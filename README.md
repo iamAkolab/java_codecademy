@@ -1,8 +1,12 @@
-# java_codecademy
+# Java Learning Resources
 This is my self taught course from codecademy
 
-# Java Learning Resources
-
+## Summary
+- **[Learn Beginner Java](https://www.codecademy.com/learn/learn-java)** - 16 hrs
+- **[Intermediate Java](https://www.codecademy.com/learn/learn-intermediate-java)** - 10 hrs
+- **[Learned Advanced Java](https://www.codecademy.com/learn/learn-advanced-java)** - 2 hrs
+- 
+## Course Breakdown
 ### Beginner Course: **[Learn Java](https://www.codecademy.com/learn/learn-java)** - 16 hrs
 - **[Learn Java: Intro to Java](https://www.codecademy.com/learn/java-introduction)** - 6 hrs
 - **[Learn Java: Object Oriented Programming](https://www.codecademy.com/learn/learn-java-object-oriented-programming)** - 3 hrs
