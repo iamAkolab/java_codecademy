@@ -64,3 +64,40 @@ public class HelloWorld {
 }
 ```
 Note that we access the elements of the args array the same way we would access the elements of any other array.
+
+---
+## Print Statements and Comments
+### Print Statements
+There are two common ways of printing in Java: System.out.print() and System.out.println().
+```
+System.out.print("I'm first!");
+System.out.println("I'm second!");
+System.out.print("I'm third!");
+```
+The only difference between the two is that lines printed using System.out.println() end with a new line. After printing "I'm second!", the terminal creates a new line for the next statement. The output for the above code is:
+```
+I'm first!I'm second!
+I'm third!
+```
+
+### Comments
+Let’s take a look at the two types of Java comments.
+
+### Inline Comments
+An inline (or single-line) comment in Java is created using two consecutive / symbols:
+```
+// This will print: Today is Wednesday.
+System.out.println("Today is Wednesday.");
+```
+This is a single-line comment that documents the code. The compiler will ignore everything after // to the end of the line.
+
+### Block Comments
+Block, or multi-line, comments are created using /* and */:
+```
+/* This method takes in two whole numbers and then
+returns their sum */
+public void addNumbers(int a, int b) {
+  return a + b;
+}
+```
+Anything between the /* and */ will be ignored by the compiler. Block comments are often used for longer comments and at the top of methods or classes to describe what that portion of code does.
