@@ -51,3 +51,5 @@
 By following this reading plan and actively practicing coding, you can aim to become a proficient Java developer in about a year. To reach a professional level, consider gaining hands-on experience through internships, contributing to open-source projects, or working on real-world projects. Continuous learning and practice will help you grow and refine your skills over time.
 
 ---
+
+
