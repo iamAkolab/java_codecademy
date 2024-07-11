@@ -51,3 +51,16 @@ Once you have your executable file, use java and the name of the class to run it
 java MyClass
 ```
 Note: Do not include the .java or .class suffixes, only use the name of the class.
+
+### main Method Parameters
+Each Java program must have a main method, and every main method contains the parameters String[] args, but what does that mean?
+
+args is an array of Strings that is passed to the program when it’s run. (Click here for a refresher on arrays in Java.) We don’t need to pass anything in, but we can if we want to. For example, we can edit our HelloWorld class to use elements from args:
+```
+public class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println("Hello world, my name is " + args[0] + "!");
+  }
+}
+```
+Note that we access the elements of the args array the same way we would access the elements of any other array.
