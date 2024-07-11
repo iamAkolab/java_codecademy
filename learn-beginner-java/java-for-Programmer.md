@@ -5,8 +5,8 @@ The Java programming language was designed by James Gosling and released by Sun 
 
 ### The Cycle of a Java Program
 Java code gets written in a .java file. When we run our program, the code gets compiled into bytecode which is a machine language that the JVM can understand. Bytecode gets sent to the JVM where it is analyzed and then executed as instructions. The JVM terminates once it executes the final instruction!
----
 
+---
 ## Java Style Guide
 ### Naming Conventions
 As a rule, Java uses camel case (eg. camelCase) for most names, including variables and methods. However, there are some variations depending on what you are naming.
@@ -37,3 +37,17 @@ is valid syntax, placing a space between each side of the operator keeps the cod
 ```
 x = 3;
 ```
+
+---
+## Java and the Command Line
+### Compiling Java
+Before you can run the program from the command line, you must compile it. Open your terminal or command prompt (depending on OS), and navigate to the directory where the file you want to run is located. Once there, use javac and the filename to compile:
+```
+javac MyClass.java
+```
+This creates the .class file that can be executed. However, if there are any bugs found in your program, they will be flagged at this point, and the executable .class file will not be created. You won’t be able to run the file until it compiles with no issues.
+Once you have your executable file, use java and the name of the class to run it:
+```
+java MyClass
+```
+Note: Do not include the .java or .class suffixes, only use the name of the class.
