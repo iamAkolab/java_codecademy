@@ -19,8 +19,21 @@ Constants do not use camel case, and instead use snake case (eg. snake_case) wit
 Brackets ({ and }) must be used for all method and class declarations, as well as conditionals and loops that contain multiple lines of code.
 
 While you can omit brackets for single line conditionals and loops, it’s best practice to use them for readability. For example,
-'''
+```
 if (true) {
   return false;
 }
-'''
+```
+### Indentations and Spacing
+While the amount of whitespace doesn’t affect the compilation and running of code in Java, there are standards that help with readability.
+
+All indentations should be two spaces, and there should be an indentation each time a new block (eg. loop, method, etc) is opened, as seen in the examples above.
+
+There should be spaces before and after keywords and operators. For example, while
+```
+x=3;
+```
+is valid syntax, placing a space between each side of the operator keeps the code clear and readable:
+```
+x = 3;
+```
