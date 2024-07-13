@@ -1,5 +1,5 @@
 # Java Learning Resources.
-This is my self taught course from codecademy.
+This is my self taught course from codecademy
 
 ## Summary
 - **[Learn Beginner Java](https://www.codecademy.com/learn/learn-java)** - 16 hrs
