@@ -1,4 +1,4 @@
 Syllabus
 
-aDDITIONAL 
+Additional
 https://learn.udacity.com/courses/cs259
