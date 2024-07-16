@@ -1,2 +1,2 @@
-# Conditional Statements and Comparison Operators..
+# Conditional Statements and Comparison Operators.
 
