@@ -155,7 +155,7 @@ System.out.println((double)(100 / 5)); // Prints: 20.0
 ```
 ### Converting Integer and String Values
 In Java, we can convert an int value to a String value and vice versa. This doesn’t count as casting because a String is not a primitive type value, but it can be useful to know how to perform this conversion. To change the value of an int into a String, we need to use the valueOf() method from the String class:
-``
+```
 int numInt = 15;
 System.out.println("Int value: " + numInt);
 // Convert int value to String
