@@ -1,5 +1,4 @@
 # Variables and Types
----
 ## Declaring a Variable
 To declare a variable with a value, use the following syntax:
 ```
@@ -86,4 +85,71 @@ final int yearBorn = 1968;
 When we declare a variable using final, the value cannot be changed; any attempts at doing so will cause an error to occur:
 ```
 error: cannot assign a value to final variable yearBorn
+```
+# Casting and Converting
+## Numerical-Based Casting
+When we use casting to change the data type of number-based values, it can impact how much data the value holds. If there is less data in the value after casting, it’s considered narrow type casting. If the value contains more data after casting, it’s classified as widening type casting.
+
+In order to cast, we need to use a casting operator to alert the compiler that we want to create a temporary value that is a converted data type. Two casting operators we will focus on are (int) and (double).
+
+### Narrow Type Casting
+To convert a double to an int, we would place the casting operator (int) in front of a value we would like to convert.
+
+For example:
+```
+double numDouble = 12.99;
+System.out.println("Double value: " + numDouble);
+// convert a double to int
+int numInt = (int) numDouble;
+System.out.println("Int value: " + numInt);
+```
+This would output:
+```
+Double value: 12.99
+Int value: 12
+```
+When we convert a double to an int, the digits to the right of the decimal point are truncated. Of course, when we see a value like 12.99, we know that it’s numerically closer in value to 13 than it is to 12. Java does not automatically round the value. If we want to round our positive value to the nearest integer, we can use (int)(value + 0.5); in the case that our number is negative, we would instead use (int)(x - 0.5):
+```
+double numDouble = 12.99;
+System.out.println("Double value: " + numDouble);
+// convert a double to an int rounded to nearest value
+int numInt = (int) (numDouble + 0.5);
+System.out.println("Int value: " + numInt);
+```
+This would output:
+```
+Double value: 12.99
+Int value: 13
+```
+
+It’s important to be aware that there are limitations to when working with whole number, or int, values in Java. There is a limited amount of data that can be stored in an int — 4 bytes. We can use Integer.MIN_VALUE and Integer.MAX_VALUE to find the minimum and maximum value of an int:
+```
+System.out.println("Min: " + Integer.MIN_VALUE); // Prints: Min: -2147483648
+System.out.println("Max: " + Integer.MAX_VALUE); // Prints: Max: 2147483647
+```
+
+### Widening Type Casting
+If we were to use casting to change an int value to a double, we’d need to implement the (double) casting operator in our code:
+```
+int numInt = 9;
+System.out.println("Int value: " + numInt);
+// convert an int to a double
+System.out.println("Double value: " + (double)numInt);
+```
+This will output:
+```
+Int value: 9
+Double value: 9.0
+```
+In the program above, we did not change the type of numInt in the second print statement; instead, we created a temporary value when we casted numInt as a double. If we wanted to permanently save that value, we could create a new variable like double newValue = (double)numInt.
+
+Unlike in narrow type casting, an int value can automatically get cast to a double value in Java code. For example, this occurrence can happen when we create an arithmetic expression that references a double and an int:
+```
+System.out.println(100.0 / 5); // Prints: 20.0
+```
+Java automatically cast the value as a double even though one of the values in the expression was an int.
+
+We can also cast the value of an expression as a double even if both values in the expression are ints. To do this, we’ll place (double) in front of an expression that is contained in its own set of parentheses like so:
+```
+System.out.println((double)(100 / 5)); // Prints: 20.0
 ```
