@@ -89,3 +89,43 @@ for (int i = 0; i < numbers.length; i++) {
 }
 ```
 This program would output 1, 3, and 5 since if a number is even, we hit a continue statement, which skips the rest of that iteration, so the print statement is skipped. As a result, we only see odd numbers printed.
+
+```
+public class Loops {
+  public static void main(String[] args) {
+    int num = 0;
+
+    while (num < 10) {
+      num++;
+      if (num > 10) {
+        break;
+      }
+    }
+
+    do {
+      System.out.println("Impossible!");
+    } while (2 == 4);
+
+    int[] myArray = new int[10];
+
+    for (int i = 0; i < myArray.length; i++) {
+      myArray[i] = i;
+    }
+
+    for (int x : myArray) {
+      if (x % 2 == 0) {
+        continue;
+      }
+      System.out.println(x);
+    }
+
+  }
+}
+//
+Impossible!
+1
+3
+5
+7
+9
+```
