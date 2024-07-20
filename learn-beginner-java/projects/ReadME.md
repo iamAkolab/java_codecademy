@@ -1,1 +1,2 @@
-# List fof Projects
+# List of Projects
+* Planting a Tree
