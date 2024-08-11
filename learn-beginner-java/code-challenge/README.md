@@ -1,4 +1,4 @@
-# Basic Syntax in Java
+# Basic Syntax in Java.
 * Code Challenge: Loops Not Involving Traversal
 * Code Challenge: Using Loops With Strings
 
