@@ -1,4 +1,4 @@
-# Code Challenge: Using Loops With Strings.
+# Code Challenge: Using Loops With Strings
 ## String Traversal
 Strings are objects that hold text-based information. Did you know we can also iterate through a String using a loop? That’s right- similar to arrays and ArrayLists, we can traverse a String in order to access each individual element.
 
