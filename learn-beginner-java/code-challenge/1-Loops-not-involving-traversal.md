@@ -1,4 +1,4 @@
-# Loop Refresher,
+# Loop Refresher
 
 Loops are a useful tool to repeat certain actions so that the action is only defined once. They can do things like solving for a number, combining multiple strings, populating an array with several numbers, and much more.
 
