@@ -1,4 +1,4 @@
-# Variables and Types.
+# Variables and Types
 ## Declaring a Variable
 To declare a variable with a value, use the following syntax:
 ```
