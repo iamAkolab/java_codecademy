@@ -123,3 +123,11 @@ class ArraysExample {
    
   }
 ```
+--- output
+electric keyboard
+melodica
+4
+violin
+violin
+viola
+cello
