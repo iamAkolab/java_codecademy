@@ -303,3 +303,52 @@ Apples
 banana
 apples
 ```
+
+##8. Rotate Grocery List
+MEOW! You just fixed your list, but your cat ran across your lap to chase after your dog! Thankfully, it’s still in the right order, but the starting point of the list is now the last item in the list.
+
+This means that the last element in the list should be the first item, the first item in the list should be the second item, and so on. For example, your original list looked like this: ["banana", "chocolate", "cookies", "ice cream"], but now it looks like this: ["ice cream", "banana", "chocolate", "cookies"].
+
+Without creating a new array, update the .rotateGroceries() method to rotate the items one place to the right.
+
+( Hint
+When we think about how we would do this manually, what are the steps that we would take. Make sure to consider all of your use cases, like how would your code handle the rotation when there are no elements or only one element in the grocery list? In this case, we might not need to take any action on the array.
+
+* Hint
+In order to perform the rotations, we will need to do some swapping. When swapping items, you'll need a temporary variable to hold your value while you replace the items. For example, if I want to swap a and b, I'll need to store the value of a into c before I transfer b into a:
+int a = 0;
+int b = 1;
+int c = a;
+int a = b;
+int b = c;
+
+* Hint
+Now that we know how to swap items, we know that we will need to do this for every element in the array, which we can use a loop to help us with the repetition. We can build on this method of swapping elements.
+One way is to use a “temporary” variable to hold the value of the previous element between each iteration through the loop. Then we can use another “temporary” variable to hold the value so we can swap between the current element and the “previous temporary” variable.
+
+Another way could be to iterate through the array backwards, with two counters: one to keep track of the index of the current element and another to track the index of element before. Then, in every iteration of the loop, we can perform swap between the current element and element before it.
+```
+public class GroceryList {
+  public static void rotateGroceries(String[] groceryList) {
+     if (groceryList.length > 1) {
+    String previous = groceryList[groceryList.length - 1];
+    for (int i = 0; i < groceryList.length; i++) {
+      String temp = groceryList[i];
+      groceryList[i] = previous;
+      previous = temp;
+    }}
+  }
+
+  public static void main(String[] args) {
+    // Below is a sample test case you can use to run your code.
+    // Try playing around with different values in the array to test edge cases
+    String[] groceryList = {"apples", "banana", "Apples", "chocolate"};
+    rotateGroceries(groceryList);
+
+    for (String item : groceryList) {
+      System.out.println(item);
+    }
+  }
+}
+
+```
