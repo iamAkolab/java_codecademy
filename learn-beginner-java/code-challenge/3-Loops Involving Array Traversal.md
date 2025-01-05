@@ -76,4 +76,17 @@ public class GroceryList {
 
 --- output: 12.3
 ```
+## Extra challenge
+How would you modify your solution to return the cheapest item in the array of groceryPrices?
 
+* Hint
+Our current solution looks for the biggest item in the grocery list. To find the smallest, we just need to reverse the condition that checks for the biggest item.
+
+## Super extra challenge:
+Now, let’s assume that each item costs at least $0.00. How would you modify your solution to return the cost of the item that, when removed, allows you to spend the most money? (Remember, the total should still stay within the limits of your budget.)
+
+* Hint
+There are a couple of ways to do this. One way is to expand on our solution for the previous challenges with some modifications. As we iterate through each item in the array, what constraints are we adding on that would make an item eligible for removal?
+
+* Hint
+What extra steps can we take to find the smallest item among the eligible items for removal?
