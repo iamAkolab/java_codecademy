@@ -42,3 +42,38 @@ public class GroceryList {
 ```
 
 ## 2.Most Expensive Grocery Item
+Oh no! You spent most of your money on burritos, which puts you over budget given all of the groceries on the list.
+
+All the items in the grocery list cost a total of $33.09, but you only have $31.89. Given that every item in the list costs at least $1.20 and there is at least one item in the list, you can remove one item to stay within your budget. Update the .getMostExpensiveItemCost() method to find the most expensive item in the array of groceryPrices, and return the item.
+
+* Hint
+Our aim is to find the largest number in the entire list. If we were to do this manually, we would look at each number, one by one, and compare that number to the maximum number we have so far.
+
+* Hint
+We can translate our manual steps into code. This is where a loop can come in handy (to iterate through each element in the array). The comparisons can be done in the loop, so we don’t have to write each comparison.
+
+```
+public class GroceryList {
+  public static double getMostExpensiveItemCost(double[] groceryPrices) {
+    // We can set the maxCost initially to the first item without an IndexOutOfBounds error because we can assume there is at least one item in the array.
+    double maxCost = groceryPrices[0];
+    
+    for (double itemCost : groceryPrices) {
+    if (maxCost < itemCost) {
+      maxCost = itemCost;
+    }
+    }
+    return maxCost;
+  }
+
+  public static void main(String[] args) {
+    // Below is a sample test case you can use to run your code.
+    // Try playing around with different values in the array to test edge cases
+   double[] groceryPrices = {10.0, 12.3, 8.45, 2.34};
+   System.out.println(getMostExpensiveItemCost(groceryPrices));
+  }
+}
+
+--- output: 12.3
+```
+
