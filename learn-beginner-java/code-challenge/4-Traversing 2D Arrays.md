@@ -4,7 +4,7 @@
 Four wildlife researchers in Victoria, Australia spent five days counting the number of koalas they came across in different areas. Their numbers were as follows:
 
 | Noor | Edward | Camila | Amir |
-| ---— | —----- | —----- | —--- |
+| ---- | ------ | ------ | ---- |
 | Day 1 | 17 | 13 | 19 | 22 |
 | Day 2 | 12 | 18 | 25 | 20 |
 | Day 3 | 15 | 18 | 21 | 24 |
