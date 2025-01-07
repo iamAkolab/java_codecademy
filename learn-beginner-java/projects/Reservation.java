@@ -42,3 +42,11 @@ public class Reservation {
     
   }
 }
+
+/*
+Output
+Reservation confirmed
+Please enjoy your meal!
+Reservation denied
+Unable to confirm reservation, please contact restaurant.
+*/
