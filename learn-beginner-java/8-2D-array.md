@@ -132,8 +132,6 @@ class TwoDimensionalArrays {
     }
   }
 }
-```
-```
 --- Output
 yellow
 blue
