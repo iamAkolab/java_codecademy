@@ -13,5 +13,5 @@ Four wildlife researchers in Victoria, Australia spent five days counting the nu
 
 The researchers want to use this chart to gather some information regarding their trip using Java. This type of data would be very fitting for a 2D array.
 
-* Which of the following options depicts the data above as a Java 2D array called koalaSpottings?
+Which of the following options depicts the data above as a Java 2D array called koalaSpottings?
 * Answer: int[][] koalaSpottings = {{17, 13, 19, 22}, {12, 18, 25, 20}, {15, 18, 21, 24}, {19, 23, 23, 22}, {18, 20, 21, 26}};
