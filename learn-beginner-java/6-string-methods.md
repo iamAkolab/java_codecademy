@@ -51,6 +51,20 @@ System.out.println(flavor1.equals(flavor2)); // Prints: false
 ```
 There is also an .equalsIgnoreCase() that compares two Strings without considering upper/lower case.
 
+We can also compare String values lexicographically (think dictionary order) using the 
+Preview: Docs Returns 0 if two strings are equal in Unicode value. Otherwise, the lexicographical difference is returned.
+.compareTo()
+ method. When we call the .compareTo() method, each character in the String is converted to Unicode; then the Unicode character from each String is compared.
+
+The method will return an int that represents the difference between the two Strings.
+
+For example:
+```
+String flavor1 = "Mango";
+String flavor2 = "Peach";
+
+System.out.println(flavor1.compareTo(flavor2));
+```
 ## .indexOf()
 If we want to know the index of the first occurrence of a character in a string, we can use the .indexOf() method on a string. Remember that the indices in Java start with 0:
 ```
