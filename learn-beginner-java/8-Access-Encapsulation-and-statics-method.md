@@ -12,3 +12,19 @@ As our Java programs begin to get bigger and we begin to have multiple Objects a
 ### Scope
 * Local variables vs. instance variables
 * The this keyword
+
+## The public Keyword
+After running the code in the last exercise, you should be developing an intuition on what the public and private keywords are doing. These keywords are defining what parts of your code have access to other parts of your code.
+
+We can define the access of many different parts of our code including instance 
+Preview: Docs Variables are used whenever there’s a need to store a piece of data and ensures code re-usability.
+variables
+, 
+Preview: Docs Methods are reusable pieces of code in classes. The difference between a method and a function is that methods are always related to a class or an object.
+methods
+, 
+Preview: Docs Constructors are like normal methods within the class, but are used to initialize the object of the class.
+constructors
+, and even a class itself. If we choose to declare these as public this means that any part of our code can interact with them - even if that code is in a different class!
+
+The way we declare something to be public is to use the public keyword in the declaration statement. In the code block below, we have a public class, constructor, instance variables, and method. Notice the five different uses of public.
