@@ -1,20 +1,26 @@
 public class CheckingAccount{
-  public String name;
+  private String name;
   private int balance;
   private String id;
+  private double interestRate;
   
   public CheckingAccount(String inputName, int inputBalance, String inputId){
-    name = inputName;
-    balance = inputBalance;
-    id = inputId;
+    this.name = inputName;
+    this.balance = inputBalance;
+    this.id = inputId;
+    this.interestRate = 0.02;
   }
   
   public int getBalance(){
     return this.balance;
   }
-
+    
   public void setBalance(int newBalance){
     this.balance = newBalance;
   }
-    
+  
+  public double getMonthlyInterest(){
+    return this.interestRate * this.balance;
+  }
+
 }
