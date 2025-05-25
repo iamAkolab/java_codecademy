@@ -179,10 +179,7 @@ public class Dog{
 }
 The this keyword is a reference to the current object. We used this.name in our speakNewName() method. This caused the method to print out the value stored in the instance variable name of whatever Dog Object called speakNewName(). (Note that in this somewhat contrived example, the local variable name used as a parameter gets completely ignored).
 
-Oftentimes, you’ll see 
-Preview: Docs Loading link description
-constructors
- have parameters with the same name as the instance variable. For example, you might see something like:
+Oftentimes, you’ll see constructors have parameters with the same name as the instance variable. For example, you might see something like:
  ```
 public Dog(String name){
   this.name = name;
