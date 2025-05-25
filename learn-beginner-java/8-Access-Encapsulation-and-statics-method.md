@@ -202,3 +202,40 @@ public void setName(String name){
 We reset the instance variable to the value passed into the parameter.
 
 Throughout the rest of this lesson, we’ll use this. when referring to an instance variable. This isn’t always explicitly necessary — if there’s no local variable with the same name, Java will know to use the instance variable with that name. That being said, it is a good habit to use this. when working with your instance variables to avoid potential confusion.
+
+## Using this With Methods
+We’ve seen how the this works with variab,les but we can also use the this with methods. Recall how we’ve been calling methods up to this point:
+```
+public static void main(String[] args){
+  Dog myDog = new Dog("Odie");
+  myDog.speak();
+}
+```
+Here we’re creating an instance of a Dog and using that Dog to call the speak() method. However, when defining methods, we can also use the this keyword to call other methods. Consider the code block below:
+```
+public class Computer{
+  public int brightness;
+  public int volume;
+  
+  public void setBrightness(int inputBrightness){
+    this.brightness = inputBrightness;
+  }
+
+  public void setVolume(int inputVolume){
+    this.volume = inputVolume;
+  }
+
+  public void resetSettings(){
+    this.setBrightness(0);
+    this.setVolume(0);
+  }
+}
+```
+Take a look at the resetSettings() method in particular. This method calls other methods from the class. But it needs an object to call those methods! Rather than create a new object (like we did with the Dog named myDog earlier), we use this as the object. What this means is that the object that calls resetSettings() will be used to call setBrightness(0) and setVolume(0).
+```
+public static void main(String[] args){
+  Computer myComputer = new Computer();
+  myComputer.resetSettings();
+}
+```
+In this example, calling myComputer.resetSettings() is as if we called myComputer.setBrightness(0) and myComputer.setVolume(0). this serves as a placeholder for whatever object was used to call the original method.
