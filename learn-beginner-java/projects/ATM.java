@@ -19,11 +19,8 @@ public class ATM{
     }
   }
 
-  // Write your averageMoney() method here
-
   public static void averageMoney(){
     System.out.println(totalMoney / numATMs);
-    System.out.println(this.money);
   }
 
   public static void main(String[] args){
