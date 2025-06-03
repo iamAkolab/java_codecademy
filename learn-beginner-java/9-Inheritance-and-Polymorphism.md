@@ -1,2 +1,2 @@
-# Inheritance and Polymorphism
+# Inheritance and Polymorphism.
 ## Introducing Inheritance
