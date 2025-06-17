@@ -41,3 +41,11 @@ The list below outlines some (but not all) of the different methods associated w
 | Boolean	| boolean isTrue = input.nextBoolean(); |
 | Long	| long numLong = input.nextLong(); |
 | Short |	short numShort = input.nextShort() |
+
+The Scanner class has several additional methods that help support data validation and control flow. We can use these to make sure we don’t try to process data that doesn’t exist and thereby run into errors in our program, also known as exceptions.
+
+| Code |	Function |
+| input.hasNext()	| This function returns a boolean that indicates if there is another token left to process |
+| input.hasNextLine() |	This function returns a boolean that indicates if there is another line in the input of the defined scanner. |
+| input.hasNextInt()	| This function returns a boolean that validates if there is another int in the input of the defined scanner. |
+| input.useDelimiter(","): |	This function helps us specify what delimiters we want to use. A delimiter is used to separate data units. This , delimiter can be especially useful when a program is required to read csv (comma separated values) files. |
