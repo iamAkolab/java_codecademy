@@ -45,6 +45,7 @@ The list below outlines some (but not all) of the different methods associated w
 The Scanner class has several additional methods that help support data validation and control flow. We can use these to make sure we don’t try to process data that doesn’t exist and thereby run into errors in our program, also known as exceptions.
 
 | Code |	Function |
+| ---- | -------- |
 | input.hasNext()	| This function returns a boolean that indicates if there is another token left to process |
 | input.hasNextLine() |	This function returns a boolean that indicates if there is another line in the input of the defined scanner. |
 | input.hasNextInt()	| This function returns a boolean that validates if there is another int in the input of the defined scanner. |
