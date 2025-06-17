@@ -20,3 +20,24 @@ For this exercise, we will build a program that walks us through writing code us
 ```
 import java.util.Scanner;
 ```
+
+Now that we have access to the Scanner class, let’s begin by declaring the Scanner class as an instance variable called
+```
+Scanner input = new Scanner(System.in);
+```
+Notice how we have placed System.in within parenthesis in our declaration. This is what will allow our program to read user input from the console. Similar to how the out property of System was a PrintStream, the in property is an instance of an InputStream.
+
+The first thing to know about the Scanner class is that it breaks up its input using a defined delimiter, and by default that delimiter is set to whitespace. This means every time there is a space or a new line in our input, the Scanner will recognize it as a new piece of the input, in fact, it can do its best to search the input for the specific type of information you are looking for, whether that be an integer, a word, or a character.
+
+The next most important piece of the Scanner class is blocking. That means if the Scanner is waiting on user input from the terminal, it will block continued execution of the program until it gets its input.
+The list below outlines some (but not all) of the different methods associated with the Scanner class that allow us to read the next piece of information we are looking for.
+
+| Variable	| Code |
+| -------- | ---- |
+| String	| String myString = input.next(); |
+| Int |	int num = input.nextInt(); |
+| Double	| double numDouble = input.nextDouble(); |
+| Byte	| byte numByte = input.nextByte(); |
+| Boolean	| boolean isTrue = input.nextBoolean(); |
+| Long	| long numLong = input.nextLong(); |
+| Short |	short numShort = input.nextShort() |
