@@ -1,6 +1,10 @@
 # Input and Output
 ## Introduction
-
+Java is a powerful programming language that provides us with many ways to read input and write output to consoles, 
+Preview: Docs Java provides a number of different classes and methods for utilizing files and the file system.
+files, etc. In this lesson, we will learn about some of the built-in classes that are useful for completing these 
+tasks, specifically, reading and writing text to a file. Some of these classes include:
+ 
 | Class |	Definition |
 |-------|------------|
 | System.out	| A class that holds functions to display out in a terminal or command prompt application. |
