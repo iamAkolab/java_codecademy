@@ -182,3 +182,17 @@ output.close();
 ```
 
 In Java, most classes that write output use a buffer-style memory, you can think of it as a middleman between the information you want to write and the file. The information gets loaded into the buffer, and as it gets full, it comes out the other side and into the file. One way to make sure the information makes it out of the buffer and into the file is to .flush() it out. If we are done with the FileWriter we can simply .close() it, which will flush the stream, destroy the internal memory holdings of the FileWriter, and free up the file for use elsewhere.
+```
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Introduction {
+  public static void main(String[] args) throws IOException{
+    // Your code here:
+    FileWriter writer = new FileWriter("output.txt");
+    String outputText = "We love learning to code with Codecademy.";
+    writer.write(outputText);
+    writer.close();
+  }
+}
+```
