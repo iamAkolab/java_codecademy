@@ -103,3 +103,38 @@ In the example above we:
 * Used objectOutputStream.writeObject() in main() to serialize the michael and peter objects to a file.
 
 After the execution of the above program, the persons.txt will contain a stream of bytes that has the type and value information of the fields for the michael and peter objects respectively.
+
+# Deserializing an Object to a File
+As the name suggests, deserialization does the opposite of serialization and transforms a stream of bytes into a Java object.
+
+Like with serialization, we’ll make use of helper classesFileInputStream, which helps us read a file, and ObjectInputStream which helps us read a serialized stream of bytes.
+Assuming we have the file persons.txt we created in the last exercise, let’s understand how to do this by looking at some code:
+```
+import java.io.Serializable;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class Person implements Serializable {
+  public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
+
+    FileInputStream fileInputStream = new FileInputStream("persons.txt");
+    ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        
+    Person michaelCopy = (Person) objectInputStream.readObject();
+    Person peterCopy = (Person) objectInputStream.readObject();
+  }
+}
+```
+In the example above we:
+
+Initialized FileInputStream and ObjectInputStream in main() which will read a file and transform a stream of bytes into a Java object.
+Created a Person object named michaelCopy by using objectInputStream.readObject() to read a serialized object.
+Created a Person object named peterCopy by using objectInputStream.readObject() to read a serialized object.
+It’s important to note that deserialization creates a copy of the original object. This means that the deserialized object shares the same field values as the original object but is located in a different place in memory. Also, The deserialized objects will be in the order that they were serialized in and we need to explicitly typecast the readObject() return value back into the type of object we serialized.
+
+The JVM ensures it deserializes the object using the correct class file by comparing the serialVersionUID in the class file with the one in the serialized object. If a match is not found an InvalidClassException
+ is thrown. Also, readObject() throws a ClassNotFoundException when the class of the serialized object cannot be found.
