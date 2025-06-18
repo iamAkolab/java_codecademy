@@ -40,10 +40,17 @@ In Java, the JVM defines a default way for classes that implement Serializable t
 
 Although there is no need to implement any methods for serialization, it is important for the implementing class to provide a serialVersionUID:
 ```
-public class Person implements Serializable {
-  private String name;
-  private int age;
-  private static final long serialVersionUID = 1L; 
+import java.io.Serializable;
+
+public class Car implements Serializable {
+  private String make;
+  private int year;
+  private static final long serialVersionUID = 1L;
+
+  public Car(String make,int year){
+    this.make = make;
+    this.year = year;
+  }
 } 
 ```
 In the example above, the serialVersionUID, a static final long type number, acts as an identifier for the JVM to choose the proper class to convert a stream of bytes back into an object (we’ll cover this process in-depth later). Our serializable class can get a serialVersionUID in one of the following ways:
