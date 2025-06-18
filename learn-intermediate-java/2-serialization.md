@@ -60,3 +60,46 @@ In the example above, the serialVersionUID, a static final long type number, act
 * You can define the serialVersionUID explicitly in the class. This is the preferred option because you don’t need to rely on the JVM or your IDE to ensure proper deserialization.
 
 Although the JVM uses the serialVersionUID to locate the proper class, it does not store the class file as part of the serialization. We need to ensure we load the class file into our program (if it’s not there already). With a default process of serializing objects and the serialVersionUID, Java makes serialization easy to implement.
+
+# Serializing Objects to a File
+Now that we’ve learned about the Serializable interface and how to implement it, let’s take a look at how to serialize an object to a file. To do this we’ll need to use the helper classes, FileOutputStream, which will help us write to a file, and ObjectOutputStream, which will help us write a serializable object to an outputstream.
+
+Let’s look at how to do this with some code:
+```
+import java.io.Serializable;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class Person implements Serializable {
+  private String name;
+  private int age;
+  private static final long serialVersionUID = 1L; 
+
+  public Person(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }  
+
+  public static void main(String[] args) throws FileNotFoundException, IOException{
+    Person michael = new Person("Michael", 26);
+    Person peter = new Person("Peter", 37);
+        
+    FileOutputStream fileOutputStream = new FileOutputStream("persons.txt");
+    ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        
+    objectOutputStream.writeObject(michael);
+    objectOutputStream.writeObject(peter);	
+  }
+} 
+```
+In the example above we:
+
+* Added a constructor to the Person class we defined in the previous lesson.
+* Defined main() and initialized two Person objects - michael and peter.
+* Initialized a FileOutputStream object in main() which will create and write a stream of bytes to a file named persons.txt.
+* Initialized an ObjectOutputStream object in main() which will help serialize an object to a specified output stream.
+* Used objectOutputStream.writeObject() in main() to serialize the michael and peter objects to a file.
+
+After the execution of the above program, the persons.txt will contain a stream of bytes that has the type and value information of the fields for the michael and peter objects respectively.
