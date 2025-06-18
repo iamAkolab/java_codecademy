@@ -9,15 +9,17 @@ import java.io.IOException;
 public class Car implements Serializable {
   private String make;
   private int year;
+  private Engine engine;
   private static final long serialVersionUID = 1L;
 
   public Car(String make, int year) {
     this.make = make;
     this.year = year;
+    this.engine = new Engine(2.4, 6);
   }
 
-  public String toString(){
-    return String.format("Car make is: %s, Car year is: %d", this.make, this.year);
+  public String toString() {
+    return String.format("Car make is: %s, Car year is: %d, %s", this.make, this.year, this.engine);
   }
 
   public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
