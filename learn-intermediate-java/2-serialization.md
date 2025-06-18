@@ -14,4 +14,5 @@ There are a couple of important details to note about serialization and deserial
 
 * The stream of bytes created by serialization only includes the member variables of an object and not its methods.
 * Deserialization creates a copy of the original object. This copy shares the same state but is an entirely new object in memory.
+
 Many programming languages like Java, C++, etc. support serialization and deserialization but differ in how they implement the process. Ultimately, this gives us the flexibility to work with the objects in, say Java, and also be able to work with a copy of that object in C++.
