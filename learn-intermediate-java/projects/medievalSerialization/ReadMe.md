@@ -1,4 +1,4 @@
-# Medieval Serialization..
+# Medieval Serialization.
 Welcome to Waveside Game Studio, creators of MMOTBRPGFUWJVMs, the ultra concise acronym for Massively Multiplayer Online Text Based Role Playing Games For Use With Java Virtual Machines.
 
 Catchy, we know, but it’s your first day on the job and there’s no time to dwell on clever acronyms and your marketing career aspirations.
