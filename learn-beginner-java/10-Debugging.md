@@ -95,3 +95,46 @@ Some common exceptions that you will see in the wild:
 * NullPointerException : You tried to access an instance variable or invoke a method on an object that is currently null.
 * ArrayIndexOutOfBoundsException : The index you are using is either negative or greater than the last index of the array (i.e., array.length-1).
 * FileNotFoundException : Java didn’t find the file it was looking for
+
+
+## Exception Handling
+Exception handling is an essential feature of Java programming that allows us to use run-time error exceptions to make our debugging process a little easier.
+One way to handle exceptions is using the try/catch:
+
+* The try statement allows you to define a block of code to be tested for errors while it is being executed.
+
+The catch statement allows you to define a block of code to be executed if an error occurs in the try block.
+
+The try and catch keywords come in pairs, though you can also catch several types of exceptions in a single block.
+```
+try {
+
+  //  Block of code to try
+
+} catch (NullPointerException e) {
+
+  // Print the error message like this:
+  System.err.println("NullPointerException: " + e.getMessage());
+  
+  // Or handle the error another way here
+
+}
+```
+Notice how we used System.err.println() here instead of System.out.println(). System.err.println() will print to the standard error and the text will be in red.
+
+You can also chain exceptions together:
+```
+try {
+
+  //  Block of code to try
+
+} catch (NullPointerException e) {
+
+  //  Code to handle a NullPointerException
+
+} catch (ArithmeticException e) {
+
+  //  Code to handle an ArithmeticException
+
+}
+```
