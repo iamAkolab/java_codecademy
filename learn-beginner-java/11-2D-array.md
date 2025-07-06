@@ -12,6 +12,16 @@ We can even have an array of Objects. For example, the following example shows a
 A two-dimensional (2D) array is an array that stores arrays of the same data type.
 ![image](https://github.com/user-attachments/assets/1092408f-5305-484b-975d-c18b0545b615)
 
+Why use 2D arrays?
+
+* It is useful to use 2D arrays for situations where you need to store and organize data by rows and columns. For example, exporting data to be used in a spreadsheet.
+* You can condense multiple arrays down to a single variable using 2D arrays. For example, if you have 10 students who each have 10 different quiz grades, you can represent the overall class quiz grades as a 10x10 2D array by having each row represent a student and each column represent one of the quizzes they have taken.
+* 2D arrays can be used to map out data. For example, if you want to create a game of tic-tac-toe, you can represent the game state by using a 3x3 2D array.
+
+There are many other ways to use 2D arrays depending on the application. The only downside is that once 
+initialized, no new rows or columns can be added or removed without copying the data to a newly initialized 
+2D array. This is because the length of arrays in Java are immutable (unable to be changed after creation).
+
 In this article we will cover the following:
 
 * creating a populated 2D array
