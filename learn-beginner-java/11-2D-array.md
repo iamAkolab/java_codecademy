@@ -1,5 +1,14 @@
-# 2D Arrays
+# Introduction to 2D Arrays
 
+As we have learned previously, an array is a group of data consisting of the same type. 
+This means that we can have an array of primitive data types (such as integers):
+ ```
+[1, 2, 3, 4, 5]
+```
+We can even have an array of Objects. For example, the following example shows an array of String Objects:
+```
+["hello", "world", "how", "are", "you"]
+```
 A two-dimensional (2D) array is an array that stores arrays of the same data type.
 ![image](https://github.com/user-attachments/assets/1092408f-5305-484b-975d-c18b0545b615)
 
