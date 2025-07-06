@@ -41,3 +41,34 @@ Debug.java:5: error: ';' expected
 ```
 Usually the error is on the exact line indicated by the compiler, or the line just before it; however, if the 
 problem is incorrectly nested braces, the actual error may be at the beginning of the nested block.
+
+
+## Run-time Errors
+If our program has no compile-time errors, it’ll run. This is where the fun really starts.
+
+Errors which happen during program execution (run-time) after successful compilation are called run-time errors. 
+Run-time errors occur when a program with no compile-time errors asks the computer to do something that the 
+computer is unable to reliably do.
+
+Some common run-time errors:
+
+* Division by zero also known as division error
+* Trying to open a file that doesn’t exist
+  
+There is no way for the compiler to know about these kinds of errors when the program is compiled.
+
+Here’s an example of a run-time error message:
+```
+public class Main{
+  public static void main(String[] args) {
+    int width = 0;
+    int length = 40;
+
+    int ratio = length / width;
+    
+    System.out.println(ratio);
+  }
+}
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+at Main.main(Main.java:6)
+```
