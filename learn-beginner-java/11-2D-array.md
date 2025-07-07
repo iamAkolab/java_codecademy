@@ -36,10 +36,35 @@ To declare a 2D array, state the data type of the arrays it will hold followed b
 // 2D int array
 int[][] nums;
 ```
+In this example, int represents the data type, the first set of brackets [] represent an array, and 
+the second set of brackets [] represent that we are declaring an array of arrays.
+
+Now that we’ve declared a 2D array, let’s look at how to initialize it with starting values. When initializing arrays, we define 
+their size. Initializing a 2D array is different because, instead of only including the number of elements in the array, you also 
+indicate how many elements are going to be in the sub-arrays. This can also be thought of as the number of rows and columns in the 2D matrix.
+```
+int[][] intArray1;
+intArray1 = new int[row][column];
+```
+Similar to how a regular initializer list defines the size and values of the array, nested initializer lists will define the number of rows, columns, and the values for a 2D array.
+ 
+There are three situations in which we can use initializer lists for 2D arrays:
+1. In the case where the variable has not yet been declared, we can provide an abbreviated form since Java will infer the data type of the values in the initializer lists:
+```
+double[][] doubleValues = {{1.5, 2.6, 3.7}, {7.5, 6.4,5.3}, {9.8,  8.7, 7.6}, {3.6, 5.7, 7.8}};
+```
 To declare and populate a 2D array using one line of code, place each individual array within curly brackets and separate them using commas:
 ```
 int[][] nums = {{10, 9, 8}, {7, 6, 5}, {4, 3, 2}}; 
 ```
+2. If the variable has already been declared, you can initialize it by creating a new 2D array object with the initializer list values:
+```
+String[][] stringValues;
+stringValues = new String[][] {{"working", "with"}, {"2D", "arrays"}, {"is", "fun"}};
+```
+3. The previous method also applies to assigning a new 2D array to an existing 2D array stored in a variable.
+
+
 
 ## Accessing an Element in a 2D Array
 To access an individual element in a 2D array, state the array name followed by two square brackets:
