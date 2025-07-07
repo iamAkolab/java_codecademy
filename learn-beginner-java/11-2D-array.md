@@ -161,10 +161,10 @@ You might be wondering how we can figure out the number of iterations needed in 
 * In order to find the number of elements in the subarray, we can get the length of the subarray after it has been retrieved from the outer array.
  * Remember that we retrieved the sub array earlier using this format:
    * char[] subArray = letterBlock[0];
-* Therefore, we can use this to get the length of the first subarray in the 2D array
- * int lengthOfSubArray = letterBlock[0].length;
- * When thinking about the 2D array in matrix form, this is the width of the matrix (the number of columns)
-* In most cases, getting the length of the first subarray in the 2D array will apply to the rest of the subarrays (if it is rectangular in shape), but there are rare occasions where the length of the subarrays could be different. This occurs if the 2D array is a jagged array. We won’t be working with any jagged 2D arrays in this lesson, but it’s something to keep in mind.
+ * Therefore, we can use this to get the length of the first subarray in the 2D array
+  * int lengthOfSubArray = letterBlock[0].length;
+  * When thinking about the 2D array in matrix form, this is the width of the matrix (the number of columns)
+ * In most cases, getting the length of the first subarray in the 2D array will apply to the rest of the subarrays (if it is rectangular in shape), but there are rare occasions where the length of the subarrays could be different. This occurs if the 2D array is a jagged array. We won’t be working with any jagged 2D arrays in this lesson, but it’s something to keep in mind.
 
 ## Coding Question
 ```
