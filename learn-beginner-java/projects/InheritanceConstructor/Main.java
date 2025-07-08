@@ -9,5 +9,16 @@ public class Main{
 
     Spaetzle kaesespaetzle = new Spaetzle();
     kaesespaetzle.cook();
+
+    Noodle spaghetti, ramen, pho;
+    
+    spaghetti = new Spaghetti();
+    ramen = new Ramen();
+    pho = new Pho();
+        
+    Noodle[] allTheNoodles = {spaghetti, ramen, pho};
+    for(Noodle noodle: allTheNoodles){
+      System.out.println(noodle.getCookPrep());
+    }   
   }
 }
