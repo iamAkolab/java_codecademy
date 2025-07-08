@@ -75,6 +75,26 @@ In this situation, Java secretly calls the parent class’ no-argument construct
 
 If you’re writing a constructor of a child class, and don’t explicitly make a call to a constructor from a parent class using super, it’s important to remember that Java will automatically (and secretly) call super() as the first line of your child class constructor.
 
+
+## Parent Class Aspect Modifiers
+You may recall that Java class members use private and public access modifiers to determine whether they can be accessed from outside the class.
+there is another access modifier we can use to keep a parent class member accessible to its child classes and to files in the package it’s contained in — and otherwise private: protected.
+
+Here’s what protected looks like in use:
+```
+class Shape {
+
+  protected double perimeter;
+
+}
+
+// any child class of Shape can access perimeter
+```
+In addition to access modifiers, there’s another way to establish how child classes can interact with inherited parent class members: using the final keyword. If we add final after a parent class method’s access modifier, we disallow any child classes from changing that method. This is helpful in limiting bugs that might occur from modifying a particular method.
+
+Though it is not required, there is an established order when two or more field modifiers are used (eg. public final).
+
+
 ## Method Overriding
 One common use of polymorphism with Java is something we mentioned earlier — overriding parent class methods in a child class. Like the + operator, we can give a single method slightly different meanings for different classes. This is useful when we want our child class method to have the same name as a parent class method but behave a bit differently in some way.
 
