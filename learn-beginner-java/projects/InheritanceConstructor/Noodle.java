@@ -22,5 +22,9 @@ class Noodle {
     System.out.println("Boiling.");
     this.texture = "cooked";
   }
+
+    public String getCookPrep() {
+    return "Boil noodle for 7 minutes and add sauce.";
+  }
     
 }
