@@ -94,6 +94,33 @@ In addition to access modifiers, there’s another way to establish how child cl
 
 Though it is not required, there is an established order when two or more field modifiers are used (eg. public final).
 
+# Introducing Polymorphism
+In Java, if Orange is a Fruit through inheritance, you can then use Orange in the same contexts as Fruit like this:
+```
+String makeJuice(Fruit fruit) {
+
+  return "Apple juice and " + fruit.squeeze();
+
+}
+
+// inside main()
+Orange orange = new Orange();
+System.out.println(juicer.makeJuice(orange));
+```
+
+Wait, how does that work?
+
+This is because Java incorporates the object-oriented programming principle of polymorphism. Polymorphism, which derives from Greek meaning “many forms”, allows a child class to share the information and behavior of its parent class while also incorporating its own functionality.
+
+The main advantages of polymorphic programming:
+* Simplifying syntax
+* Reducing cognitive overload for developers
+
+These benefits are particularly helpful when we want to develop our own Java packages for other developers to import and use.
+
+For example, the built-in operator + can be used for both doubles and ints. To the computer, the + means something like addDouble() for one and addInt() for the other, but the creators of Java (and of other languages) didn’t want to burden us as developers with recalling each individual method.
+
+Note that the reverse situation is not true; you cannot use a generic parent class instance where a child class instance is required. So an Orange can be used as a Fruit, but a Fruit cannot be used as an Orange.
 
 ## Method Overriding
 One common use of polymorphism with Java is something we mentioned earlier — overriding parent class methods in a child class. Like the + operator, we can give a single method slightly different meanings for different classes. This is useful when we want our child class method to have the same name as a parent class method but behave a bit differently in some way.
@@ -124,3 +151,10 @@ class CheckingAccount extends BankAccount {
   }
 }
 ```
+Notice that in order to properly override printBalance(), in CheckingAccount the method has the following in common with the corresponding method in BankAccount:
+
+* Method name
+* Return type
+* Number and type of parameters
+
+You may have also noticed the @Override keyword above printBalance() in CheckingAccount. This annotation informs the compiler that we want to override a method in the parent class. If the method doesn’t exist in the parent class, we’ll get a helpful error when we compile the program.
