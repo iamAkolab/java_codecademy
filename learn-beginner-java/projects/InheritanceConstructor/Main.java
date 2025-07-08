@@ -6,5 +6,8 @@ public class Main{
     Ramen yasaiRamen = new Ramen();
     //System.out.println(yasaiRamen.ingredients);
     System.out.println(yasaiRamen.isTasty());  
+
+    Spaetzle kaesespaetzle = new Spaetzle();
+    kaesespaetzle.cook();
   }
 }
