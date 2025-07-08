@@ -2,6 +2,7 @@ public class Mayan extends Language {
 
     Mayan(String name, int numSpeakers) {
         super(name, numSpeakers, "Central America", "Verb | Object | Subject");
+        // // super(name, numSpeakers, "Central America", "verb-object-subject");
     }
 
     @Override
