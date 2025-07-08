@@ -20,7 +20,8 @@ public class Language {
     public static void main(String[] args) {
         Language french = new Language("French", 76_000_000, "France", "Subject | Verb | Complement");
         french.getInfo();
-        Mayan kiche = new Mayan("Kʼiche", 2_330_00);
+        Mayan kiche = new Mayan("Kʼiche'", 2_330_000);
+        //Mayan kiche = new Mayan("Kʼiche", 2_330_00);
         kiche.getInfo();
         SinoTibetan mandarin = new SinoTibetan("Mandarin Chinese", 920_000_000);
         SinoTibetan burmese = new SinoTibetan("Burmese", 32_000_000);
