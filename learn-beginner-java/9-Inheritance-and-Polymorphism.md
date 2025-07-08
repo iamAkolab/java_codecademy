@@ -37,6 +37,44 @@ Until now, we’ve only been working with one class and one file. However, most 
 Note: the various classes in our Java package — even though they are in different files
  — will have access to each other, so we can instantiate one class inside of another.
 
+## Inheriting the Constructor
+Hang on, you might be thinking, if the child class inherits its parent’s fields and methods, does it also inherit the constructor? Let’s take a look at how the super() constructor works!
+Let’s say Shape has a numSides field that is set by passing an integer into the constructor. If we’re instantiating a Triangle, we would want that number to always be 3, so we’d want to modify the constructor to automatically assign numSides with a value of 3.
+
+Can we do that?
+
+As it happens, Java has a trick up its sleeve for just this occasion: using the super() method which acts like the parent constructor inside the child class constructor:
+```
+class Triangle extends Shape {
+
+  Triangle() {
+    super(3);
+  }
+
+  // additional Triangle class members
+
+}
+```
+By passing 3 to super(), we are making it possible to instantiate a Triangle without passing in a value for numSides.
+
+Meanwhile, super(3) (behaving as Shape(3)) will shoulder the responsibility of setting numSides to 3 for our Triangle object. It’s like we called Shape(3).
+
+It is also possible to write a constructor without making a call to any super() constructor:
+```
+class Triangle extends Shape {
+
+  Triangle() {
+    this.numSides = 3;
+  }
+
+  // additional Triangle class methods
+
+}
+```
+In this situation, Java secretly calls the parent class’ no-argument constructor (super()). So in this specific example, the Triangle() constructor first calls the Shape() constructor. That Shape() takes care of whatever business it needs to take care of. And then after that is complete, we go in and set this.numSides to 3.
+
+If you’re writing a constructor of a child class, and don’t explicitly make a call to a constructor from a parent class using super, it’s important to remember that Java will automatically (and secretly) call super() as the first line of your child class constructor.
+
 ## Method Overriding
 One common use of polymorphism with Java is something we mentioned earlier — overriding parent class methods in a child class. Like the + operator, we can give a single method slightly different meanings for different classes. This is useful when we want our child class method to have the same name as a parent class method but behave a bit differently in some way.
 
