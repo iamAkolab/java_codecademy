@@ -13,6 +13,10 @@ class Noodle {
     this.ingredients = ingr;
       
   }
+
+  public boolean isTasty() {
+    return true;
+  }
     
   public void cook() {
     this.texture = "cooked";
