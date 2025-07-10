@@ -82,3 +82,123 @@ public class RunnableTask implements Runnable {
   }
 }
 ```
+
+## The Fork-Join Framework
+A similar interface to the executor service was added in Java 7 that included functionality to split a task into smaller subtasks and re-enqueue them into the thread pool. This is particularly useful for more intensive tasks and actually implements parallelism to do it (we’ll touch on this more in the next exercise).
+
+This new interface is part of a Fork-Join framework and is called ForkJoinPool, which distributes a task across several worker threads and waits for a result.
+
+Another big difference is the type of task object we’ll be passing to this pool. Instead of implementing the Runnable class, we’ll actually be extending either RecursiveAction or RecursiveTask depending on the implementation we want.
+
+Here is the difference between the two:
+
+RecursiveAction: does not return any result
+RecursiveTask: returns a result
+As the namesake suggests, the Fork-Join framework utilizes recursion to perform its subtask splitting, which we’ll limit by defining a set number of threads. This controls how many times the task is allowed to split itself since each subtask will be assigned to an individual thread.
+
+Additionally, instead of calling execute() as we did before to add new tasks to the thread pool 
+queue, we’ll be calling invoke(). Since we’re splitting a singular task across the worker threads, we only have to call invoke() once, which means we can invoke the task in the same place we create the pool itself:
+```
+private static final int N = 4;
+ForkJoinExecutor pool = new ForkJoinPool(N);
+pool.invoke(task);
+```
+
+--- Main
+```
+import java.math.BigInteger;
+import java.time.Clock;
+import java.util.concurrent.ForkJoinPool;
+
+public class Main {
+  public static void main(String[] args) {
+    Clock clock = Clock.systemDefaultZone();
+    long start, stop;
+    MakeBigIntArray test = new MakeBigIntArray(5000);
+    
+    // Check the number of available processors
+    int nThreads = Runtime.getRuntime().availableProcessors();
+    System.out.println(nThreads);
+    
+    RecursiveFactorial rSum = new RecursiveFactorial(test.getList());
+    ForkJoinPool pool = new ForkJoinPool(nThreads);
+    
+    start = clock.millis();
+    pool.invoke(rSum);
+    stop = clock.millis();
+    
+    BigInteger result = rSum.result;
+    System.out.println("Time in ms: " + (stop - start));
+    System.out.println("Pooled Result: " + result);
+    
+    BigInteger sum = new BigInteger("1");
+    start = clock.millis();
+    for (int i = 0; i < test.getList().length; i++) {
+        sum = sum.multiply(test.getList()[i]);
+    }
+    stop = clock.millis();
+    System.out.println("Time in ms: " + (stop - start));
+    System.out.println("Serial Result: " + sum);
+  }
+}
+```
+
+--- MakeBigIntArray
+```
+import java.math.BigInteger;
+
+public class MakeBigIntArray {
+  private final BigInteger[] list;
+
+  public MakeBigIntArray(int bounds) {
+    list = new BigInteger[bounds];
+    for (int i = 0; i < bounds; i++) { 
+      list[i] = new BigInteger("" + (i + 1));
+    }
+  }
+
+  public BigInteger[] getList() {
+      return list;
+  }
+}
+```
+
+--- RecursiveFactorial
+```
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.concurrent.RecursiveAction;
+
+public class RecursiveFactorial extends RecursiveAction {
+  private BigInteger[] list;
+  public BigInteger result;
+
+  public RecursiveFactorial(BigInteger[] array) {
+      this.list = array;
+  }
+
+  @Override
+  protected void compute() {
+      if (list.length == 1) {
+          result = list[0];
+      } else {
+          int midpoint = list.length / 2;
+          BigInteger[] l1 = Arrays.copyOfRange(list, 0, midpoint);
+          BigInteger[] l2 = Arrays.copyOfRange(list, midpoint, list.length);
+          RecursiveFactorial rf1 = new RecursiveFactorial(l1);
+          RecursiveFactorial rf2 = new RecursiveFactorial(l2);
+          
+          // Fork s1 and s2
+          rf1.fork();
+          rf2.fork();
+          
+          // Join s1 and s2 and wait for them to finish
+          rf1.join();
+          rf2.join();
+          
+          // Compute the combined result
+          result = rf1.result.multiply(rf2.result);
+      }
+  }
+}
+```
