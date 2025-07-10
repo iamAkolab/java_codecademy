@@ -62,7 +62,7 @@ There are two ways to do this:
 * Application starts multiple threads which are then executed on multiple CPUs
 * Application both works on multiple tasks concurrently and also breaks each task down into subtasks for parallel execution. However, some of the benefits unique to each case may be lost in this scenario.
 
-### Conclusion
+## Conclusion
 Humans can’t multitask. We’ve proven this by discussing the differences between concurrent and parallel programming, and we’ve seen that we’re just really good at switching tasks very quickly.
 
 However, applying what we’ve learned about parallelism, we can extrapolate that two humans can simultaneously work on the same task and operate in parallel. An easy example of this can be found in any typical group project.
