@@ -233,3 +233,106 @@ public class Parallelism {
   }
 }
 ```
+
+
+## Java Streams
+To explain what parallel streams are, we need to first talk about what exactly a Java Stream is. Java Streams were introduced in Java 8, and are used to process a collection of objects which can be pipelined to produce a desired result.
+
+A stream itself is not a data structure, it instead takes its input from 
+collections, array, or other I/O channels. Additionally, streams don’t change the original data structure and only return results based on pipelined methods.
+
+In a stream, intermediate operations are lazily executed and return results in the form of additional streams, which allow for the pipelining of those results. Terminal operations mark the end of the stream and return the final result.
+
+An operation is lazy if its value is evaluated only when it is required. The reason why it does this is to save the processing of actual stream contents until the terminal operation commences. This enables the Java
+compiler and runtime to optimize how they process streams.
+
+Let’s go over some different types of operations.
+
+Intermediate Operations:
+
+
+* map : returns a stream consisting of the results after applying a given function to the elements of this stream
+```
+List numbers = Arrays.asList(1,2,3,4);
+List square = numbers.stream().map(x->x*x).collect(Collectors.toList());
+```
+
+* filter: selects elements as per a Predicate passed as an argument
+```
+List names = Arrays.asList(“Alpha”,”Beta”,”Omega”);
+List find = names.stream().filter(s->s.startsWith(“O”)).collect(Collectors.toList());
+```
+
+* sorted: sorts the stream
+```
+List names = Arrays.asList(“Omega”,”Alpha”,”Beta”);
+List sorted = names.stream().sorted().collect(Collectors.toList());
+```
+
+
+Terminal Operations:
+
+* collect: returns the result of the intermediate operations performed on the stream
+```
+List numbers = Arrays.asList(1,2,3,4,2);
+Set squareSet = numbers.stream().map(x->x*x).collect(Collectors.toSet());
+```
+
+* forEach: iterates through every element of the stream
+```
+List numbers = Arrays.asList(1,2,3,4);
+numbers.stream().map(x->x*x).forEach(y->System.out.println(y));
+```
+
+* reduce: reduces the elements of a stream to a single value (this takes a BinaryOperator as a parameter)
+```
+List numbers = Arrays.asList(1,2,3,4);
+int even = numbers.stream().filter(x->x%2==0).reduce(0,(ans,i)->ans+i);
+```
+
+In the above example, ans is a variable that is assigned the value 0 initially, then i is added to it.
+
+Remember, everything a stream does has no effect on the original value of the object initially passed to it.
+
+--- Main
+```
+import java.util.*;
+import java.util.stream.*;
+  
+public class Main {
+  public static void main(String args[]) {  
+    // Create a list of integers
+    List<Integer> number = Arrays.asList(1,2,3,4);
+  
+    // Demonstration of map method
+    List<Integer> square = number.stream().map(x -> x*x).collect(Collectors.toList());
+    System.out.println("Squares: " + square);
+  
+    // Create a list of String
+    List<String> names = Arrays.asList("Omega","Alpha","Beta");
+  
+    // Demonstration of filter method
+    List<String> find = names.stream().filter(s->s.startsWith("O")).collect(Collectors.toList());
+    System.out.println("Name starts with O: " + find);
+  
+    // Demonstration of sorted method
+    List<String> sorted = names.stream().sorted().collect(Collectors.toList());
+    System.out.println("Sorted names: " + sorted);
+  
+    // create a list of integers
+    List<Integer> numbers = Arrays.asList(1,2,3,4,1,2);
+  
+    // Collect method returns a set
+    Set<Integer> squareSet = numbers.stream().map(x->x*x).collect(Collectors.toSet());
+    System.out.println("Square set: " + squareSet);
+  
+    // Demonstration of forEach method
+    number.stream().map(x->x*x).forEach(y->System.out.println("  intermediate square: " + y));
+  
+    // Demonstration of reduce method
+    int even = number.stream().filter(x->x%2==0).reduce(0,(ans,i)-> ans+i);
+  
+    System.out.println("Reduce evens: " + even);
+  }
+}
+```
