@@ -17,6 +17,7 @@ Well, technically… no. Every claim made above is actually a misrepresentation 
 But to explain why this is, we need to talk about concurrent and parallel programming. Or more specifically, we need to discuss the differences between concurrency and parallelism.
 
 # Concurrent Programming
+![concurrent](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/parallel-and-concurrent-programming/concurrent%20programming.jpg)
 Concurrency is the act of processing more than one task at seemingly the same time on the same CPU, requiring the ability to switch between tasks. This means the actual processing of these tasks can’t happen at exactly the same time, only seemingly.
 
 This is what humans do. Humans can’t multitask, we’re just really good at switching tasks so fast and effortlessly that we appear to be processing more than one task simultaneously. This is concurrency, but not parallelism.
