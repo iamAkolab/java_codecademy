@@ -18,18 +18,25 @@ But to explain why this is, we need to talk about concurrent and parallel progra
 
 # Concurrent Programming
 ![concurrent](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/parallel-and-concurrent-programming/concurrent%20programming.jpg)
+
 Concurrency is the act of processing more than one task at seemingly the same time on the same CPU, requiring the ability to switch between tasks. This means the actual processing of these tasks can’t happen at exactly the same time, only seemingly.
 
 This is what humans do. Humans can’t multitask, we’re just really good at switching tasks so fast and effortlessly that we appear to be processing more than one task simultaneously. This is concurrency, but not parallelism.
 
 # Parallel Programming
+![paralle](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/parallel-and-concurrent-programming/parallel%20programming.jpg)
+
 Parallelism is the act of splitting tasks into smaller subtasks and processing those subtasks in parallel, for instance across multiple CPUs at the exact same time. True parallelism happens when each thread processing a designated subtask runs on a separate CPU / CPU core / GPU core.
 
 An important distinction to note as well is the difference between parallel execution and parallelism.
 
+![parallel2](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/parallel-and-concurrent-programming/parallel%20programming%202.jpg)
+
 Parallel execution is the act of processing more than one task simultaneously across more than one CPU, but with the distinction that the tasks being processed stay on their designated CPU and never leave it.
 
 This means that a program can perform concurrent parallel execution, but not implement parallelism.
+
+![parallel3](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/parallel-and-concurrent-programming/parallel%20programming%203.jpg)
 
 To do this, multiple CPUs are used and each CPU is processing more than one task, but each individual task remains and eventually fully processes on the CPU that started it.
 
