@@ -16,14 +16,14 @@ Well, technically… no. Every claim made above is actually a misrepresentation 
 
 But to explain why this is, we need to talk about concurrent and parallel programming. Or more specifically, we need to discuss the differences between concurrency and parallelism.
 
-# Concurrent Programming
+## Concurrent Programming
 ![concurrent](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/parallel-and-concurrent-programming/concurrent%20programming.jpg)
 
 Concurrency is the act of processing more than one task at seemingly the same time on the same CPU, requiring the ability to switch between tasks. This means the actual processing of these tasks can’t happen at exactly the same time, only seemingly.
 
 This is what humans do. Humans can’t multitask, we’re just really good at switching tasks so fast and effortlessly that we appear to be processing more than one task simultaneously. This is concurrency, but not parallelism.
 
-# Parallel Programming
+## Parallel Programming
 ![paralle](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/parallel-and-concurrent-programming/parallel%20programming.jpg)
 
 Parallelism is the act of splitting tasks into smaller subtasks and processing those subtasks in parallel, for instance across multiple CPUs at the exact same time. True parallelism happens when each thread processing a designated subtask runs on a separate CPU / CPU core / GPU core.
@@ -45,24 +45,24 @@ An easy-to-remember distinction between concurrency and parallelism looks like t
 Or in other words, concurrency is about “structure” and parallelism is about “execution.”
 
 ## Concurrency and Parallelism Combos:
-Concurrency without Parallelism
+### Concurrency without Parallelism
 More than one task is processed at seemingly the same time (concurrently), but in actuality, the application is switching between making progress on each task until the tasks are done.
 
 There is no true parallel execution in parallel threads or CPUs.
 
-## Parallelism without Concurrency
+### Parallelism without Concurrency
 Only one task is worked on at a time, but that task is broken down into subtasks that are processed in parallel. This only works if each task, and its subtasks, completes before the next task is split and executed in parallel.
 
 Neither Concurrent nor Parallel
 Only one task is worked on at a time, and the task is never broken down into subtasks for parallel execution.
 
-## Concurrent and Parallel
+### Concurrent and Parallel
 There are two ways to do this:
 
 * Application starts multiple threads which are then executed on multiple CPUs
 * Application both works on multiple tasks concurrently and also breaks each task down into subtasks for parallel execution. However, some of the benefits unique to each case may be lost in this scenario.
 
-## Conclusion
+### Conclusion
 Humans can’t multitask. We’ve proven this by discussing the differences between concurrent and parallel programming, and we’ve seen that we’re just really good at switching tasks very quickly.
 
 However, applying what we’ve learned about parallelism, we can extrapolate that two humans can simultaneously work on the same task and operate in parallel. An easy example of this can be found in any typical group project.
