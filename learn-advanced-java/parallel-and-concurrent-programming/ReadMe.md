@@ -404,3 +404,28 @@ welcome
 to
 Codecademy!
 ```
+
+## Review
+Congratulations! You completed the lesson on parallel and concurrent programming! 🙌
+
+Key concepts covered in this lesson:
+
+* What Concurrency and Parallelism are and what their differences are
+* Thread pools and how they work
+* The Executor framework and how it uses thread pooling
+* The Fork-Join framework and how it uses ForkJoinPool and ForkJoinExecutor
+* How to implement true parallelism through the use of Fork-Join and Parallel Streams
+* What Streams are and how they can be used in Parallel Streams
+
+--- Review
+```
+import java.util.*;
+import java.util.stream.*;
+  
+public class Review {
+  public static void main(String args[]) {
+    List<String> welcome = Arrays.asList("You","did","it!");
+    welcome.stream().forEach(y->System.out.println(y));
+  }
+}
+```
