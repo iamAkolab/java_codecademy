@@ -202,3 +202,34 @@ public class RecursiveFactorial extends RecursiveAction {
   }
 }
 ```
+
+## Parallelism
+So far, we’ve seen that parallelism is hard to come by. The biggest reason for this is the innate issue of making something “thread-safe.” If something is thread-safe, then multiple threads can interact with it without causing problems.
+
+Unfortunately, a big problem exists when trying to enforce this concept of thread-safe. 
+Collections are not thread-safe, which include Lists, Maps, and Sets.
+
+Multiple threads can’t manipulate a collection without introducing thread interference or memory consistency errors. The former occurs when one thread overwrites the results of another thread in an unpredictable way, which can cause unexpected results when reading the altered data. The latter occurs when different threads have inconsistent views of what should be the same data.
+
+And even if we introduce synchronization to make these collections thread-safe, doing so then also introduces thread contention. And thread contention directly contradicts parallelism due to it preventing threads from interacting with a resource while it’s being used by another thread.
+
+So… how did Fork-Join get around this?
+
+As you saw in the previous exercise, the Fork-Join framework was the first framework we’ve worked with so far that legitimately implements parallelism into its processing. The way it does this is through something called aggregate operations, which performs all the partitioning and combining of solutions during Java runtime.
+
+We won’t get into exactly what aggregate operations are or how they work, but just know they’re one key way to implement parallelism. Another key way, which we will get into, is something called parallel streams.
+
+Note: remember that parallelism doesn’t automatically result in faster performance than serial processing. while aggregate operations and parallel streams more easily implement parallelism, it is still the coder’s responsibility to determine if their application is even suitable for parallelism.
+
+--- Parallelism
+```
+import java.util.*;
+import java.util.stream.*;
+  
+public class Parallelism {
+  public static void main(String args[]) {
+    List<String> welcome = Arrays.asList("Welcome","to","streams!");
+    welcome.stream().forEach(y->System.out.println(y));
+  }
+}
+```
