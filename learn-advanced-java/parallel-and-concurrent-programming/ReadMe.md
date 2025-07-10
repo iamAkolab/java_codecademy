@@ -336,3 +336,28 @@ public class Main {
   }
 }
 ```
+
+## Java Parallel Streams
+Now that we know what Java Streams are and how they work, we can start to understand why they’re good for parallel processing. They ultimately don’t alter the original object passed to them, which helps with the thread-safe problem.
+
+Additionally, Java normally has one stream for processing code, which uses sequential execution and is the default when performing normal threading.
+
+Java Parallel Streams divide a running process into multiple streams that execute in parallel on separate cores, returning a combined result of all the individual outcomes. However, the order of execution is not under our control.
+
+This means we want to try to only use parallel streams when the order of execution doesn’t matter.
+
+To create a parallel stream, we need to invoke the operation Collection.parallelStream. Implementing this may look something like this:
+```
+File file = new File(filePath);
+List<String> textLines = Files.readAllLines(file.toPath());
+textLines.parallelStream().forEach(System.out::println);
+```
+
+
+Alternatively, we can also invoke the operation BaseStream.parallel. Implementing this may look something like this:
+```
+File file = new File(filePath);
+Stream<String> textLines = Files.lines(file.toPath());
+textLines.parallel().forEach(System.out::println);
+textLines.close();
+```
