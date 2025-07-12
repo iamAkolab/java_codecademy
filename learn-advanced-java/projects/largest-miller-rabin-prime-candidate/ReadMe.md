@@ -113,3 +113,10 @@ That’s enough math. Let’s get into the actual project!
 Move to the next task when you’re ready to get started!
 
 ## Separating the driver from our RecursiveAction object
+The first thing you’ll notice is that we actually have three Java classes we’re working with. We have LargestPrimeSerial.java, which you should be familiar with now, but we also have LargestPrimeForkJoin.java and RecursivePrime.java. If you remember from working with ForkJoinPools during the lesson, we’ll be using RecursivePrime.java to act as our RecursiveAction object to add to our pool.
+
+To start, we need to first separate the driver code from what we’ll want to compute within the ForkJoinPool.
+
+Copy the entirety of public static void main into LargestPrimeForkJoin.java.
+
+Note: You can either copy this part of the code from LargestPrimeSerial.java or copy the code from the hint and paste it into LargestPrimeForkJoin.java.
