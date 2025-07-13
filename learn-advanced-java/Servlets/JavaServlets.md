@@ -187,3 +187,31 @@ In order to map a URL to a servlet we:
 * Define the child tag, <url-pattern>/home</url-pattern>, which defines the servlet path this servlet will handle.
 
 Nice work defining the web.xml; we can now test our servlet.
+
+## Testing the Servlet
+Let’s get our ice-cream app ready to deploy by first compiling HomeServlet.java. Let’s open the CMD (Windows) or terminal (Linux/ OS X) and change our directory to the bin/ directory in Tomcat.
+
+An example Windows CMD or Linux/ OS X terminal command would look like this:
+```
+cd Documents\apache-tomcat-9.0.64\bin   # Windows
+cd Documents/apache-tomcat-9.0.64/bin   # Linux/ OS X
+```
+Note that your path may be different depending on where you extracted Tomcat to.
+
+In order to compile HomeServlet.java file, we’ll need to use the javac command and specify the classpath to the Tomcat servlet-api.jar and specify to place the generated .class file in the classes/ directory of WEB-INF/.
+
+Our command will look like this:
+```
+javac -cp  lib/servlet-api.jar -d webapps/icecream-app/WEB-INF/classes webapps/icecream-app/WEB-INF/src/HomeServlet.java
+```
+Let’s review what exactly is going on here:
+* javac - The java compiler command-line tool.
+* -cp lib/servlet-api.jar - The javac option to specify where the compiler can look for our imported classes (like HttpServlet).
+* -d webapps/icecream-app/WEB-INF/classes - The javac option to specify where to place the generated .class file.
+* webapps/icecream-app/WEB-INF/src/HomeServlet.java - The path to our .java file that we wish to compile.
+
+At this point, we’re ready to start Tomcat and see our web page. Let’s execute the startup.bat (Windows) or startup.sh (Linux/ OS X). Once Tomcat has started let’s go to our browser and navigate to:
+
+http://localhost:8080/icecream-app/home
+
+Note that the path to our servlet is http://localhost:8080/icecream-app/home instead of http://localhost:8080/home (this will give us a 404 not found error) because we need to specify the context path of our /home path we defined in our web.xml. The context path in this example is the name of our web application project directory, icecream-app.
