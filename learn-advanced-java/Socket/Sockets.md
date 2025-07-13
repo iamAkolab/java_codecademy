@@ -1,0 +1,15 @@
+# What are Sockets in Java?
+In this article, we are going to learn about socket programming in Java. To do this, we will:
+
+* Review client-server architecture
+* Introduce the definition of a socket
+* Go over Transmission Control Protocol (TCP) To start this journey, let’s talk about client-server architecture.
+
+## Client-server Architecture
+If you went through the servlets in Java content before this, this section will be a bit of a review. Feel free to skip to the next section if this is repetitive. Let’s start by defining some key terms:
+
+* Client - A tool (computer or software) used to request data from a server.
+* Server - A tool (computer or software) used to respond to client requests.
+* Request/Response - Communication model used by a computer to communicate over a network.
+
+When we type in a website into our browser and hit enter, our browser (or client) makes a request to the server. The server performs the necessary steps (like pulling records from a database) needed to fulfill the request and sends it back to the client in a response. This process is known as the client-server architecture.
