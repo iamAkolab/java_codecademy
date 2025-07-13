@@ -20,3 +20,5 @@ Now, where do servlets fit in this picture? Let’s get into that.
 
 ## Servlets
 A Java servlet is a Java class whose sole purpose is to receive a network request and response object (typically HTTP) and construct the necessary response. A servlet allows us to create dynamic responses (like a dynamic web page) based on a request sent by a client. Servlets make it easy for us to create web applications incorporated with all the benefits of Java, like its portability and security.
+
+![icecream](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/Servlets/Ice%20cream.jpg)
