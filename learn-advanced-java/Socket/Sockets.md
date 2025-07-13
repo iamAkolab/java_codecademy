@@ -13,3 +13,11 @@ If you went through the servlets in Java content before this, this section will 
 * Request/Response - Communication model used by a computer to communicate over a network.
 
 When we type in a website into our browser and hit enter, our browser (or client) makes a request to the server. The server performs the necessary steps (like pulling records from a database) needed to fulfill the request and sends it back to the client in a response. This process is known as the client-server architecture.
+
+![Server](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/Socket/Server.jpg)
+
+## Transmission Control Protocol
+Before diving into what sockets are, we have one more concept to go over: transport protocols for HTTP response/requests. The one used by sockets in Java is called Transmission Control Protocol (TCP)
+
+TCP is a communication protocol that enables applications to exchange messages over a network and ensure the successful delivery of exchanged data packets. Due to its reliability, TCP is the favored protocol for many types of common applications.
+![TCP](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/Socket/TCP.jpg)
