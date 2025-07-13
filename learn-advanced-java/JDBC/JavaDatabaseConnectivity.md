@@ -15,3 +15,4 @@ JDBC allows our Java program to execute both types of commands, DDL and DML, as 
 
 ## Components / Architecture
 When working inside the JDBC environment, there are five primary layers in the architecture of the program:
+![JDBC](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/JDBC/JDBC.jpg)
