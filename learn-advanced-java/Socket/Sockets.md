@@ -219,9 +219,9 @@ This program will be similar to the one you worked on in the previous article. H
 
 Here are the steps you will need to follow:
 
-* 1. Create a Socket on your client side code and a ServerSocket as well as a Socket on your server side code.
-* 2. Create BOTH a DataInputStream and DataOutputStream in both your client side code and server side code.
-* 3. Since you will have data being read and written from both sides continuously in this program, you will need something called a BufferedReader. This reads the text from a character-input stream, buffering characters to provide a clean reading of the content. You will need the following line of code:
+1. Create a Socket on your client side code and a ServerSocket as well as a Socket on your server side code.
+2. Create BOTH a DataInputStream and DataOutputStream in both your client side code and server side code.
+3. Since you will have data being read and written from both sides continuously in this program, you will need something called a BufferedReader. This reads the text from a character-input stream, buffering characters to provide a clean reading of the content. You will need the following line of code:
 ```
 BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(System.in));
 ```
