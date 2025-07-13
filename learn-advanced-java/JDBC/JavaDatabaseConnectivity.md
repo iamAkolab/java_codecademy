@@ -121,3 +121,108 @@ Steps:
 2. Establishing a connection to your database and ensuring resources are closed after use
 3. Setting up the statement manager and executing queries
 4. Operating on the ResultSet to send information to and from your front-end.
+
+# SQL for JDBC
+An article teaching foundational SQL skills necessary for integration into a Java application through the Java Database Connectivity framework.
+
+## Introduction to SQL
+When data inside an application needs to persist, that is, be available at a later time, there are a number of options that a software engineer has at their disposal:
+
+* Application data: this lives during the runtime of the application and is destroyed when the program is exited or the mobile app is closed
+* Local drives (hard drives or memory on mobile devices): great for maintaining authentication and other small, unchanging data
+* Cloud/Web storage: great for data that is updated from multiple sources and large data amounts.
+
+Of the latter two options, the most common type of storage is a relational database. You can picture these databases as a collection of related spreadsheets, called tables, with multiple columns and rows in each table representing the data that we store and use inside our applications.
+
+These databases don’t understand the Java programming language that we have been using so far, instead, they communicate using the Structured Query Language, or SQL. SQL is a small and relatively simple language used to both create the database structures, called data definition, and to add, edit, and delete the data inside the database, called data manipulation.
+
+The question now becomes how do we connect our Java application to these databases? The answer is, of course, the Java Database Connectivity (JDBC) library, a collection of classes that provide the framework necessary to connect and communicate across both languages. While this article is not meant to be in itself a complete SQL tutorial, the objective is to be able to understand enough of the language mechanics to use SQL inside your Java applications at a foundational level.
+
+## Data Definition (Creating the Structure)
+SQL is divided into two basic subcategories, Data Definition Language (DDL) and Data Manipulation Language (DML). In its DDL role, SQL is responsible for the creation and updating of the database structure itself. Through these commands, databases can be created, tables can be established, and the data types, constraints, and relations of individual columns and rows can be defined.
+
+One of the most important decisions, as you’re defining the database, is establishing the data types of the columns. These ideally are matched to the objects of your application, that is if you have a Chair object in your program such as below, the columns of your table should align with the data types of your object.
+```
+public class Chair {
+  int id;
+  String name;
+  String color;
+  double weight;
+  int quantity;
+}
+```
+SQL data types can vary by vendor, and we’ll use SQLite as our standard vendor throughout since it is open source and free to all. Let’s take a look at the data types available in SQLite:
+
+* NULL
+* INTEGER, similar to an int
+* REAL, similar to a float or double
+* TEXT, similar to a String
+* BLOB, a blob of data, stored exactly as it was inputted and can be binary.
+Note: It is common convention to use all capital letters for names in SQL.
+
+It is when you create a table in SQL that you must decide the data types of your columns. The syntax to create a table that matches our Chair object is as follows:
+```
+CREATE TABLE CHAIRS (
+    CHAIR_ID INTEGER PRIMARY KEY,
+    CHAIR_NAME STRING NOT NULL,
+    CHAIR_COLOR STRING,
+    CHAIR_WEIGHT REAL NOT NULL,
+    CHAIR_QTY INTEGER NOT NULL
+);
+```
+The first clause, CREATE TABLE lets the database know what we want to do. We then give the table a name, CHAIRS, because that is what the table will store. Inside the parentheses of the clause, we now list all the columns, their data types, and any constraints we want for them, each column being comma separated. Constraints are simply added parameters we want our table and columns to conform to, the most common constraint is PRIMARY KEY which is used to identify a table row by a unique combination of column data. Another common constraint is NOT NULL, which requires that something is stored into the column when it is created or manipulated.
+
+## Data Manipulation (Querying or Modifying the Data)
+After we’ve built the framework of our database, we need to fill it with our data and have it return actionable results. This is where the Data Manipulation Language portion of SQL comes into play. DDL uses a series of commands to query (return information from) data from or modify the data inside our database. We’ll focus on the four fundamental actions: inserting, updating, deleting, and retrieving information, along with how to sort and filter our results.
+
+### The INSERT Statement
+Inserting data into a database is done with the INSERT INTO command. The following statement inserts a chair into the CHAIRS table:
+```
+INSERT INTO CHAIRS (CHAIR_ID, CHAIR_NAME, CHAIR_COLOR, CHAIR_WEIGHT, CHAIR_QTY)
+VALUES 
+    (10001, "Camp Chair", "Blue", 3.7, 4);
+```
+The first thing we tell the database after the INSERT INTO is which table we are entering data into, in this case, CHAIRS. We then open a set of parentheses that tell the database which columns we are entering data into, in our case we list all the columns. Following the column list we use another SQL keyword, VALUES, which tells the database that the following list of information is the values that will be stored in the columns.
+
+### The UPDATE Statement
+As the name suggests, an UPDATE statement is used to update specific rows in a table. The two primary actions are to tell the database what table we will be looking in and what column we will be updating. Additionally, we can add criteria to the statement so we only update very specific rows based on the criteria. If we wanted to update all the chairs in the CHAIRS table to have a zero quantity, we could write the statement like this:
+```
+UPDATE CHAIRS
+    SET CHAIR_QTY = 0;
+```
+If we want to update the color of our blue camp chair to red, we have to add a conditional that searches the table and returns only our specified chair to the update. We do this through the use of the WHERE keyword, and it works by updating all the entries WHERE the entered condition is true:
+```
+UPDATE CHAIRS
+    SET CHAIR_COLOR = "RED"
+    WHERE CHAIR_ID = 10001;
+```
+
+### The DELETE Statement
+The DELETE statement works very similarly to the UPDATE statement as far as syntax, but removes data from a table based on the WHERE criteria instead of updating it.
+```
+DELETE FROM CHAIRS
+    WHERE CHAIR_ID = 10001;
+```
+
+### The SELECT Statement
+The SELECT statement is used to return data back from a database and is the standard query used to view data. In a SELECT statement you specify what columns you want to retrieve and from what tables. The results are returned in the form of a temporary table that can be used by, in our case, the Java application. If we wanted to view all the chairs in the CHAIRS table, we could write the following statement:
+```
+SELECT 
+    CHAIR_ID, CHAIR_NAME, CHAIR_COLOR, CHAIR_WEIGHT, CHAIR_QTY
+FROM
+    CHAIRS;
+```
+Lucky for us, there is a shortcut, the * symbol, that we can use when we want to grab all the columns from a given table. The following command returns the same results as the statement from above:
+```
+SELECT * FROM CHAIRS;
+```
+## Java Database Connectivity (JDBC)
+Now that we have a basic understanding of Structured Query Language, it’s time to see how this functionality integrates into our Java applications. As mentioned above, Oracle provides us with the JDBC, a library that bridges the two languages and allows us to share data and logic between the two structures: the application and the database. As you’ll learn in the accompanying lesson, there are several classes inside the JDBC library that work together to connect, read, and write. The ones we’ll work with are:
+
+* DriverManager, provides the methods to establish the database Connection object
+* Connection, manages the connection and creates Statement objects
+* Statement, executes the DDL and DML statements on the database
+* ResultSet, a Java object that represents the results of a query
+* SQLExeception, provides error handling when interacting with the database
+
+As the classes of the JDBC API combine with your application logic and the third-party database drivers provided by the database vendor, a fully functioning program with back-end data persistence emerges! Congratulations!
