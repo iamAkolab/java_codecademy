@@ -388,6 +388,7 @@ Let’s start our Tomcat by executing startup.bat (Windows) or startup.sh (Unix)
 
 We should see the browser load a web page stating what type of ice cream our user has ordered.
 
+
 ## Redirecting Request and Sending Responses
 Now that we know how to build dynamic responses with client request data, we need to be able to handle cases when we want to redirect a client to a static HTML page on our server or respond with an error message. HttpServletResponse objects make this easy for us by providing the methods sendRedirect() and sendError().
 
@@ -456,3 +457,42 @@ In the example we:
 * Call setAttribute() to update or create the attribute in the session where the first argument is the name of the attribute and the second argument is the value to associate with that name. Note that the second argument can be any Java Object.
 
 With HttpSession we’ve managed to introduce “memory” in our servlets to recognize clients and store client-specific information about them.
+
+# Servlets Review
+## Introduction
+In this article, we will review servlet concepts and see how we can expand on what we’ve learned.
+
+## Servlet Architecture Review
+Let’s start by reviewing the servlet architecture and how it fits in the client-server architecture model.
+
+Recall that the client-server architecture model is a communication model where a client makes a request to a server, and the server generates some response. A servlet lives inside the server component of this architecture.
+
+A servlet is a Java class that provides methods to process requests and generate responses and lives within the servlet container. The servlet container is an abstraction layer between the server and servlet that manages the servlet’s lifecycle and its communication to the server.
+
+Let’s now review how to actually create a servlet.
+
+## Creating Servlets
+Java makes creating servlets easy by providing pre-defined classes for us to extend, such as HttpServlet. By extending these classes, we can finalize our servlets by implementing certain methods like doGet(), doPost(), etc.
+
+In order to deploy (“run”) our servlets, we’ll need a server and servlet container. We can use tools like Tomcat, which provides a server and a container that make it easy to deploy our servlets.
+
+Using servlets allow us to leverage the power and ease of use of Java to process client request and generate responses which made the shift away from older technologies like the Common Gateway Interface (CGI) compelling.
+
+Let’s review how we can process request data and provide responses.
+
+## Processing Request and Generating Responses
+When working with HttpServlets we receive HttpServletRequest and HttpServletResponse objects which we can use to process client request data and generate responses respectively.
+
+HttpServletRequest provides an inherited method called getParameter(String name) which allows us to retrieve client data with a specific name (useful when processing client form data).
+
+HttpServletResponse provides an inherited method called getWriter() which we can use to create dynamic HTML as a response. We also have access to sendRedirect(String location) which lets us redirect the client to location and sendError(int code, String message) which let’s send an error to the client with an HTTP status code and a message.
+
+Let’s finish by talking about sessions.
+
+## Sessions
+Servlets, specifically HttpServlet, allow us to process user requests and generate responses but also let us store information about the requester across multiple requests.
+
+Servlet requests (such as HttpServletRequest) allow us to get the requester’s HttpSession object or create it. With sessions, we can store information we’d like to keep track of over multiple calls.
+
+## Conclusion
+Great job learning about servlets and creating your first servlet project. You may take your knowledge of servlets further by learning about servlet filtering, communication between servlets, and connecting to a database.
