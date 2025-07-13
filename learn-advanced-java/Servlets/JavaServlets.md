@@ -102,3 +102,88 @@ In this article, we’ll cover how to create a Java servlet to respond to a user
 Before we begin, let’s place the provided starter project, icecream-app/, in Tomcat. Locate where you extracted the starter project and copy the icecream-app/ directory into the webapps/ directory of Tomcat.
 
 We’ll use the ice cream application project to build a simple web application with a home page for our ice cream shop and a form for our customers to order ice cream using Java servlets.
+
+## Understanding the icecream-app
+Let’s go through what the icecream-app/ directory looks like and what type of files we expect in each subdirectory. When you first open the icecream-app/ directory, you’ll notice:
+
+* WEB-INF/ directory.
+* HTML file(s).
+
+The WEB-INF/ folder contains everything needed to run our web application and consists of the following subdirectories and files:
+* src/ - Contains java source (.java) files.
+* classes/ - Contains Java bytecode (.class) files.
+* lib/ - Contains JARs needed by our web application.
+* web.xml - An XML deployment descriptor file needed by Tomcat to deploy our servlets. We can define things like servlets, URL mappings, and more.
+
+We now can get started creating our first servlet.
+
+#Creating a Servlet
+Java makes creating a servlet easy by providing the GenericServlet and HttpServlet classes which we can extend to create a custom servlet. Using a protocol-specific subclass (like HttpServlet) is recommended to create our servlets. We’ll start by creating a homepage for our ice cream web application.
+
+In our text editor, let’s create a new file called HomeServlet.java and save it in the src/ directory of our WEB-INF/ directory. We’ll need to add some imports to our file in order to work with servlets, so let’s add the following imports to the top of our file:
+```
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+```
+Now let’s define a class called HomeServlet that extends that HttpServlet class we’ve imported and a private static final serialVersionUID.
+```
+public class HomeServlet extends HttpServlet {
+  private static final long serialVersionUID = 100L;  // Used for serialization since `HttpServlet` implements `Serializable`. 
+}
+```
+We’d like our HomeServlet to serve us an HTML page when we go to our URL in our browser. Recall that our browser will make a request to the server, and the server will process the request and return a response to the client. To accomplish this, we’ll need to implement the doGet() method of HttpServlet like:
+```
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  PrintWriter out = response.getWriter();
+  out.println("<html>");
+  out.println("<head><title>My Icecream Shop!</title></head>");
+  out.println("<body>");
+  out.println("<h1>Welcome To My Ice Cream Parlor</h1>");
+  out.println("</body></html>");
+}
+```
+Note that our implementation of doGet():
+* Takes the HTTP request and response objects as parameters.
+* Throws the ServletException (servlet was not able to handle GET request) and IOException (an input or output error occurred).
+* Uses PrintWriter to create a simple HTML page with a header welcoming our visitors.
+
+Great job defining our first servlet; we can now move on to registering our servlet to a URL so our server knows which servlet to invoke to process a specific request.
+
+## Web.xml
+In order to make a servlet “visible” to our server, we’ll need to configure a URL to the servlet so that our server knows to invoke it when a request to that URL comes in. We can do this using the web.xml file provided in the WEB-INF/ directory of our icecream-app/ directory.
+
+The web.xml file is the deployment descriptor for our web application. In this file, we can register our servlet classes, define the URLs those servlets map to, and many other things. We’ll only be using the <servlet> and <servlet-mapping> tags in this tutorial.
+
+Let’s go ahead and place the following snippet in our web.xml file:
+```
+  <servlet>
+    <servlet-name>homeServlet</servlet-name>
+    <servlet-class>HomeServlet</servlet-class>
+  </servlet>
+```
+Note that to register a servlet we:
+
+* Use the <servlet>...</servlet> tag.
+* Define the child tag, <servlet-name>homeServlet</servlet-name>, which will define our reference to this servlet and can be any name.
+* Define the child tag <servlet-class>HomeServlet</servlet-class>, which will define the class this servlet definition maps to. Note that if your servlet is in a package you need specify the package path.
+
+Finally, we’ll need to tell our server which URL to invoke our HomeServlet for. Let’s do this by placing the following snippet after the <servlet></servlet> block we added previously in our web.xml file:
+```
+  <servlet-mapping>
+    <servlet-name>homeServlet</servlet-name>
+    <url-pattern>/home</url-pattern>
+  </servlet-mapping>
+```
+In order to map a URL to a servlet we:
+
+* Use the servlet-mapping>...</servlet-mapping> tag.
+* Define the child tag, <servlet-name>homeServlet</servlet-name>, which defines which servlet (using the name we defined using <servlet-name>), this URL will map to.
+* Define the child tag, <url-pattern>/home</url-pattern>, which defines the servlet path this servlet will handle.
+
+Nice work defining the web.xml; we can now test our servlet.
