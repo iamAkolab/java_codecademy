@@ -267,3 +267,192 @@ The container will:
 Once a servlet needs to be removed, for example when we shut down our web server, it takes care of shutting down the servlet by calling its destroy() method.
 
 One final important note about a servlet’s init() and destroy() methods is that they can be overridden to implement custom initialization and destruction like setting up a database connection or removing a database connection respectively.
+
+# Processing Requests and Building Responses
+## Introduction
+In this article, we’ll learn how to process client HTTP requests and build HTTP responses to process an ice cream order in our ice cream application. We’ll learn how to:
+
+* Create a link to one of our servlets.
+* Respond with an HTML page.
+* Read form inputs using the HTTPRequest object.
+* Build dynamic responses.
+
+We’ll continue using our icecream-app for this article and working with our HomeServlet and an order form that has been provided. Let’s take a look at the form.html provided.
+
+## Ice Cream Order Form
+Let’s navigate to the icecream-app/ directory and open form.html in our text editor. form.html is an HTML page that we’ll use to display a form users can use to select various options for their ice cream order.
+
+Notice this line in the HTML:
+<form id="orderForm" name="orderForm" method="post" action="/icecream-app/home">
+
+We specify:
+
+* method="post" to direct the form to make an HTTP post request.
+* action="/icecream-app/home" to direct the form data to our HomeServlet using the /home path. The post request to /home would currently fail because we have not implemented our doPost() method in HomeServlet (we’ll do this later).
+
+One final important thing to highlight is that the WEB-INF/ directory is not publicly accessible to the client, which means that any files inside can only be accessed by the servlet. Files outside of the WEB-INF/ can be accessed by the client directly. Notice that form.html is outside of the WEB-INF/ and we do this because form.html is a static HTML file, doesn’t contain any sensitive information, and makes it slightly easier for our servlet to link to.
+
+Let’s link our ice cream order form to our ice cream application.
+
+## Linking a Form
+We’d like for our customers to be able to order ice cream from a link on our home page. We’ll need to add a few more things to our HomeServlet.
+
+Let’s open the file HomeServlet.java from our WEB-INF/src/ directory in our text editor. In our doGet() method we’d like to add a link to the form.html file provided in the icecream-app/ directory. Our doGet() should look like this:
+```
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  PrintWriter out = response.getWriter();
+  out.println("<html>");
+  out.println("<head><title>My Icecream Shop!</title></head>");
+  out.println("<body>");
+  out.println("<h1>Welcome To My Ice Cream Parlor</h1>");
+  out.println("<a href='/icecream-app/form.html'>Place An Order!</a>"); // link to form
+  out.println("</body></html>");
+}
+```
+We can now compile our servlet using the javac command (this command assumes our directory is at our Tomcat root folder) like:
+```
+javac -cp  lib/servlet-api.jar -d webapps/icecream-app/WEB-INF/classes webapps/icecream-app/WEB-INF/src/HomeServlet.java
+```
+Let’s start our Tomcat by executing startup.bat (Windows) or startup.sh (Unix). We should see the following page when we navigate to http://localhost:8080/icecream-app/home:
+When we click the link we should be taken to http://localhost:8080/icecream-app/form.html and see:
+
+Recall that clicking on order will give you an error page (we’ll fix this later) with a 405 status code because our servlet has not implemented the doPost() method.
+
+Before implementing our doPost() we’ll need a better understanding of the various HTTP methods. Let’s get into that.
+
+## HTTP Methods
+Hypertext Transfer Protocol (or HTTP) is a communication method that, at its core, is transferring data over the internet in a client-server model. HTTP provides methods for manipulating data on the server in different ways. Some of the most used methods are:
+
+* GET - Used to retrieve resources/data from the server.
+* POST - Used to create resources on the server.
+* PUT - Used to update a resource on the server.
+* DELETE - Used to specify a resource on a server to delete.
+
+HTTP methods typically respond with or without data and a status code. Some of the most used status codes are:
+
+* 200 - Successful request.
+* 201 - Successful request, and a resource was created.
+* 400 - Bad request; the client sent a request that has some error.
+* 401 - Unauthorized; the client has not been authenticated.
+* 403 - Forbidden; the client does not have the correct access rights.
+* 404 - Not found; the client cannot find the requested resource.
+* 500 - Internal server error because there was an error on the server side that could not be handled.
+
+Great job learning about HTTP methods; we can now implement our doPost() method to process an ice cream order!
+
+## Request Parameters and Dynamic Responses
+Let’s implement doPost() in HomeServlet to process an ice cream order sent by our users and provide a unique response based on their selections.
+
+In your text editor, open HomeServlet.java and under our doGet() method let’s define the doPost() method like:
+```
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+}
+```
+A neat thing about an HTML form is that when the order button is clicked, the browser automatically sends a POST request with the form data by placing it in the body of the request. The body of a request is a place for the client to place data to send to the server, to which the server has access.
+
+In our doPost() method, we can make use of the getParameter() method provided by the HTTPServletRequest object to access the form data. In form.html, our input fields make use of the name attribute for example:
+```
+<input type="radio" id="cup" name="cupOrCone" value="cup">
+```
+We can use name as an argument to getParameter() to retrieve the associated value like:
+```
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  String cupOrCone = request.getParameter("cupOrCone");
+  String size = request.getParameter("size");
+  String flavor = request.getParameter("flavor");
+}
+```
+We now have the field values that the client chose on the form in the String variables cupOrCone, size, and flavor. At this point, we can do any type of processing we need to do like validate the form fields or do some database operation. For this tutorial, we’ll simply return a unique response back to the user based on their selection.
+
+Let’s use PrintWriter to create a response to our user with details about their order like:
+```
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException {
+  String cupOrCone = request.getParameter("cupOrCone");
+  String size = request.getParameter("size");
+  String flavor = request.getParameter("flavor");
+        
+  PrintWriter out = response.getWriter();   // Get the response PrintWriter
+  out.println("<html>");
+  out.println("<head><title>My Icecream Shop!</title></head>");
+  out.println("<body>");
+  out.println(String.format("<h1>Here is your %s %s ice cream in a %s. Enjoy!</h1>", size, flavor, cupOrCone));
+  out.println("</body></html>");
+}
+```
+We can now compile our servlet using the javac command (this command assumes we are in the root Tomcat directory) as follows:
+```
+javac -cp  lib/servlet-api.jar -d webapps/icecream-app/WEB-INF/classes webapps/icecream-app/WEB-INF/src/HomeServlet.java 
+```
+
+Let’s start our Tomcat by executing startup.bat (Windows) or startup.sh (Unix). We should see the following page when we navigate to http://localhost:8080/icecream-app/home:
+
+We should see the browser load a web page stating what type of ice cream our user has ordered.
+
+## Redirecting Request and Sending Responses
+Now that we know how to build dynamic responses with client request data, we need to be able to handle cases when we want to redirect a client to a static HTML page on our server or respond with an error message. HttpServletResponse objects make this easy for us by providing the methods sendRedirect() and sendError().
+
+When our client sends a request and we notice that we’d like to redirect them to a static page on our server or even to a different website altogether (like https://www.google.com). We can redirect to a different site like:
+```
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  response.sendRedirect("https://wwww.google.com"); 
+  return; 
+}
+```
+
+We can also redirect to a static page on our server (this HTML page should be in the root project directory) like:
+```
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  response.sendRedirect("/icecream-app/example.html"); 
+  return; 
+}
+```
+We can also tell our users that an error occurred on the server side or they provided a bad request using sendError() like:
+```
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  response.sendError(HttpServletResponse.SC_BAD_REQUEST, "There was an error in your request.");
+  return; 
+}
+```
+
+In the example above we:
+
+* Used sendError() to respond with an error to a client request.
+* In the first argument used HttpServletResponse constant field value, SC_BAD_REQUEST, which represents HTTP status code 400 (note there are constants for other codes as well).
+* In the second argument we passed an error message that we’d like to display to our client.
+Great job learning about client redirects and error responses.
+
+## Request Sessions
+We’ve done a good job at reading data from client requests and generating dynamic responses but what if we’d like to display the customer’s previous order and their current order? To accomplish this we’d need to be able to recognize the client making the call and storing their information. We can do both things by using sessions.
+
+Sessions refer to data that is stored between calls from a specific client. Sessions allow our server to recognize who is making a request and allow us to store information specific to that client. We can make use of sessions by getting them from the HttpServletRequest object provided to our servlets like:
+```
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException {
+  HttpSession session = request.getSession(true);
+}
+```
+In the example, we call getSession(true) from request, which returns the session associated with the client or creates one if it doesn’t exist yet when we provide true as an argument. If we provided false the method would return an HttpSession if it already exists (it won’t create one if it doesn’t) or return null if one doesn’t exist.
+
+Now that we have a session associated with a client we can store and read information for the client in the session by using HttpSession methods setAttribute() and getAttribute() in our icecream example like:
+```
+public void doPost(HttpServletRequest request, HttpServletResponse response) throws  ServletException, IOException {
+  String cupOrCone = request.getParameter("cupOrCone");
+  String size = request.getParameter("size");
+  String flavor = request.getParameter("flavor");
+  HttpSession session = request.getSession(true);  // Get or create session object
+
+  String prevSize = session.getAttribute("size");  // Get previously saved size value
+  String prevFlavor = session.getAttribute("flavor");  // Get previously saved flavor value
+  String prevCupOrCone = session.getAttribute("cupOrCone");  // Get previously saved cupOrCone value
+
+  session.setAttribute("size", size);  // Update size option
+  session.setAttribute("flavor", flavor);  // Update flavor option
+  session.setAttribute("cupOrCone", cupOrCone);  // Update cupOrCone option
+}
+```
+In the example we:
+
+* Call getSession(true) to get or create a session for this client.
+* Call getAttribute() to retrieve the previously selected ice cream options for this client by passing in the name of the attribute. Note that this method returns null if no value is associated with the attribute name provided.
+* Call setAttribute() to update or create the attribute in the session where the first argument is the name of the attribute and the second argument is the value to associate with that name. Note that the second argument can be any Java Object.
+
+With HttpSession we’ve managed to introduce “memory” in our servlets to recognize clients and store client-specific information about them.
