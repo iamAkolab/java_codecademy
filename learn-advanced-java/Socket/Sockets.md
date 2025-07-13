@@ -21,3 +21,11 @@ Before diving into what sockets are, we have one more concept to go over: transp
 
 TCP is a communication protocol that enables applications to exchange messages over a network and ensure the successful delivery of exchanged data packets. Due to its reliability, TCP is the favored protocol for many types of common applications.
 ![TCP](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/Socket/TCP.jpg)
+
+## Introducing Sockets
+A socket is an endpoint that essentially allows us to connect the client and server using transmission control protocol. The TCP layer can identify where the data should be sent to since a socket is tied to a specific port number. The combination of the IP address and port number is the endpoint.
+
+So, why is this important? Sockets essentially allow one computer to communicate with many different clients at once!
+
+## Conclusion
+Great job learning about what sockets in Java are and how they in the client-server architecture. As we continue with the unit we’ll learn how to build a socket program from scratch to fulfill different types of tasks and get a more in-depth look at the power behind sockets.
