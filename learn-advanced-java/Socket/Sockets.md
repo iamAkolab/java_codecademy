@@ -205,7 +205,47 @@ javac FirstClient.java
 java FirstClient
 ```
 In the first terminal you should see the following output (or unique message you setup):
+
 ```
 message= Happy Coding!
 ```
 You now have a fully functioning Java socket program! Happy coding!
+
+
+# Creating Your Own Socket in Java
+In the previous article, we walked you through creating a simple socket program in Java. Now it is time for you to take the wheel and create your very own socket program!
+
+This program will be similar to the one you worked on in the previous article. However, this one will be able to read and write from both the server and client sides.
+
+Here are the steps you will need to follow:
+
+* 1. Create a Socket on your client side code and a ServerSocket as well as a Socket on your server side code.
+* 2. Create BOTH a DataInputStream and DataOutputStream in both your client side code and server side code.
+* 3. Since you will have data being read and written from both sides continuously in this program, you will need something called a BufferedReader. This reads the text from a character-input stream, buffering characters to provide a clean reading of the content. You will need the following line of code:
+```
+BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(System.in));
+```
+1. In both the server side code and client side code, create two empty strings.
+2. Create a while in your server side code that runs until your first string equals "done" (or some other string). Within this while loop, write out the following logic:
+
+* Read the DataInputStream data using .readUTF().
+* Print the data.
+* Use your BufferedReader variable and the .readline() method on your second string. You should have the following line of code here:
+```
+string2=bufferedReader.readLine();  
+// may vary depending on variable names
+```
+* Write and flush the DataOutputStream data.
+1. Create a while in your client side code that runs until your first string equals "done" (or some other string). Within this while loop, write out the following logic:
+* Use the BufferedReader variable and the .readline() method on your first string. You should have the following line of code here:
+```
+string1=bufferedReader.readLine();  
+// may vary depending on variable names
+```
+* Write and flush the DataOutputStream data.
+* Read the DataInputStream data using .readUTF().
+* Print the data.
+
+1. On the server side code, close the DataInputStream, Socket, and ServerSocket.
+2. On the client side code, close the DataOutputStream and Socket.
+3. Test your code using two terminals!
