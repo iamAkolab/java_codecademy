@@ -71,9 +71,10 @@ Some main benefits of implementing JNI include programming to implement platform
 5. All library files that have been called in your program.
 
 Now let’s take a look at specific steps based on operating systems that will help us run applications that use JNI in the table below.
-|-|
+
 | Operating System |	Steps |
-| Windows	| 1. Compile the C++ file and create shared libraries using the following command: gcc -Wl,--kill-at -shared -IC:/JDK/include -IC:/JDK/include/win32 -IC:/dll -o C:/JNI_project/mynativelib.dll C:/JNI_project/jnitest.cpp
-2. Run your program with the following command in your terminal: java -Djava.library.path=C:JNI_project FindSum |
+| ---------------- | ----- |
+| Windows	| 1. Compile the C++ file and create shared libraries using the following command: gcc -Wl,--kill-at -shared -IC:/JDK/include -IC:/JDK/include/win32 -IC:/dll -o C:/JNI_project/mynativelib.dll C:/JNI_project/jnitest.cpp |
+| | 2. Run your program with the following command in your terminal: java -Djava.library.path=C:JNI_project FindSum |
 | Linux	| 1. Compile the C++ file and create shared libraries using the following command: gcc -I/usr/lib/jvm/java-8-oracle/include -I/usr/lib/jvm/java-8-oracle/include/linux -I/home/user1/JNI_project/ -o /home/user1/JNI_project/mynativelib.so /home/user1/JNI_project/FindSum.cpp |
-2. Run your program with the following command in your terminal: java -Djava.library.path=/home/user1/JNI_project FindSum |
+| | 2. Run your program with the following command in your terminal: java -Djava.library.path=/home/user1/JNI_project FindSum |
