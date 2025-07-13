@@ -215,3 +215,55 @@ At this point, we’re ready to start Tomcat and see our web page. Let’s execu
 http://localhost:8080/icecream-app/home
 
 Note that the path to our servlet is http://localhost:8080/icecream-app/home instead of http://localhost:8080/home (this will give us a 404 not found error) because we need to specify the context path of our /home path we defined in our web.xml. The context path in this example is the name of our web application project directory, icecream-app.
+
+# Servlet Architecture and Lifecycle
+## Introduction
+In this article, we’ll compare servlets to the Common Gateway Interface (CGI) and go more in-depth about servlet architecture. We’ll go over the following:
+
+* CGI vs Servlet architecture
+* Servet Container
+* Servlet lifecycle
+
+Let’s begin by comparing the CGI to Java servlets.
+
+## CGI vs Java Servlets
+Prior to the introduction of Java servlets, a server could respond to user requests using the CGI. Like servlets, the CGI would allow our web server to build responses to client requests at specific URLs but do it by running CGI scripts.
+![CGI)[https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/Servlets/CGI.jpg]
+
+The CGI architecture worked okay but had some major drawbacks like:
+* CGI programs were OS-dependent scripts (.bat for Windows and .sh for Linux).
+* Since client requests would require the execution of a script, a new process is created on every request.
+* More memory is needed on the server as each process needs its own memory space; this causes a scalability issue.
+* Since the CGI ran scripts on the web server, there was a high-security risk if any user input was not properly sanitized.
+
+Java servlets addressed many of the issues related to CGI in the following ways:
+* Being OS-independent as it runs on the JVM.
+* Requests are processed in new threads, which require less overhead to create than processes.
+* Less memory is needed on the webserver as threads share memory.
+* Servlets are written in Java and inherit all of the built-in security features making them more resilient to attacks.
+
+The CGI can still be used today, but it is preferred to use more modern technologies like Java servlets. We’ve learned a lot about servlets, but how does our web server know to initialize or shut down our servlets? To understand this better we’ll need to discuss the servlet container.
+
+## Servlet Container
+The servlet container is a program that runs on our web server, and its “job” is to run and manage our servlets. Using Tomcat provides not only the servlet-api.jar but also a web server and a servlet container.
+
+The servlet container keeps track of all the servlets (and other servlet-related properties) in what is known as the servlet context. A full overview of the servlet context is outside the scope of this article, but we should understand that the servlet container creates a servlet context that it uses to know what servlets are available in our application.
+![Container](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/Servlets/Container.jpg)
+
+The servlet container receives a request from the web server and does the necessary network and protocol (like HTTP) processing to make the request and response objects easily available to the servlet that should handle the request.
+
+We know how the servlet container helps simplify our servlets by creating the Java request and response objects for us but how does it manage our servlets? This is where the servlet lifecycle comes in.
+
+## Servlet Lifecycle
+Our servlets are managed through the servlet container. The management of servlets involves initialization, invocation, and destruction. The servlet API exposes methods for the container to use like init(), service(), and destroy().
+![LifeCycle](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/Servlets/LifeCycle.jpg)
+
+The container will:
+
+* Check if an instance of the requested servlet is available.
+* If an instance is not available it will load the servlet class, create an instance of it, and call init(). Note that once a servlet is initialized it stays initialized until destroyed.
+* Once an instance of a servlet is available and initialized, it will call the service() method which, in the case of an HttpServlet, takes care of calling the appropriate (GET, POST, etc) methods.
+
+Once a servlet needs to be removed, for example when we shut down our web server, it takes care of shutting down the servlet by calling its destroy() method.
+
+One final important note about a servlet’s init() and destroy() methods is that they can be overridden to implement custom initialization and destruction like setting up a database connection or removing a database connection respectively.
