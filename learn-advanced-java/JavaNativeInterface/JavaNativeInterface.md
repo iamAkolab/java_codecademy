@@ -179,3 +179,16 @@ Now let’s take a look at specific steps based on operating systems that will h
 | | 2. Run your program with the following command in your terminal: java -Djava.library.path=C:JNI_project FindSum |
 | Linux	| 1. Compile the C++ file and create shared libraries using the following command: gcc -I/usr/lib/jvm/java-8-oracle/include -I/usr/lib/jvm/java-8-oracle/include/linux -I/home/user1/JNI_project/ -o /home/user1/JNI_project/mynativelib.so /home/user1/JNI_project/FindSum.cpp |
 | | 2. Run your program with the following command in your terminal: java -Djava.library.path=/home/user1/JNI_project FindSum |
+
+![cpp](https://github.com/iamAkolab/java_codecademy/blob/main/learn-advanced-java/JavaNativeInterface/cpp%20jni.jpg)
+
+# Implementing third-party APIs
+So far we have seen how to code our own C++ functions and link them to JNI in a program. However, sometimes you may find it useful to use functions already implemented into third-party APIs. Third-party APIs are application programming interfaces that are designed by third parties (often large corporations) to add functionality to your own applications. You may find a lot of examples, particularly within mobile development such as Android development, where third-party APIs are used to add services such as location, Google services, etc. to a phone’s operating system. Third-party API integration is a great way to save time by allowing programmers to reuse methods that have already been created instead of developing their own implementation to deliver similar, if not the same, functionality.
+
+Third-party APIs can be linked to Java applications using JNI. To do that it is crucial that all third-party .dll, .jar, and .so 
+files are placed in the native directory on the computer you are running your program on. It is also important that you include the path to the third-party files in the compilation of your program. Take a look at the following example of code to run in your terminal:
+
+```
+-Djava.library.path=pathname
+```
+where pathname refers to the path leading to the folder housing the dynamic library files.
