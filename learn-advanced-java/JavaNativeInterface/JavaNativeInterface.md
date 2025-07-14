@@ -25,6 +25,22 @@ Preview: Docs Loading link description
 * Being able to access functionality that is outside the scope of the Java Standard Library.
 
 For the rest of this exercise, we will learn more about the relevance of C++ to JNI, how to implement third-party APIs using JNI, and how to implement JNI within your own environments.
+```
+-- SubtractionFun.Java
+public class SubtractionFun {
+  static {
+    System.loadLibrary("native");
+  }
+
+  private native int subtractValues(double num1, double num2);
+
+  public static void main(String[] args) {
+    double num1 = 3;
+    double num2 = 1;
+    int difference = new SubtractionFun().subtractValues(num1, num2);
+  }
+}
+```
 
 # Implementing JNI into Java
 Now that we’ve understood JNI’s purpose, let’s look at how to implement JNI into Java code.
