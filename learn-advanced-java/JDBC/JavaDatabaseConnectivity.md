@@ -270,3 +270,29 @@ INSERT INTO CUSTOMERS
   VALUES (1010, "Jack", "Delangey", "jack@mysterybusiness.com", "555-867-5309");
 ```
 We don’t want to hardcode values into our SQL expression like the example above though, we want our CustomerDaoService to contain the logic to substitute each of these values for the properties of our Customer class. The whole command will be concatenated together into a String that we can execute on our database using our Statement object.
+
+
+## Operating on a ResultSet
+Everything we’ve done so far has revolved around pushing data to our database, an important skill, but only half of the story.
+
+Let’s take a look at a very common data persistence scenario, loading a user’s previous data when an app is closed and reopened at a later 
+date.
+
+Just prior to a user exiting an app and the process is killed, the application executes a save function that pushes the user’s current state to a database.
+When the application is reopened in the future, a splash screen is shown, along with a loading bar
+During this time the application is sending a request back to the database to load that user’s saved state, moving the loading bar along as data is received.
+When the splash screen disappears it then appears to the user that the app never forgot where the user left it, when in fact all the information came from a separate database.
+Through our JDBC implementation, we can produce similar results, but we need to now learn how to retrieve information back from the database.
+
+In JDBC, the data that is sent back to the Java application from a database comes in the form of a ResultSet and is returned by a query on the database from a Statement object. This ResultSet object, just like Connection and Statement needs to be closed when finished, meaning it belongs with the other resources in our try-with-resources block.
+
+A ResultSet object is a collection of rows and columns that represent a table from the database. There is a “cursor” that points to the current row, from which we can access columns by the column’s index (which, unlike other Java data structures, begins with index 1).
+
+```
+Statement statement = connection.createStatement();
+ResultSet results = statement.executeQuery("SQL QUERY");
+```
+
+You may have noticed in the code example that we are now calling the .executeQuery() method instead of the .executeUpdate() method, the difference being that a query returns a ResultSet.
+
+Once we have injected the SQL into the database and received the result as a ResultSet, we can use regular ol’ Java code to work through the results and present them to the user.
