@@ -1,20 +1,16 @@
 package viewmodels;
 
 // Add the import statement
-
+import services.CustomerDaoService;
 import models.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BusinessLogic {
-  List<Customer> customerList;
+  static List<Customer> customerList = new ArrayList<>();
 
-  public BusinessLogic() {
-    customerList = new ArrayList<>();
-  }
-
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
 
     BusinessLogic mysteryBusiness = new BusinessLogic();
     // Do a bunch of business things for your business
@@ -23,24 +19,23 @@ public class BusinessLogic {
     mysteryBusiness.addCustomer(new Customer(1003, "Evan", "Huang", "e.huang@mysterybusiness.com", "555-555-5002"));
     mysteryBusiness.addCustomer(new Customer(1004, "Yasser", "Salter", "y.salter@mysterybusiness.com", "555-555-5003"));
     mysteryBusiness.addCustomer(new Customer(1005, "Dawson", "Rangel", "d.rangel@mysterybusiness.com", "555-555-5004"));
-
-    // Add the DAO method that tests the drivers are loaded and registered here.
-    CustomerDaoService.loadDriver();
     CustomerDaoService.resetDatabase();
-    CustomerDaoService.testDatabaseConnection();
-
-   // Make a call to .createTable() here:
     CustomerDaoService.createTable();
-
-    // Add a call to .saveCustomers() here:
     CustomerDaoService.saveCustomers(customerList);
 
-        // Add a call to .loadAllCustomers() here:
-    CustomerDaoService.loadAllCustomers();
-    
+    System.out.println("Clearing out the 'customerList' variable now that all entries have been saved to the database.");
+    Thread.sleep(1500);
+    customerList.clear();
+    System.out.println("There are currently " + customerList.size() + " elements in the 'customerList'.");
+
+    System.out.println("Loading all customers from the database back into the 'customerList':");
+    customerList = CustomerDaoService.loadAllCustomers();
+    Thread.sleep(1000);
+    customerList.forEach(System.out::println);
   }
 
   public void addCustomer(Customer customer) {
     customerList.add(customer);
   }
 }
+
