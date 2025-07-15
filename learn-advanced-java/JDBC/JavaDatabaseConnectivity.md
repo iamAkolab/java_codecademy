@@ -32,22 +32,6 @@ When working inside the JDBC environment, there are five primary layers in the a
 
 ### 5. Databases
 * These are the data storage objects used to persist data throughout your application. There are many different vendors providing data storage solutions and each has its own set of advantages and disadvantages. As a developer, it may be your job to compare databases and decide which one works best for your application.
-
-## Design Principles: MVVM
-In order to keep our project organized, we are going to spend some time refactoring it. As we start expanding the scope of our program to bring in outside resources and communicate across a variety of networks and mediums, a little organization can go a long way.
-
-Let’s assume, for this lesson’s purposes, that we are an independent developer that has been asked to create a simple Java application. It should be able to process customer data for a yet-to-be-named business and also store that customer information to permanent storage via a SQLite database.
-
-For this project, we are going to follow the MVVM, or Model-View-ViewModel, architecture. Essentially we are going to organize all of our objects (called models) into one package, our views (the user interface) into another package, and the ViewModels (the business logic that interacts with models, UI, and services) into another. We will also have a separate package for our data access 
-classes, called services, where our data access object (the class that accesses the database) lives.
-
-Let’s review our project environment:
-
-* project -top level package
-* models - holds object representations (customers)
-* views - holds user interface files (we don’t have UI yet)
-* viewmodels - holds business logic that uses models and interacts with other parts of the program such as UI and external resources
-* services - provides the viewmodels with a mode of communicating with external resources
   
 ## Establishing the JDBC Connection
 Setting up our application for JDBC can seem daunting but can easily be broken down into small, easily executable steps. Essentially we are filling in the layers from above and, because of the advances that have been made to the JDBC API, it takes a surprisingly little amount of code to bridge the gap between your program and a database. Here are the steps:
@@ -242,3 +226,19 @@ Now that we have a basic understanding of Structured Query Language, it’s time
 * SQLExeception, provides error handling when interacting with the database
 
 As the classes of the JDBC API combine with your application logic and the third-party database drivers provided by the database vendor, a fully functioning program with back-end data persistence emerges! Congratulations!
+
+## Design Principles: MVVM
+In order to keep our project organized, we are going to spend some time refactoring it. As we start expanding the scope of our program to bring in outside resources and communicate across a variety of networks and mediums, a little organization can go a long way.
+
+Let’s assume, for this lesson’s purposes, that we are an independent developer that has been asked to create a simple Java application. It should be able to process customer data for a yet-to-be-named business and also store that customer information to permanent storage via a SQLite database.
+
+For this project, we are going to follow the MVVM, or Model-View-ViewModel, architecture. Essentially we are going to organize all of our objects (called models) into one package, our views (the user interface) into another package, and the ViewModels (the business logic that interacts with models, UI, and services) into another. We will also have a separate package for our data access 
+classes, called services, where our data access object (the class that accesses the database) lives.
+
+Let’s review our project environment:
+
+* project -top level package
+  * models - holds object representations (customers)
+  * views - holds user interface files (we don’t have UI yet)
+  * viewmodels - holds business logic that uses models and interacts with other parts of the program such as UI and external resources
+  * services - provides the viewmodels with a mode of communicating with external resources
