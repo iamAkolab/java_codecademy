@@ -34,6 +34,9 @@ public class BusinessLogic {
 
     // Add a call to .saveCustomers() here:
     CustomerDaoService.saveCustomers(customerList);
+
+        // Add a call to .loadAllCustomers() here:
+    CustomerDaoService.loadAllCustomers();
     
   }
 
