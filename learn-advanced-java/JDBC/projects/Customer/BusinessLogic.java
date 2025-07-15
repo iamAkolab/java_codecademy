@@ -26,10 +26,14 @@ public class BusinessLogic {
 
     // Add the DAO method that tests the drivers are loaded and registered here.
     CustomerDaoService.loadDriver();
+    CustomerDaoService.resetDatabase();
     CustomerDaoService.testDatabaseConnection();
 
    // Make a call to .createTable() here:
     CustomerDaoService.createTable();
+
+    // Add a call to .saveCustomers() here:
+    CustomerDaoService.saveCustomers(customerList);
     
   }
 
