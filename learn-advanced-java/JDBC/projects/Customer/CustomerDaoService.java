@@ -126,4 +126,33 @@ public class CustomerDaoService {
     return allCustomers;
   }
 
+     public static List<Customer> loadAllCustomers1() {
+    List<Customer> allCustomers = new ArrayList<>();
+    System.out.println("Trying to load all customers from the database...\n");
+
+    try (
+      Connection connection = DriverManager.getConnection(url);
+      Statement statement = connection.createStatement();
+      ResultSet results = statement.executeQuery("SELECT * FROM CUSTOMERS;")
+    ) {
+      Thread.sleep(1000);
+      while (results.next()) {
+        // Save customer variables here:
+        int ID = results.getInt(1);
+        String firstName = results.getString(2);
+        String lastName = results.getString(3);
+        String email = results.getString(4);
+        String cellNumber = results.getString(5);
+        // Add a new customer to allCustomers here:
+        allCustomers.add(new Customer(ID, firstName, lastName, email, cellNumber));
+      }
+      System.out.println("All customers were loaded from the database.");
+    } catch (SQLException | InterruptedException e) {
+      System.out.println("There was an error with your request.");
+      System.out.println(e);
+    }
+
+    return allCustomers;
+  }
+
 }
