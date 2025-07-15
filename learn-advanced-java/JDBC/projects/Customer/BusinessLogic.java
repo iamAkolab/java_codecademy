@@ -25,6 +25,11 @@ public class BusinessLogic {
     mysteryBusiness.addCustomer(new Customer(1005, "Dawson", "Rangel", "d.rangel@mysterybusiness.com", "555-555-5004"));
 
     // Add the DAO method that tests the drivers are loaded and registered here.
+    CustomerDaoService.loadDriver();
+    CustomerDaoService.testDatabaseConnection();
+
+   // Make a call to .createTable() here:
+    CustomerDaoService.createTable();
     
   }
 
