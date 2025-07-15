@@ -242,3 +242,13 @@ Let’s review our project environment:
   * views - holds user interface files (we don’t have UI yet)
   * viewmodels - holds business logic that uses models and interacts with other parts of the program such as UI and external resources
   * services - provides the viewmodels with a mode of communicating with external resources
+
+## Executing SQL Through JDBC
+Up to this point, we have still been operating strictly in the Java language within our application. Now that we have firmly established a connection with our database and successfully created a statement manager, it is time to begin blending SQL into our program.
+
+As a reminder, SQL is the language of relational databases. The term “relation” is just a fancy word for a table and how the data across multiple tables can be related to each other. All data in a relational database is stored inside these tables, broken down into columns and rows.
+
+Inside CustomerDaoService, most of our methods are waiting on some preliminary data manipulation and then the injection of the actual SQL statements to execute “queries” or commands on the database. While this isn’t a SQL-focused lesson, we will make sure you walk away with a functional program and the ability to store your application’s data into a persistent data source.
+
+As it stands, we currently have an entirely empty database, “MYSTERY_BUSINESS.db”, without even a table to its name, just an empty shell, like a variable that has been declared but not initialized. In SQL, we use the command “CREATE TABLE” followed by the table name and then the column names and 
+data types. Let’s look at our Customer model and how it will translate into a table in SQLite:Java to SQLite Datatype Conversion
