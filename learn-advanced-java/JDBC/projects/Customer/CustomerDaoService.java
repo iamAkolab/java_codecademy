@@ -43,12 +43,22 @@ public class CustomerDaoService {
   /*
   Method to create the CUSTOMER table in the database
    */
-  public static void createTable() {
+      public static void createTable() {
+    // Edit SQL Query string here:
+    String createTableStatement = "CREATE TABLE CUSTOMERS ("
+      + "CUST_ID INTEGER PRIMARY KEY,"
+      + "CUST_F_NAME TEXT NOT NULL,"
+      + "CUST_L_NAME TEXT NOT NULL,"
+      + "CUST_EMAIL TEXT NOT NULL,"
+      + "CUST_CELL_NUM TEXT NOT NULL"
+      + ");";
+
     try (
       Connection connection = DriverManager.getConnection(url);
-      // Add the Statement creation here:
-      Statement statement = connection.createStatement
+      Statement statement = connection.createStatement();
     ) {
+      // Add .executeUpdate() method here:
+      statement.executeUpdate(createTableStatement);
       System.out.println("The CUSTOMER table has been created.");
     } catch (SQLException e) {
       System.out.println("There was an error with your request.");
