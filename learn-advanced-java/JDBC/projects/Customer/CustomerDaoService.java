@@ -72,9 +72,20 @@ public class CustomerDaoService {
   public static void saveCustomers(List<Customer> customers) {
     try (
       Connection connection = DriverManager.getConnection(url);
-      // Add the Statement creation here:
-      Statement statement = connection.createStatement
+      Statement statement = connection.createStatement();
     ) {
+      for (Customer customer : customers) {
+        // Add Customer properties here:
+        String insertIntoCustomer = "INSERT INTO CUSTOMERS VALUES ("
+          + "CAST('" + customer.ID + "' AS INTEGER),\""
+          + customer.firstName + "\",\""
+          + customer.lastName + "\",\""
+          + customer.email + "\",\""
+          + customer.cellNumber
+          + "\");";
+        // Add .executeUpdate method call here:
+        statement.executeUpdate(insertIntoCustomer);
+      }
       System.out.println("The customers have been saved to the CUSTOMER table.");
     } catch (SQLException e) {
       System.out.println("There was an error with your request.");
