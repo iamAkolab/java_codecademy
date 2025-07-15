@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDaoService {
+    // Add database url here:
+  private static final String url = "jdbc:sqlite:resources/MYSTERY_BUSINESS.db";
 
   /*
   Method to test the drivers are found in the classpath
@@ -24,7 +26,14 @@ public class CustomerDaoService {
   /*
   Method to test the connection to the database
    */
-  public static void testDatabaseConnection() { }
+ public static void testDatabaseConnection() {
+    try (Connection connection = DriverManager.getConnection(url)) {
+      System.out.println("The connection to the SQLite database was successful!");
+    } catch (SQLException e) {
+      System.out.println("The connection to the database was unsuccessful!");
+      System.out.println(e);
+    }
+  }
 
   /*
   Method to create the CUSTOMER table in the database
