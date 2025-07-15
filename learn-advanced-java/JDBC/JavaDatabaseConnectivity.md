@@ -296,3 +296,20 @@ ResultSet results = statement.executeQuery("SQL QUERY");
 You may have noticed in the code example that we are now calling the .executeQuery() method instead of the .executeUpdate() method, the difference being that a query returns a ResultSet.
 
 Once we have injected the SQL into the database and received the result as a ResultSet, we can use regular ol’ Java code to work through the results and present them to the user.
+
+## Creating a Customer from a ResultSet
+A ResultSet is all good and dandy, but what we really need back into our program is Customer objects! In the previous exercise, we used the .getString() method to pull data from a column and convert it to a string for use in printing. The ResultSet class has a wide range of other get 
+methods that will return nearly any data from a column if of course that data type can be converted to the requested type.
+
+Our Customer class stores its ID as an integer and the rest of the properties are 
+strings, making our implementation fairly easy so, we’ll stick to just two methods: .getInt() and .getString(). Here are some of the other options available:
+
+* .getBoolean()
+* .getArray()
+* .getTime()
+* .getDouble()
+* .getBlob()
+
+There is a generic .getObject() method as well that returns the default Java object type corresponding to the column’s SQL type, following the mapping for built-in types specified in the JDBC specification.
+
+Let’s get to creating our Customer objects from information stored inside a SQL database!
