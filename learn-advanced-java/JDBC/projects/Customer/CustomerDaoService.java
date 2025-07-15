@@ -3,6 +3,7 @@ package services;
 import models.Customer;
 
 // Add import here:
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -93,22 +94,36 @@ public class CustomerDaoService {
     }
   }
 
-  /*
+/*
   Method to load all customers from the CUSTOMER table
    */
   public static List<Customer> loadAllCustomers() {
+    List<Customer> allCustomers = new ArrayList<>();
+    System.out.println("Trying to load all customers from the database...\n");
+    
     try (
       Connection connection = DriverManager.getConnection(url);
-      // Add the Statement creation here:
-      Statement statement = connection.createStatement
+      Statement statement = connection.createStatement();
+      // Create the ResultSet here:
+      ResultSet results = statement.executeQuery("SELECT * FROM CUSTOMERS;")
     ) {
+      Thread.sleep(1000);
+      // Add logic to print the ResultSet here:
+      while (results.next()) {
+        System.out.print("Current Customer: ");
+        for (int i = 1; i < 6; i++) {
+          System.out.print(results.getString(i) + ", ");
+        }
+        System.out.println("moving to the next customer...");
+        Thread.sleep(1000);
+      }
       System.out.println("All customers were loaded from the database.");
-    } catch (SQLException e) {
+    } catch (SQLException | InterruptedException e) {
       System.out.println("There was an error with your request.");
       System.out.println(e);
     }
 
-    return new ArrayList<>();
+    return allCustomers;
   }
 
 }
