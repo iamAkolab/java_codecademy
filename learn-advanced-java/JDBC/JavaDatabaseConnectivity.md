@@ -252,3 +252,21 @@ Inside CustomerDaoService, most of our methods are waiting on some preliminary d
 
 As it stands, we currently have an entirely empty database, “MYSTERY_BUSINESS.db”, without even a table to its name, just an empty shell, like a variable that has been declared but not initialized. In SQL, we use the command “CREATE TABLE” followed by the table name and then the column names and 
 data types. Let’s look at our Customer model and how it will translate into a table in SQLite:Java to SQLite Datatype Conversion
+
+## Storing a Customer List
+* Database Created… ✅
+* Table Created… ✅
+* Alderaan System targeted… ✅
+* List of Customers Saved to Table… ❌
+
+As you can see our death star, database, is not quite fully operational yet. Let’s keep working toward making this weapon system JDBC connection perform some useful work. Creating databases and tables is all good and well but our core functionality is actually turning our Java data into data that we can store in our tables and then retrieving it back out of the database at a later 
+date.
+
+This is done with the SQL INSERT INTO statement. We INSERT a set of values, in the same order as the columns of our table, INTO our table. We will continue to use the Statement interface to implement this SQL command, although we challenge you to browse the PreparedStatement Documentation to see how you can implement a more efficient solution on your own.
+
+Let’s take a look at a sample insert statement in SQLite:
+```
+INSERT INTO CUSTOMERS
+  VALUES (1010, "Jack", "Delangey", "jack@mysterybusiness.com", "555-867-5309");
+```
+We don’t want to hardcode values into our SQL expression like the example above though, we want our CustomerDaoService to contain the logic to substitute each of these values for the properties of our Customer class. The whole command will be concatenated together into a String that we can execute on our database using our Statement object.
