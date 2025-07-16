@@ -51,6 +51,19 @@ public class MedievalGame {
   private void save() {
     // Add save functionality here
 
+    // 1. Create file name
+  // 2. Open FileOutputStream
+  // 3. Open ObjectOutputStream
+  // 4. Write player object
+  // 5. Handle exceptions
+
+  try (FileOutputStream userSaveFile = new FileOutputStream(fileName);
+     ObjectOutputStream playerSaver = new ObjectOutputStream(userSaveFile)) {
+  playerSaver.writeObject(player);
+} catch (IOException e) {
+  // handle exception
+}
+
   } // End of save
 
   private Player load(String playerName, Scanner console) {
