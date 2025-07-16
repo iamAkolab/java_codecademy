@@ -23,6 +23,7 @@ You hastily agree! An opportunity to broaden your experience and be a part of th
 ### COMMENTS Table
 
 | Column 1	| Column 2	| Column 3	| Column 4 |
+| --------- | --------- | --------- | -------- |
 | Name: POST_ID | Name: USER_ID | Name: COMMENT_DATE | Name: COMMENT |
 | Data Type: TEXT | Data Type: TEXT | Data Type: TEXT | Data Type: TEXT |
 | Index: 1	| Index: 2	| Index: 3	| Index: 4 |
@@ -30,6 +31,7 @@ You hastily agree! An opportunity to broaden your experience and be a part of th
 ### USERS Table
 
 | Column 1 | Column 2 | Column 3 |
+| -------- | -------- | -------- |
 | Name: ID | Name: USERNAME | Name: PASSWORD |
 | Data Type: TEXT | Data Type: TEXT | Data Type: TEXT |
 | Index: 1 | Index: 2	| Index: 3 |
