@@ -1,5 +1,6 @@
 import java.math.BigInteger;
 import java.time.Clock;
+import java.util.concurrent.ForkJoinPool;
 
 /**
  * https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test Applying
@@ -15,6 +16,9 @@ import java.time.Clock;
 public class LargestPrimeForkJoin {
   // Stopping time limit in milliseconds
   static int timeLimit = 5 * 1000;
+
+  int nThreads = Runtime.getRuntime().availableProcessors();
+ForkJoinPool pool = new ForkJoinPool(nThreads);
 
   
 }
