@@ -17,6 +17,22 @@ public class PostService {
    */
   public static void savePost(Post post) {
     // TODO: Finish the savePost Method
+    String SQL_savePost = "INSERT INTO POSTS VALUES (\"" + post.getIdString() + "\", \"" + post.getTitle() + "\", \"" + post.getMessage() + "\", \"" + post.getUser().getIdString() + "\", " + post.getDate().getTime() + ");";
+    try (
+      Connection connection = DriverManager.getConnection(DatabaseInfo.DB_URL);
+      //Statement statement = connection.createStatement()
+    ) {
+      PreparedStatement statement = connection.prepareStatement("INSERT INTO POSTS VALUES (?, ?, ?, ?, ?)");
+statement.setString(1, post.getIdString());
+statement.setString(2, post.getTitle());
+statement.setString(3, post.getMessage());
+statement.setString(4, post.getUser().getIdString());
+statement.setLong(5, post.getDate().getTime());
+statement.executeUpdate();
+      //statement.executeUpdate(SQL_savePost);
+    } catch (SQLException e) {
+      System.out.println("There was an error saving your post to the database.");
+    }
   }
 
 
@@ -28,6 +44,17 @@ public class PostService {
    */
   public static List<Post> getPostsByUser(User user) {
     // TODO: Finish the getPostsByUser Method
+      String SQL_postsByUser = "SELECT * FROM POSTS WHERE USER_ID = \"" + user.getIdString() + "\" ORDER BY POST_DATE DESC;";
+  List<Post> usersStories = new ArrayList<>();
+  try (
+    Connection connection = DriverManager.getConnection(DatabaseInfo.DB_URL);
+    Statement statement = connection.createStatement();
+    ResultSet results = statement.executeQuery(SQL_postsByUser)
+  ) {
+    while (results != null && results.next()) {
+      Post post = new Post(results.getString(1), results.getString(2), results.getString(3), user, results.getLong(5), null);
+      usersStories.add(post);
+    }
   }
 
 
