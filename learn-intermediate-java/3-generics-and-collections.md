@@ -111,3 +111,84 @@ Replacer<String> bagReplacer = new StringBag();  // Using non-generic `StringBag
 In the example above we created two Replacer references. The Box implementation can be of any type but the StringBag implementation needs to be a <String> type because of the non-generic class implementation.
 
 Let’s practice creating generic interfaces and references.
+
+# Methods
+We’ve covered generic classes and interfaces, but what can we do if we want one of our methods to be generic and not the whole class or interface? We can create generic methods to do just that. For example:
+```
+public class StringBox {
+  private String data;
+
+  public <T> boolean isString(T item) {
+    return item instanceof String; 
+  }
+}
+
+StringBox box = new StringBox();
+box.isString(5); // Returns false
+```
+In the example above, using the class StringBox, we created the generic method isString() with a generic type T as a method parameter. It’s important to note that generic methods need to include the type parameter, <T> in our example, before the return type, even if the return type is void. The generic method is called like any other method as shown.
+
+We can also do this with static methods. Their signatures have the same requirements except for also needing the static keyword. For example:
+```
+public class StringBox {
+  private String data;
+
+  public static <T> boolean isString(T item) {
+    return item instanceof String; 
+  }
+}
+StringBox.isString(5);  // Returns false
+```
+In the example above, we see how we made the isString() a static method by adding static to the method signature. We call it by using the class name instead of an object.
+Let’s practice creating generic methods.
+```
+public class Main {
+  public static void main(String[] args) {
+    String test1 = "Double";
+    double test2 = 5.8;
+
+    // Enter code below...
+    boolean isTest1Double = Main.isDouble(test1);
+    boolean isTest2Double = Main.isDouble(test2);
+
+    System.out.println("test1 is double - " + isTest1Double);
+    System.out.println("test2 is double - " + isTest2Double);    
+  }
+
+  public static <T> boolean isDouble (T object) {
+    return object instanceof Double;
+  }
+}
+```
+
+## Benefits
+We’ve done great work learning about generic classes, interfaces, and methods. Let’s discuss some benefits of using generics besides making our code more scalable. We can get away with not providing a type argument to a generic class or interface. This is known as using a raw type and they were prevalent before the introduction of generics in Java 5. For example:
+```
+public class Box <T> {
+  private T data;
+
+  public Box(T data) {
+    this.data = data; 
+  }
+
+  public T getData() {
+    return this.data;
+  }  
+}
+
+Box box = new Box<>("My String");  // Raw type box
+String s2 = (String) box.getData();  // No incompatible type error
+String s1 = box.getData();  // Incompatible type error
+```
+In the example above:
+* Using the generic class Box, we created a raw type Box and passed "My String" as an argument.
+* We called getData() and typecast the result in String s2. This has no error because we are explicitly downcasting to String.
+* We called getData() to store the result in String s1. We get an Incompatible type error as getData() returns an Object type and we are trying to implicitly downcast to a String.
+
+Raw types should be avoided because generics:
+* Avoid “incompatible type”  errors when retrieving data from raw types.
+* Avoid a potential runtime ClassCastException error when explicitly typecasting.
+* Give us compile-time type checking, which helps detect bugs before our code runs.
+* Help when the JVM applies type erasure
+
+When using generics, type erasure is applied by the JVM and will cause all type parameters to be replaced by Object or their type bounds (we’ll learn about this later). The type erasure will also apply any necessary type casting to ensure our code is type-safe and that the final byte code produced has non-generic types.
