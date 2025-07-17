@@ -729,3 +729,241 @@ In the example above, we:
 * Called toArray() to transform our collection into an array. Note the new Integer[0] argument that specifies the type of array we want returned.
 
 We can iterate through a Collection with an enhanced for-loop as we’ve seen with the other core interfaces.
+```
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.Collection;
+public class Main {
+  public static void main(String[] args) {
+    List<Integer> intList = new ArrayList<>();
+    Set<String> stringSet = new HashSet<>();
+    Queue<Double> doubleQueue = new LinkedList<>();
+    Deque<Integer> intDeque = new ArrayDeque<>();
+
+    intList.add(5);
+    intList.add(8);
+    intList.add(5);
+    intList.add(1);
+
+    stringSet.add("Hello");
+    stringSet.add("World");
+    stringSet.add("World");
+
+    doubleQueue.add(3.89);
+    doubleQueue.add(889.64);
+
+    intDeque.addFirst(7);
+    intDeque.addFirst(8);
+    intDeque.addLast(40);
+
+    System.out.println(intList.getClass());
+    printCollection(intList);
+    System.out.println();
+    System.out.println(stringSet.getClass());
+    printCollection(stringSet);
+    System.out.println();
+    System.out.println(doubleQueue.getClass());
+    printCollection(doubleQueue);
+    System.out.println();
+    System.out.println(intDeque.getClass());
+    printCollection(intDeque);
+  }
+
+  private static <T> void printCollection(Collection<T> collection) {
+    for(T item: collection) {
+      System.out.println(item);
+    }
+  }
+}
+```
+
+## Algorithms
+We’ve seen the many benefits of the collections framework and how they provide ready-to-use implementations so we don’t have to create them ourselves. What should we do when we need to sort a collection or get some statistic like the maximum or minimum element in the collection? The collections framework provides the Collections class that has many static methods that perform these types of operations for us.
+
+Here are some of the methods provided by the Collections class:
+
+* binarySearch(): Performs binary search over a List to find the specified object and returns the index if found. This method is overloaded to also accept a Comparator to define a custom ordering policy. Note: this method only provides the correct value if the elements in the List are sorted.
+* max(): Returns the maximum element in the Collection. This method is overloaded to also accept a Comparator to define a custom ordering policy.
+* min(): Returns the minimum element in the Collection. This method is overloaded to also accept a Comparator to define a custom ordering policy.
+* reverse(): Reverses the order of elements in the List passed in as an argument.
+* sort(): Sorts the List passed in as an argument. This method is overloaded to also accept a Comparator to define a custom ordering policy.
+  
+These utility methods for the collections framework make performing complex calculations or gaining insight into the collection of data we have easy and efficient.
+
+## Map
+Previously, we saw the collections framework hierarchy and howCollection is the root of it. There exists another interface that didn’t quite fit into that hierarchy but is an extremely important part of the collection framework: the Map.
+
+Map defines a generic interface for an object that holds key-value pairs as elements. The key is used to retrieve some value (like the index in an array or List). A key must be unique and map to exactly one value. There are many implementations of Map, but we’ll focus on the HashMap implementation.
+
+The HashMap defines no specific ordering for the keys and is the most optimized implementation for retrieving values. This is Java’s implementation of a 
+hash table.
+
+A Map has the following methods for accessing its elements:
+
+* put(): Sets the value that a key maps to. Note that this method replaces the value a key mapped to if the key was already present in the Map.
+* get(): Gets, but does not remove, the value the provided key argument points to if it exists. This method returns null if the key is not in the Map.
+
+Let’s see how we can use them:
+```
+Map<String, String> myMap = new HashMap<>();
+
+myMap.put("Hello", "World") // { "Hello" -> "World" }
+myMap.put("Name", "John") //   { "Hello" -> "World" }, { "Name" -> "John" }
+
+String result = myMap.get("Hello") // returns "World" 
+String noResult = myMap.get("Jack") // return `null`
+```
+
+
+In the example above, we:
+
+* Created a Map reference that maps a String key to a String value using the HashMap implementation. Note that a Map needs a type argument for the key and value.
+* Added key-value pairs to myMap using put() where the first argument is the key and the second is the value the key maps to.
+* Retrieved the value the key “Hello” maps to using get(). The String “World” is returned since the key “Hello” exists. get() returns null because the key “Jack” does not exist.
+
+We can iterate over a Map with an enhanced for-loop like so:
+```
+// Given a map, `myMap`, with the following key-value pairs { "Hello" -> "World" }, { "Name" -> "John"}
+for (String s: myMap.keySet()){
+  System.out.println("key: "+s+", value: "+myMap.get(s));
+}
+// OUTPUT TERMINAL:
+// key: Name, value: John
+// key: Hello, value: World
+```
+
+In the example above, we:
+
+* Called keySet() to return the Set of the keys contained in this HashMap.
+* Iterated through the set of keys of this map.
+* Called myMap.get(s) to get the value associated with key s.
+
+```
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Random;
+public class Main {
+  public static void main(String[] args) {
+    List<Integer> myInts = new ArrayList<>();
+    Random random = new Random();
+
+    for(int i =0; i < 20; i++) {
+      myInts.add(random.nextInt(5));
+    }
+
+    System.out.println("myInts: " + myInts);
+
+    Map<Integer, Integer> intCount = countNumbers(myInts);
+    for(Map.Entry<Integer, Integer> entry: intCount.entrySet()) {
+      System.out.println("Integer: "+ entry.getKey()+" appears: "+ entry.getValue());
+    }
+  }
+
+  public static Map<Integer, Integer> countNumbers(List<Integer> list) {
+
+    Map<Integer, Integer> intCount = new HashMap<>();
+
+    for(int i: list){
+      if(intCount.get(i) == null){
+        intCount.put(i, 1);
+      }else{
+        int currentCount = intCount.get(i);
+        currentCount++;
+        intCount.put(i, currentCount);
+      }
+    }
+    return intCount;
+  }
+}
+```
+
+## Aggregate Operations
+As we’ve worked with different types of Collections and Maps, we’ve seen how important and verbose for-loops can get. For example, this code will produce a new Integer List where even numbers are doubled:
+```
+// Given `intList` with the following elements: 5, 4, 1, 3, 7, 8
+List<Integer> evenList = new ArrayList<>();
+for(Integer i: intList) {
+  if(i % 2 == 0) {
+    evenList.add(i*2);
+  }
+}
+// evenList will have elements 8, 16
+```
+
+
+In the example above, we filtered down intList to only include even numbers (i % 2 == 0) and then doubled their value and stored them in evenList. We can perform the same operation using Streams. A Stream is a sequence of elements created from a Collection source. A Stream can be used as input to a pipeline, which defines a set of aggregate operations (methods that apply transformations to a Stream of data). The 
+output of an aggregate operation serves as the input of the next operation (these are known as intermediate operations) until we reach a terminal operation, which is the final operation in a pipeline that produces some non-Stream output.
+
+Before we continue, we need a brief understanding of lambda functions in Java. A lambda eliminates the need to create (extremely verbose) anonymous classes to implement methods. With lambdas, we can define the method with its parameter(s) and its return value in a small block of code. Let’s look at the example above rewritten using aggregate operations.
+```
+List<Integer> evenList = intList.stream()
+  .filter((number) -> {return number % 2 == 0;})
+  .map(evenNum -> evenNum*2)
+  .collect(Collectors.toList());
+```
+
+
+In the example above, we:
+
+* Called stream() which returns a sequential Stream with elements from intList.
+* Created a (small) pipeline with a single intermediate operation filter() and the terminal operation collect().
+* Called filter() which returns a Stream with elements that pass some filter condition. An element passes a filter condition by returning true when called on the filter method. We defined the filter method to return true if the number is even.
+* Defined a lambda to provide the filter method to filter(). The lambda defines all the parameters before the arrow (->) symbol and defines the function’s body after.
+* Called map() which will return a new Stream with elements that have had some method applied to them.
+* Defined the map() method using a lambda where we have evenNum as a parameter and return the result of multiplying evenNum by 2. You can omit the parameter parentheses () when there is only one parameter and omit the curly braces {} and return when the lambda body is one line.
+*Called collect() (terminal operation), which takes the Stream and collects the elements back into some Container (we use a List). Java provides a Collectors class with static utility methods to use as an argument to collect().
+
+Great job getting this far. It’s important to note that there is a lot more information about lambda and Stream that is outside the scope of this lesson. We encourage you to explore the Java docs to learn more.
+```
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+public class Main {
+  public static void main(String[] args) {
+    List<String> words = new ArrayList<>();
+    words.add("Tree");
+    words.add("Hello");
+    words.add("World");
+    words.add("Race");
+    words.add("Game");
+    words.add("Numbers");
+    words.add("Ride");
+
+    List<String> specialWordsWithForLoop = getSpecialWordsWithForLoop(words);
+
+    List<String> specialWordsWithPipeline = getSpecialWordsWithPipeline(words);
+
+    System.out.println("Special Words retrieved from for loop: "+ specialWordsWithForLoop);
+
+    System.out.println("Special Words retrieved from pipeline: "+ specialWordsWithPipeline);
+
+  }
+
+  public static List<String> getSpecialWordsWithForLoop(List<String> words){
+    List<String> specialWords = new ArrayList<>();
+
+    for(String word: words) {
+      if (word.length() == 4) {
+        String upperCaseWord = word.toUpperCase();
+        specialWords.add(upperCaseWord);
+      }
+    }
+    return specialWords;
+  }
+
+  public static List<String> getSpecialWordsWithPipeline(List<String> words){
+    List<String> specialWords = words.stream().filter(word -> word.length() == 4).map(word -> word.toUpperCase()).collect(Collectors.toList());
+
+    return specialWords;
+  }
+}
+``
