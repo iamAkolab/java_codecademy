@@ -292,3 +292,101 @@ public class Box <T extends Number & Comparable<T>> {
 }
 ```
 In the example above, we specified multiple bounds (Number and Comparable) for type parameter T using the & operator between the different upper bounds. It’s important to note that when defining multiple bounds, any upper bound that is a class (in our example Number) must come first followed by any interfaces (in our example Comparable<T>).
+
+
+## Wildcards
+We’ve seen that generic code can take type arguments to help generalize our code. We can make our code even more general when we don’t need the more strict type checking of using type parameters by using wildcards. A wildcard, denoted by the ? symbol, represents an unknown type when used with generic methods. Let’s look at an example:
+```
+public class Util {
+  public static void printBag(Bag<?> bag) {
+    System.out.println(bag.toString()); 
+  }
+}
+Bag<String> myBag1 = new Bag("Hello");
+Bag<Integer> myBag2 = new Bag(23);
+Util.printBag(myBag1);  // Hello
+Util.printBag(myBag2);  // 23
+```
+In the example above, we defined a static generic method that works on Bag types. We specify that Bag, which is a generic class, can be of any type by using the wildcard Bag<?>. We also created two Bag references of different types, String and Integer, and used them as arguments to printBag().
+
+You may be thinking how this is different than using a type parameter because we could write the above method as:
+```
+public static <T> void printBag(Bag<T> bag) {
+  System.out.println(bag.toString()); 
+}
+```
+In the example above, we’ve defined the parameter as Bag<T> as opposed to Bag<?>. This implementation makes no difference, but you may notice that the wildcard version is better as it does not need the extra <T> before the return type making the signature easier to read.
+
+In general, we should use type parameters, when we have a relationship between the type of arguments and the return type. For example:
+```
+public static <T> Bag<T> getBag(Bag<T> bag) {
+  return bag;
+}
+```
+In the example above, we created a method that accepts a Bag of some type T and returns a Bag of the same type T. This use of type parameters maintains strong type checking throughout our code.
+
+We can also create upper bounds and lower bounds (we’ll see this later) when using wildcards. For example:
+```
+public static void printBag(Bag<? extends Number> bag) {
+  System.out.println(bag.toString()); 
+}
+```
+In the example above, printBag() accepts any Bag that is a Number and will produce an error when passing a type of Bag that does not extend Number. For example, Bag<String> will produce an error.
+```
+public class Main {
+  public static void main(String[] args) {
+    Container<String> stringContainer = new Container<>("Hello");
+    Container<Integer> intContainer = new Container<>(34);
+
+    printContainer(stringContainer);
+    printContainer(intContainer);
+  }
+
+  public static void printContainer(Container<?> container) {
+    System.out.println(container.toString());
+  }
+}
+```
+
+## Wildcard Lower Bounds
+Recall that generic code can have an upper bound when defined using a type parameter or a wildcard. We can also provide a lower bound when working with wildcards. A lower bound wildcard restricts the wildcard to a class or interface and any of its parent types. For example:
+```
+public class Util {
+  public static void getBag(Bag<? super Integer> bag) {
+    return bag;
+  }
+}
+```
+In the example above, we used the super keyword to restrict the argument to getBag() to be a Bag of Integer, Number, or Object. If a call to getBag() with Bag<Double> is made, it would result in an error because Double is not an Integer or one of its parents.
+
+Some important things to note about lower bounds are:
+
+* They cannot be used with generic type parameters, only wildcards.
+* A wildcard cannot have both a lower bound and an upper bound. In this case, it’s best to use a generic type parameter.
+
+There are some general guidelines provided by Java as to when to use what type of wildcard:
+
+* An upper bound wildcard should be used when the variable is being used to serve some type of data to our code.
+* A lower bound wildcard should be used when the variable is receiving data and holding it for later use.
+* When a variable that serves data is used and only uses Object methods, an unbounded wildcard is preferred.
+* When a variable needs to serve data and store data for later use, a wildcard should not be used (use a type parameter instead).
+
+```
+public class Main {
+  public static void main(String[] args) {
+    Bus<Student> studentBus = new Bus<>(new Student("Mike", "Math"));
+    Bus<SchoolPerson> personBus = new Bus<>(new SchoolPerson("Jerry"));
+
+    transferData(studentBus, personBus);
+  }
+
+  public static void transferData(Bus<? extends Student> src, Bus<? super SchoolPerson> dsc) {
+    System.out.print("dsc bus rider before switch: ");
+    dsc.printRider();
+    Student studentInSrcBus = src.getRider();
+    System.out.print("dsc bus rider after switch: ");
+    dsc.setRider(studentInSrcBus);
+    dsc.printRider();
+  }
+}
+```
