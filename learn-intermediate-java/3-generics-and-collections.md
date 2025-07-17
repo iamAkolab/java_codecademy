@@ -400,3 +400,295 @@ The collections framework provides a hierarchical relationship between its inter
 data types.
 
 As we go through the lesson, we will explore the collections framework interfaces and implementations, their relationship to generics, and the operations we can perform.
+![collection](https://github.com/iamAkolab/java_codecademy/blob/main/learn-intermediate-java/collections.jpg)
+
+## List
+The collections framework provides a core set of interfaces to define different collection behaviors. One of the core interfaces is the List interface. A List is a collection where elements are ordered in a sequence. Lists allow us to have duplicate elements and fine-grain control over where elements are inserted in the sequence. Like arrays, the position of a List is known as the index and is 0 based. Unlike arrays, which have a static size, Lists are dynamically sized.
+
+The collections framework provides many List implementations, but we’ll focus on the ArrayList and LinkedList. The ArrayList is the overall preferred implementation for most use cases but the LinkedList performs better than an ArrayList if your program mostly inserts and deletes elements at the beginning or end of a list.
+
+Let’s create a List using an ArrayList as its implementation and see some operations:
+```
+List<Integer> intList = new ArrayList<>(); // Empty `List`
+intList.add(4); // 4
+intList.add(6); // 4, 6
+intList.add(3); // 4, 6, 3
+intList.set(1, 3); // 4, 3, 3
+
+int a = intList.get(2); // a = 3
+int b = intList.indexOf(3); // b = 1
+
+List<Integer> subIntList = intList.subList(1,3); // subIntList -> 3, 3
+```
+In the example above, we:
+
+* Created a List reference named intList with an ArrayList implementation.
+* Called add(), which appends elements to the end of the List. We can see the state of intList after each call.
+* Called intList.set(1, 3), which replaces the element at index 1 (the second element in 0-based indexing) with 3.
+* Called get(), which gets the value at index 2 (the third element in 0-based indexing).
+* Called indexOf(), which returns the index of the first occurrence of 3 (the first 3 is at index 1). -Called subList(), which returns a sublist in a new List with the elements specified by the starting index 1 (inclusive) and ending index 3 (exclusive).
+
+We can iterate through a List using the enhanced for-loop. For example:
+```
+// Assuming `intList` has elements -> 1, 5, 2, 6, 1
+for (Integer number: intList) {
+  System.out.println(number);  
+}
+// OUTPUT TERMINAL: 1 5 2 6 1
+```
+In the example above, we used the enhanced for-loop, which iterates through the elements in intList from index 0 to the end of the list. Note that we use the int wrapper class Integer to iterate through the elements in intList. However, we could have also used an ‘int’.
+
+```
+import java.util.List;
+import java.util.ArrayList;
+public class Main {
+  public static void main(String[] args) {
+    List<String> stringList = new ArrayList<>();
+    stringList.add("Hello");
+    stringList.add("World");
+    stringList.add("!");
+
+    for(String element: stringList) {
+      System.out.println(element);
+    } 
+  }
+}
+
+```
+
+## Set
+Another core interface provided by the collections framework is the Set interface. A Set is a collection of unique elements and all of its 
+methods ensure this stays true. The collections framework provides different implementations of a Set (we’ll focus on a subset of them) that each have different use cases.
+
+The HashSet implementation has the best performance when retrieving or inserting elements but cannot guarantee any ordering among them.
+
+The  TreeSet implementation does not perform as well on insertion and deletion of elements but does keep the elements stored in order based on their values (this can be customized).
+
+The LinkedHashSet implementation has a slightly slower performance on insertion and deletion of elements than a HashSet but keeps elements in insertion order.
+
+Let’s look at how we can create Set with a HashSet implementation:
+```
+Set<Integer> intSet = new HashSet<>();  // Empty set
+intSet.add(6);  // true - 6  
+intSet.add(0);  //  true - 0, 6 (no guaranteed ordering)
+intSet.add(6);  //  false - 0, 6 (no change, no guaranteed ordering)
+
+boolean isNineInSet = intSet.contains(9);  // false
+boolean isZeroInSet = intSet.contains(0);  // true
+```
+In the example above, we:
+
+* Created a Set reference named intSet with a HashSet implementation.
+* Called add(), which adds elements to the Set and returns true if an element was successfully added or false if not.
+* Called add(), noting that the program will not throw an error if we try to insert a non-unique element into the set.
+* Called contains(9), which returns false because the 9 does not exist in intSet.
+* Called contains(0), which returns true because the 0 does exist in intSet.
+
+All of these methods work for other Set implementations too.
+```
+// Assuming `intSet` has elements -> 1, 5, 9, 0, 23
+for (Integer number: intSet) {
+  System.out.println(number);
+}
+// OUTPUT TERMINAL: 5 0 23 9 1
+```
+We can iterate through a Set using the enhanced for-loop and notice that we can’t guarantee the ordering of elements looped. For example:
+```
+import java.util.Set;
+import java.util.TreeSet;
+
+public class Main {
+  public static void main(String[] args) {
+    Set<Integer> sortedSet = new TreeSet<>();
+    sortedSet.add(3);
+    sortedSet.add(7);
+    sortedSet.add(27);
+    sortedSet.add(7);
+
+    for(Integer element: sortedSet){
+      System.out.println(element);
+    }
+  }
+}
+```
+
+## Queue
+The Queue core interface in the collections framework is a collection that implements the Queue data structure. A Queue is a First In First Out (FIFO) data structure in which elements are inserted at the tail (back) of the collection and removed from the head (front). Think of it like a line (queue) of people waiting to make a purchase: the first people that arrive on the line (queue) will be the first ones to be able to make a purchase.
+
+A Queue has two types of access methods for inserting, removing, and getting (but not removing) the element at the head of the Queue.
+
+The following methods throw an exception when:
+
+* add() - there is no space for the element
+* remove() - there are no elements to remove
+* element() - there are no elements to get
+
+The following methods return a special value:
+
+* offer() - false there is no space for the element
+* poll() - null there are no elements to remove
+* peek() - null there are no elements to get
+The methods that return a special value should be used when working with a statically sized Queue and the exception throwing methods when using a dynamic Queue.
+
+Like the other collections framework 
+interfaces, Queue has many implementations. We’ll focus on LinkedList and PriorityQueue. We’ve seen LinkedList be used as a List implementation, but it’s also perfect when needing a basic Queue implementation. Being able to use a LinkedList as both a List and a Queue is a perfect example of the compatibility within the collections framework. The PriorityQueue ensures the top element is the smallest relative to the data type’s natural ordering (or some custom ordering policy you provide).
+
+Let’s look at an example of Queue with a LinkedList implementation:
+```
+Queue<String> stringQueue = new LinkedList<>();
+stringQueue.add("Mike"); // true - state of queue -> "Mike"
+stringQueue.offer("Jeff"); // true - state of queue -> "Mike", "Jeff" 
+
+String a = stringQueue.remove() // Returns "Mike" - state of queue -> 1
+String b = stringQueue.poll() // Returns "Jeff" - state of queue -> empty
+String c = stringQueue.peek() // Returns null
+String d = stringQueue.element() // Throws NoSuchElementException
+```
+
+In the example above we:
+
+* Created a new String Queue reference with a LinkedList implementation.
+* Called add() and offer() to insert elements into the Queue. Note the state of the Queue after each call.
+* Called remove() and poll() to remove and retrieve the element at the front of the Queue.
+* Called peek() and element() to retrieve but not remove the element at the front of the Queue. Note the results when stringQueue is empty.
+
+We can iterate through a Queue using the enhanced for-loop. For example:
+```
+// Assuming `stringQueue` has elements -> "Mike", "Jack", "John"
+for (String name: stringQueue) {
+  System.out.println(name);
+}
+// OUTPUT TERMINAL: "Mike", "Jack", "John"
+```
+
+One thing to note about a PriorityQueue is that an enhanced for-loop (or Iterator) makes no guarantee in the ordering of elements after the head.
+```
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+public class Main {
+  public static void main(String[] args) {
+    Queue<String> line = new LinkedList<>();
+    line.add("Mike");
+    line.add("Isabel");
+    line.add("Jenny");
+
+    for(String name: line) {
+      System.out.println(name);
+    }
+    processAlphabetically(line);   
+  }
+
+  public static void processAlphabetically(Queue<String> queue){
+     Queue<String> alphabeticalQueue = new PriorityQueue<>();
+
+    for(String name: queue) {
+      alphabeticalQueue.offer(name);
+    }
+
+     while(alphabeticalQueue.peek() != null) {
+      String headElement = alphabeticalQueue.remove();
+      System.out.println("Processing: "+ headElement);
+    }
+  }
+}
+```
+
+## Deque
+The last of the core interfaces in the collections framework is the Deque interface (pronounced “Deck”). A deque (short for “double-ended queue”) is a type of queue that allows us to access elements from the front and the back of the queue.
+
+The Deque interface has two types of methods for manipulating the front and back of the collection.
+
+The following are some of the available methods and the exceptions they throw:
+
+* addFirst(), addLast() - there is no space to add an element.
+* removeFirst(), removeLast() - there is no element to remove.
+* getFirst(), getLast() - there is no element to get.
+
+The following methods return a special value:
+
+* offerFirst(), offerLast() - false when there is no space to add an element.
+* pollFirst(), pollLast() - null when there is no element to remove.
+* peekFirst(), peekLast() - null when there is no element to get.
+
+A Deque has many implementations, but we’ll focus on the LinkedList and ArrayDeque implementations. The LinkedList, although not the most optimized, is flexible enough to not only be used as a List and 
+Queue, but also a Deque. The ArrayDeque is the preferred implementation when needing to manipulate elements at the front and back of a collection.
+
+Let’s look at an ArrayDeque implementation of a Deque:
+```
+Deque<String> stringDeque = new ArrayDeque<>();
+stringDeque.addFirst("A"); // Front -> "A" <- end
+stringDeque.offerFirst("B"); // Return `true` - front -> "B", "A" <- end
+stringDeque.offerLast("Z"); // Returns `true` - front -> "B", "A", "Z" <- end
+
+String a = stringDeque.removeFirst()  // Returns "B" - front -> "A", "Z"
+String b = stringDeque.pollLast()  // Returns "Z" - front -> "A" <- back
+String c = stringDeque.removeLast()  // Returns "A" - empty deque
+
+String d = stringDeque.peekFirst()  // Returns null
+String e = stringDeque.getLast() // Throws NoSuchElementException
+```
+
+
+In the example above, we:
+
+* Called addFirst(), offerFirst(), and offerLast() to add elements. Note that the offer() methods return a boolean.
+* Called removeFirst(), pollLast(), and removeLast() to remove elements.
+* Called peekFirst() and getLast() to get but not remove the element at the front and back of deque respectively.
+If we iterate through a Deque using an enhanced for-loop, the elements would be processed from front to back like a standard Queue. However, we can also iterate through a Deque from front to back by using an 
+Iterator from the descendingIterator() method and a while-loop like so:
+```
+// Assuming `stringDeque` has elements front -> "Mike", "Jack", "John" <- back
+
+Deque<String> stringDeque = new ArrayDeque<>();
+stringDeque.addLast("Mike");
+stringDeque.addLast("Jack");
+stringDeque.addLast("John");
+
+Iterator<String> iterator = stringDeque.descendingIterator();
+
+while(iterator.hasNext()) {
+  System.out.println(iterator.next());
+}
+// OUTPUT TERMINAL:  "John", "Jack", "Mike"
+```
+
+
+Let’s practice creating a Deque and iterating through it.
+```
+import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.List;
+import java.util.ArrayList;
+public class Main {
+  public static void main(String[] args) {
+    List<Integer> myInts = new ArrayList<>();
+    myInts.add(9);
+    myInts.add(13);
+    myInts.add(2);
+    myInts.add(1);
+    myInts.add(11);
+    myInts.add(39);
+    myInts.add(78);
+    myInts.add(4);
+
+    Deque<Integer> result = separateInts(myInts);
+    for(Integer i: result) {
+      System.out.println(i);
+    }
+  }
+
+  public static Deque<Integer> separateInts(List<Integer> integers){
+    Deque<Integer> separatedDeque = new ArrayDeque<>();
+
+    for(Integer myInt: integers) {
+      if(myInt % 2 == 0) {
+        separatedDeque.addFirst(myInt);
+      }else{
+        separatedDeque.addLast(myInt);
+      }
+    }
+    return separatedDeque;
+  }
+}
+```
