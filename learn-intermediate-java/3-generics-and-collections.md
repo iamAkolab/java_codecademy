@@ -64,3 +64,4 @@ Integer a = 56;
 int aPrimitive1 = a.intValue();  // Return primitive `int` value from `Integer` object
 int aPrimitive2 = a;  // Unboxing, automatic call to `intValue()`
 ```
+![WrapperClasses](https://github.com/iamAkolab/java_codecademy/blob/main/learn-intermediate-java/Wrapper%20classes.jpg)
