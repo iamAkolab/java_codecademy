@@ -311,6 +311,97 @@ This syntax has several benefits:
 * Our class is easier to read! The lambda syntax makes it so that people reading our code can immediately identify what task is being performed in our thread without having to read our class first to find the run() method.
 
 Now, let’s try both of these methods of implementing Runnable with our FortuneTeller class.
+```
+--- FortuneTeller.java
+import java.util.Arrays;
+import java.util.List;
+
+public class FortuneTeller {
+
+  public static void main(String[] args) {
+
+    List<Question> questions = Arrays.asList(
+        new Question(Question.Difficulty.EASY, "Am I a good coder?"),
+        new Question(Question.Difficulty.MEDIUM, "Will I be able to finish this course?"),
+        new Question(Question.Difficulty.EASY, "Will it rain tomorrow?"),
+        new Question(Question.Difficulty.EASY, "Will it snow today?"),
+        new Question(Question.Difficulty.HARD, "Are you really all-knowing?"),
+        new Question(Question.Difficulty.HARD, "Do I have any hidden talents?"),
+        new Question(Question.Difficulty.HARD, "Will I live to be greater than 100 years old?"),
+        new Question(Question.Difficulty.MEDIUM, "Will I be rich one day?"),
+        new Question(Question.Difficulty.MEDIUM, "Should I clean my room?")
+    );
+
+    questions.stream().forEach(q -> {
+      CrystalBall c = new CrystalBall(q);
+      c.start();
+    });
+  }
+}
+
+--- CrystallBall.java
+import java.util.Random;
+
+public class CrystalBall extends Thread {
+
+  /* Instance Variables */
+  private Question question;
+
+  /* Constructors */
+  public CrystalBall(Question question) {
+    this.question = question;
+  }
+
+  /* Instance Methods */
+  @Override
+  public void run() {
+    ask(this.question);
+  }
+
+  public void ask(Question question) {
+    System.out.println("Good question! You asked: " + question.getQuestion());
+    this.think(question);
+    System.out.println("Answer: " + this.answer());
+  }
+
+  private void think(Question question) {
+    System.out.println("Hmm... Thinking");
+    try {
+      Thread.sleep(this.getSleepTimeInMs(question.getDifficulty()));
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+    System.out.println("Done!");
+  }
+
+  private String answer() {
+    String[] answers = {
+        "Signs point to yes!",
+        "Certainly!",
+        "No opinion",
+        "Answer is a little cloudy. Try again.",
+        "Surely.",
+        "No.",
+        "Signs point to no.",
+        "It could very well be!"
+    };
+    return answers[new Random().nextInt(answers.length)];
+  }
+
+  private int getSleepTimeInMs(Question.Difficulty difficulty) {
+    switch (difficulty) {
+      case EASY:
+        return 1000;
+      case MEDIUM:
+        return 2000;
+      case HARD:
+        return 3000;
+      default:
+        return 500;
+    }
+  }
+}
+```
 
 Note: Sometimes you will see developers specifically import the Thread and Runnable classes from java.lang. This is not necessary since all Java programs naturally import the java.lang package anyway. It is often used to help with readability or remind an author to add a specific feature.
 
@@ -362,5 +453,119 @@ public class Factorial{
  
    System.out.println("Supervisor " + supervisor.getName() + " watching worker " + t1.getName());
  }
+}
+```
+The thread labeled supervisor here is polling the status of t1 (a “worker” thread) continuously at an interval of 1000 milliseconds (one second). The supervisor checks the status of t1 using the isAlive() method in a while loop.
+
+Additionally, the getName() method will return a unique name for a thread in the current context. This comes in handy when debugging multi-threaded programs: the programmer can better understand which thread is performing a certain task at a given moment. We can also name a thread ourselves, using the setName() method of the Thread class.
+
+Now, let’s create a supervisor thread that polls for the status of all of the running CrystalBall threads.
+
+```
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class FortuneTeller {
+  
+  public static void main(String[] args) {
+
+    List<Question> questions = Arrays.asList(
+        new Question(Question.Difficulty.EASY, "Am I a good coder?"),
+        new Question(Question.Difficulty.MEDIUM, "Will I be able to finish this course?"),
+        new Question(Question.Difficulty.EASY, "Will it rain tomorrow?"),
+        new Question(Question.Difficulty.EASY, "Will it snow today?"),
+        new Question(Question.Difficulty.HARD, "Are you really all-knowing?"),
+        new Question(Question.Difficulty.HARD, "Do I have any hidden talents?"),
+        new Question(Question.Difficulty.HARD, "Will I live to be greater than 100 years old?"),
+        new Question(Question.Difficulty.MEDIUM, "Will I be rich one day?"),
+        new Question(Question.Difficulty.MEDIUM, "Should I clean my room?")
+    );
+
+    CrystalBall c = new CrystalBall();
+    List<Thread> threads = questions.stream().map(q -> {
+      Thread t = new Thread(() -> {
+        c.ask(q);
+      });
+      return t;
+    }).collect(Collectors.toList());
+    Thread supervisor = createSupervisor(threads);
+
+    threads.stream().forEach(t -> t.start());
+    supervisor.start();
+  }
+
+  public static Thread createSupervisor(List<Thread> threads) {
+
+    Thread supervisor = new Thread(() -> {
+      while (true) {
+        List<String> runningThreads = threads.stream().filter(t -> t.isAlive()).map(t -> t.getName()).collect(Collectors.toList());
+        System.out.println(Thread.currentThread().getName() + " - Currently running threads: " + runningThreads);
+        if (runningThreads.isEmpty()) {
+          break;
+        }
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException e) {
+          System.out.println(e);
+        }
+      }
+      System.out.println(Thread.currentThread().getName() + " - All threads completed!");
+    });
+    
+     // Set the name here...
+    supervisor.setName("Supervisor");
+
+    return supervisor;
+  };
+}
+
+import java.util.Random;
+
+public class CrystalBall {
+
+  /* Instance Methods */
+  public void ask(Question question) {
+    System.out.println(Thread.currentThread().getName() + " - Good question! You asked: " + question.getQuestion());
+    this.think(question);
+    System.out.println(Thread.currentThread().getName() + " - Answer: " + this.answer());
+  }
+
+  private void think(Question question) {
+    System.out.println(Thread.currentThread().getName() + " - Hmm... Thinking");
+    try {
+      Thread.sleep(this.getSleepTimeInMs(question.getDifficulty()));
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+    System.out.println(Thread.currentThread().getName() + " - Done!");
+  }
+
+  private String answer() {
+    String[] answers = {
+        "Signs point to yes!",
+        "Certainly!",
+        "No opinion",
+        "Answer is a little cloudy. Try again.",
+        "Surely.",
+        "No.",
+        "Signs point to no.",
+        "It could very well be!"
+    };
+    return answers[new Random().nextInt(answers.length)];
+  }
+
+  private int getSleepTimeInMs(Question.Difficulty difficulty) {
+    switch (difficulty) {
+      case EASY:
+        return 1000;
+      case MEDIUM:
+        return 2000;
+      case HARD:
+        return 3000;
+      default:
+        return 500;
+    }
+  }
 }
 ```
