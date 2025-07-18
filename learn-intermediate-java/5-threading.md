@@ -313,3 +313,54 @@ This syntax has several benefits:
 Now, let’s try both of these methods of implementing Runnable with our FortuneTeller class.
 
 Note: Sometimes you will see developers specifically import the Thread and Runnable classes from java.lang. This is not necessary since all Java programs naturally import the java.lang package anyway. It is often used to help with readability or remind an author to add a specific feature.
+
+## Supervising a Thread
+So far, you have seen how to start threads with the start() method and learned multiple ways to implement threads into sequential programs.
+
+Sometimes, we want to be able to see the status of threads during their execution. In Java, the best pattern for doing so is to use a supervisor thread. This is a pattern where the main thread (or another thread) is able to watch and check on the progress of another thread, as long as it has access to the corresponding Thread instance. This kind of thread is implemented just like other threads. Supervisor threads are often used for updating the user of our program on the progress of an ongoing task.
+
+One Thread method that a supervisor thread may use to monitor another thread is isAlive(). This method returns true if the thread is still running, and false if it has terminated. A supervisor might continuously poll this value (check it at a fixed interval) until it changes, and then notify the user that the thread has changed state. Here is an example:
+```
+import java.time.Instant;
+import java.time.Duration;
+ 
+public class Factorial{
+ public int compute(int n){
+   // the existing method to compute factorials
+ }
+ 
+ // utility method to create a supervisor thread
+ public static Thread createSupervisor(Thread t){
+   Thread supervisor = new Thread(() -> {
+     Instant startTime = Instant.now();
+     // supervisor is polling for t's status
+     while (t.isAlive()) {
+       System.out.println(Thread.currentThread().getName() + " - Computation still running...");
+       Thread.sleep(1000);
+     }
+   });
+ 
+   // setting a custom name for the supervisor thread
+   supervisor.setName("supervisor");
+   return supervisor;
+ 
+ }
+ 
+ public static void main(String[] args){
+   Factorial f = new Factorial();
+ 
+   Thread t1 = new Thread(() -> {
+     System.out.println("25 factorial is...");
+     System.out.println(f.compute(25));
+   });
+ 
+ 
+   Thread supervisor = createSupervisor(t1);
+ 
+   t1.start();
+   supervisor.start();
+ 
+   System.out.println("Supervisor " + supervisor.getName() + " watching worker " + t1.getName());
+ }
+}
+```
