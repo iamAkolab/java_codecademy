@@ -211,3 +211,44 @@ public class Example {
   }
 }
 ```
+
+## Quantifiers
+Remember that + character used in the character class example? That’s what regex calls a quantifier.
+
+Quantifiers look at preceding tokens and indicate how many matches to look for, defaulting to trying to match as many characters as possible unless otherwise defined. The following are examples of quantifiers (note that “a” is user-defined and can be any character or group of characters. Any numerical digits used are also user-defined):
+
+| Quantifier	| Description |
+| a*	| 0 or more |
+| a+	| 1 or more |
+| a?	| 0 or 1 |
+| a{5} |	Exactly five |
+| a{3,}	| Three or more |
+| a{1,3} |	Between one and three |
+| a+?	| Match as few as possible |
+| a{2,}?	| Match as few as possible with a lower bound |
+
+Patterns with quantifiers are generally straightforward. All they do is grab and group the quantified amount of characters together when found. Let’s cover a quick example:
+```
+Pattern pattern = Pattern.compile("a*b");
+```
+
+This pattern searches for text that includes 0 or more “a”s followed by a “b.” It’ll find any “ab,” “aab,” “aaaaaaab,” but also, because it can match any text that has 0 “a”s followed by a “b,” it will also find “b.”
+
+Let’s practice this concept.
+```
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class Example {
+
+  public static void main(String[] args) {
+    String[] strings = {"CCQQ", "QQCC", "CQQ", "QUACK", "CCQ", "CQC", "CQQQ", "CCCQQ"};
+    Pattern pattern = Pattern.compile("C+Q{2}");
+    Matcher matcher;
+    for(String s: strings){
+      matcher = pattern.matcher(s);
+      System.out.println(matcher.matches());
+    }
+  }
+}
+``
