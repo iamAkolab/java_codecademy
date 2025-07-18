@@ -9,7 +9,7 @@ Concurrency is a more advanced domain in programming, but modern programming lan
 ## What is a thread?
 The building blocks of concurrent programs or processes are threads. Like sequential programs, a single thread has a beginning and an end, and only a single point of execution. However, multiple threads can run at the same time! A program or process usually has multiple threads running simultaneously, leveraging the context of the program, acting on shared resources between other threads, and ensuring that any one thread does not impede the other threads from completing a task.
 
-![OperatingSystem]()
+![OperatingSystem](https://github.com/iamAkolab/java_codecademy/blob/main/learn-intermediate-java/operatingSystems.jpg)
 
 In the diagram above, we can see that a process can start and execute multiple threads. By default, a process has a single thread of execution called the main thread. From that initial thread, we can create more threads to launch different independent tasks. We don’t consider the process to be complete until all of the threads that it has started are finished. When a thread completes its execution, we say that it joins back into the main thread.
 
