@@ -569,3 +569,652 @@ public class CrystalBall {
   }
 }
 ```
+
+
+## Waiting for Thread Completion
+Another common scenario in multi-threaded programs is to wait for a thread to complete before proceeding in a path of execution.
+
+In other languages, this concept is called “awaiting” or “blocking”. In Java, we say that we wait for the thread to join.
+
+When a thread joins, it means that the thread’s task is complete and the process that was initially forked off has been “joined” back into the main thread.
+
+This is useful when we can only perform a specific task once several prerequisite tasks have been completed. Take a look at BurgerMaker.java in the editor, which describes the process of preparing a cheeseburger. A cheeseburger is generally prepared in the following way:
+
+1. Grill hamburger patty.
+2. Once the patty is properly cooked, add cheese on top to melt it.
+3. Toast the burger buns.
+4. Fry onions.
+5. Once all ingredients are ready, assemble the burger.
+   
+Many of these steps can be done concurrently. However, notice that some of the steps are dependent on the completion of other steps. Step 2 requires the patty to be grilled before melting cheese on top of it. Step 5 requires all other steps to be completed before it can start (we can’t assemble a burger until everything is ready).
+
+In BurgerMaker, we can see how join() is used to enforce dependencies between different tasks. By using start() and join() properly, we can ensure that tasks that can be performed concurrently are started. Still, tasks with dependencies are not started until all dependencies have been joined.
+
+In this exercise, we’ll use the join() features we see in BurgerMaker.java to ensure that tasks occur in the correct order while making a cake in our new file, CakeMaker.java. CakeMaker describes baking a cake by following these steps: A cake is made in the following way:
+
+1. The oven must be preheated before the cake can be baked.
+2. The dry ingredients and wet ingredients should be mixed before the ingredients can be combined.
+3. The ingredients must be combined before the cake can be baked.
+4. The cake must be finished baking before the cake can be frosted.
+
+```
+import java.lang.Thread;
+public class BurgerMaker {
+ 
+ public void toastBuns() {
+   try {
+     System.out.println("Toasting buns...");
+     Thread.sleep(2000);
+   } catch (InterruptedException e) {
+     System.out.println(e);
+   }
+ }
+
+ public void grillPatty() {
+   System.out.println("Grilling patty...");
+   Thread.sleep(1500);
+ }
+
+ public void meltCheese() {
+   System.out.println("Melting cheese...");
+   Thread.sleep(800);
+ }
+
+ public void fryOnions() {
+   System.out.println("Frying onions...");
+   Thread.sleep(1000);
+ }
+
+ public void assembleBurger() {
+   System.out.println("Assembling burger...");
+   Thread.sleep(1500);
+ }
+
+ public static void main(String[] args) {
+   BurgerMaker burgerMaker = new BurgerMaker();
+   Thread t1 = new Thread(() -> burgerMaker.toastBuns());
+   Thread t2 = new Thread(() -> burgerMaker.grillPatty());
+   Thread t3 = new Thread(() -> burgerMaker.meltCheese());
+   Thread t4 = new Thread(() -> burgerMaker.fryOnions());
+   Thread t5 = new Thread(() -> burgerMaker.assembleBurger());
+ 
+   t1.start();
+   t2.start();
+   t4.start();
+   t2.join(); // must grill patty before melting cheese on it
+   t3.start(); // ready to melt cheese
+   t1.join();
+   t3.join();
+   t4.join();
+   // must complete all other steps before assembling burger
+   t5.start();
+   t5.join(); // waiting for the burger assembly task to complete
+   System.out.println("Burger complete!");
+ }
+ 
+}
+
+public class CakeMaker {
+
+    /* Instance Variables */
+    private boolean whiskInUse = false;
+    private boolean ovenInUse = false;
+    private boolean mixingBowlInUse = false;
+
+    /* Main Method */
+    public static void main(String[] args) {
+
+        CakeMaker c = new CakeMaker();
+        try {
+
+            Thread preheatOven = new Thread(() -> c.preheatOven(), "preheatOven");
+            Thread mixDryIngredients = new Thread(() -> c.mixDryIngredients(), "mixDryIngredients");
+            Thread mixWetIngredients = new Thread(() -> c.mixWetIngredients(), "mixWetIngredients");
+            Thread combineIngredients = new Thread(() -> c.combineIngredients(), "combineIngredients");
+            Thread bakeCake = new Thread(() -> c.bakeCake(), "bakeCake");
+            Thread makeFrosting = new Thread(() -> c.makeFrosting(), "makeFrosting");
+            Thread frostCake = new Thread(() -> c.frostCake(), "frostCake");
+
+            // Add logic to start and initial.join threads here!
+            // There should be a .start() and .initial.join() method call for each thread, seven in total.
+            preheatOven.start();
+            mixDryIngredients.start();
+            mixWetIngredients.start();
+            makeFrosting.start();
+            mixDryIngredients.join();
+            mixWetIngredients.join();
+            combineIngredients.start();
+            combineIngredients.join();
+            preheatOven.join();
+            bakeCake.start();
+            makeFrosting.join();
+            bakeCake.join();
+            frostCake.start();
+            frostCake.join();
+
+            System.out.println("Cake complete!");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    } // End of Main
+
+    /* Instance Methods */
+    public void preheatOven() {
+        try {
+            printTask("Oven pre-heating...");
+            ovenInUse = true;
+            Thread.sleep(10000);
+            ovenInUse = false;
+            printTask("Done!");
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void mixDryIngredients() {
+        try {
+            printTask("Mixing dry ingredients...");
+            mixingBowlInUse = true;
+            Thread.sleep(200);
+            printTask("Adding cake flour");
+            Thread.sleep(200);
+            printTask("Adding salt");
+            Thread.sleep(200);
+            printTask("Adding baking powder");
+            Thread.sleep(200);
+            printTask("Adding baking soda");
+            Thread.sleep(200);
+            whiskInUse = true;
+            printTask("Mixing...");
+            Thread.sleep(200);
+            whiskInUse = false;
+            mixingBowlInUse = false;
+            printTask("Done!");
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    };
+
+    public void mixWetIngredients() {
+        try {
+            printTask("Mixing wet ingredients...");
+            mixingBowlInUse = true;
+            Thread.sleep(1000);
+            printTask("Adding butter...");
+            Thread.sleep(500);
+            printTask("Adding eggs...");
+            Thread.sleep(500);
+            printTask("Adding vanilla extract...");
+            Thread.sleep(500);
+            printTask("Adding buttermilk...");
+            Thread.sleep(500);
+            whiskInUse = true;
+            printTask("Mixing...");
+            Thread.sleep(1500);
+            whiskInUse = false;
+            mixingBowlInUse = false;
+            printTask("Done!");
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    };
+
+    public void combineIngredients() {
+        try {
+            printTask("Combining ingredients...");
+            mixingBowlInUse = true;
+            Thread.sleep(1000);
+            printTask("Adding dry mix to wet mix...");
+            Thread.sleep(1500);
+            whiskInUse = true;
+            printTask("Mixing...");
+            Thread.sleep(1500);
+            whiskInUse = false;
+            mixingBowlInUse = false;
+            printTask("Done!");
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    };
+
+    public void bakeCake() {
+        try {
+            printTask("Baking cake...");
+            ovenInUse = true;
+            Thread.sleep(10000);
+            ovenInUse = false;
+            printTask("Done!");
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void makeFrosting() {
+        try {
+            printTask("Making frosting...");
+            whiskInUse = true;
+            mixingBowlInUse = true;
+            printTask("Adding butter...");
+            Thread.sleep(200);
+            printTask("Adding milk...");
+            Thread.sleep(200);
+            printTask("Adding sugar...");
+            Thread.sleep(200);
+            printTask("Adding vanilla extract...");
+            Thread.sleep(200);
+            printTask("Adding salt...");
+            Thread.sleep(200);
+            whiskInUse = false;
+            mixingBowlInUse = false;
+            printTask("Done!");
+
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void frostCake() {
+        try {
+            printTask("Frosting cake...");
+            Thread.sleep(1500);
+            printTask("Done!");
+
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+
+    private void printTask(String task) {
+        System.out.println(Thread.currentThread().getName() + " " + " - " + task);
+    };
+}
+```
+
+## Thread Synchronization
+Another important scenario when working with multi-threaded programs is managing shared resources between threads.
+
+When we access the same data from two different threads, we may cause a race condition. A race condition occurs when some inconsistency is caused by two threads trying to access the same shared data at the same time. Consider this example where two threads are attempting to increment a value simultaneously:
+```
+class IntegerMapper{
+  public int[] array = {1, 2, 3, 4, 5};    
+  public void incrementElement(int i, int j){
+    array[i] += j;
+  }   
+}
+public class Main{
+  public static void main(String args[]) throws InterruptedException{
+    IntegerMapper iMapper = new IntegerMapper();
+    Thread thread1 = new Thread(() -> {
+      for(int i = 0; i < 100; i++){
+        iMapper.incrementElement(2, 4);
+        try{
+          Thread.sleep(10);
+        }
+        catch(InterruptedException exception){
+          System.out.println("Error!");
+        }
+      }
+            
+    });
+    Thread thread2 = new Thread(() -> {
+      for(int i = 0; i < 100; i++){
+        iMapper.incrementElement(2, 3);
+        try{
+          Thread.sleep(10);
+        }
+        catch(InterruptedException exception){
+          System.out.println("Error!");
+        }
+      }
+    });
+        
+    thread1.start();
+    thread2.start();
+        
+    thread1.join();
+    thread2.join();
+        
+    System.out.println(iMapper.array[2]);
+  }
+}
+```
+If we run this program multiple times, we will get a different 
+output
+Preview: Docs Loading link description
+ each time! This is because thread1 and thread2 conflict in their access of array[2]. To update the value in the incrementElement() method, the value must be read, incremented, then saved. One thread could be reading the value while the other thread is incrementing it, leading to inconsistencies.
+
+We can prevent race conditions on shared data by using the synchronized keyword in Java. In a threaded program, when we add synchronized to the definition of a function, it will ensure that for a given instance of a class, only one thread can run that method at a time. We can fix incrementElement() by making it synchronized like so:
+```
+public synchronized void incrementElement(int i, int j){
+    array[i] += j;
+}
+```
+Now, each time the program is run, it will output the same value.
+
+Let’s see how we can use thread synchronization to solve a classic race condition problem.
+```
+public class Counter {
+  private int c = 0;
+
+  public int getCount() {
+    return this.c;
+  };
+
+  public void setCount(int c) {
+    this.c = c;
+  };
+
+  public synchronized void increment() {
+    this.setCount(this.getCount() + 1);
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    Counter c = new Counter();
+
+    Thread a = new Thread(() -> {
+      for (int i = 0; i < 100; i++) {
+        c.increment();
+        try {
+          Thread.sleep(10);
+        } catch (InterruptedException e) {
+          System.out.println(e);
+        }
+      }
+    });
+
+    Thread b = new Thread(() -> {
+      for (int i = 0; i < 100; i++) {
+        c.increment();
+        try {
+          Thread.sleep(10);
+        } catch (InterruptedException e) {
+          System.out.println(e);
+        }
+      }
+    });
+
+    // Start both threads here
+    a.start();
+    b.start();
+
+    // Join both threads here
+    a.join();
+    b.join();
+
+    System.out.println("Counter: " + c.getCount());
+  }
+}
+```
+
+## Communicating Between Threads
+Previously, we learned how to block thread execution using join(). However, this is only to block thread execution from the context where the thread was started. For example, if a thread was created and started in the main thread, we can only call join() on it from the main thread and wait on its completion from there.
+
+In Java, to control thread execution from within other threads, we can use the wait(), notify(), and notifyAll() methods. These are primarily used to protect shared resources from being used by two threads at the same time or to wait until some condition has changed in a thread.
+
+When using wait() and notifyAll(), it is important to do so in a synchronized(this) block. When we create a synchronized(this) block, we are telling Java that we want it to be the only thread accessing the fields of the class at a given moment. In the synchronized(this) block, we must:
+
+1. Check the condition on which to wait.
+2. Decide whether to wait() (block the execution of the current thread) or notifyAll() (allow other threads to check their condition again and proceed)
+
+```
+import java.lang.Thread;
+ 
+public class OrderDinnerProcess {
+ private boolean foodArrived = false;
+ 
+ private void printTask(String task) { 
+   System.out.println(Thread.currentThread().getName() + " - " + task);
+ }
+ 
+ public void eatFood() {
+   printTask("Wow, I am starving!");
+   try {
+     synchronized (this) {
+       while (!this.foodArrived) {
+         printTask("Waiting for the food to arrive...");
+         wait();
+       }
+     }
+   } catch (InterruptedException e) {
+     System.out.println(e);
+   }
+   printTask("Finally! Yum yum yum!!!");
+ }
+ 
+ public void deliverFood() {
+   printTask("Driving food over...");
+   try {
+     Thread.sleep(5000);
+     synchronized (this) {
+       this.foodArrived = true;
+       printTask("Arrived!");
+       notifyAll();
+     }
+   } catch (InterruptedException e) {
+     System.out.println(e);
+   }
+ }
+ 
+ public static void main(String[] args) {
+   OrderDinnerProcess p = new OrderDinnerProcess();
+   try {
+     for (int i = 0; i < 5; i++) {
+       Thread eatFood = new Thread(() -> p.eatFood());
+       eatFood.start();
+     }
+     Thread.sleep(1000);
+     Thread delivery = new Thread(() -> p.deliverFood());
+     delivery.start();
+   } catch (InterruptedException e) {
+     System.out.println(e);
+   }
+ }
+}
+```
+In the example, we are simulating a family of five eager to eat some dinner! However, they can’t eat until the food has arrived. We could have controlled this behavior before by defining, starting, and joining the delivery thread before the five eatFood() threads began. However, using wait() and notifyAll(), we can start them in any order, and each eatFood() thread will wait() until a call to notifyAll() by another thread tells them to proceed to check again.
+
+The synchronized block is used here to tell Java that only one thread should be able to read from and write to the foodArrived() field at a time.
+
+The wait() function is used to pause execution for a thread until a call has been made to notifyAll(), which triggers another check of the condition.
+
+The notifyAll() function is used to tell all threads that are currently waiting that they may now proceed.
+
+In addition to being used to coordinate thread execution, we can use the synchronized(this) block, wait(), and notifyAll() to control access to shared resources. If a resource is currently in use, a thread should wait() until a call to notifyAll() is made, which indicates that the shared resource may have been released and is ready for use.
+
+In this exercise, you’ll use the synchronized(this) block, wait(), and notifyAll() to update our CakeMaker class so that only one thread can use the mixing bowl at a given time. The other threads must wait() until the mixing bowl is released, and are instructed to continue with execution with a call to notifyAll().
+```
+public class CakeMaker {
+
+  /* Instance Variables */
+  private boolean whiskInUse = false;
+  private boolean ovenInUse = false;
+  private boolean mixingBowlInUse = false;
+
+  /* Main Method */
+  public static void main(String[] args) {
+
+    CakeMaker c = new CakeMaker();
+    try {
+
+      Thread preheatOven = new Thread(c::preheatOven, "preheatOven");
+      Thread mixDryIngredients = new Thread(c::mixDryIngredients, "mixDryIngredients");
+      Thread mixWetIngredients = new Thread(c::mixWetIngredients, "mixWetIngredients");
+      Thread combineIngredients = new Thread(c::combineIngredients, "combineIngredients");
+      Thread bakeCake = new Thread(c::bakeCake, "bakeCake");
+      Thread makeFrosting = new Thread(c::makeFrosting, "makeFrosting");
+      Thread frostCake = new Thread(c::frostCake, "frostCake");
+
+      preheatOven.start();
+      mixDryIngredients.start();
+      mixWetIngredients.start();
+      makeFrosting.start();
+      mixDryIngredients.join();
+      mixWetIngredients.join();
+      combineIngredients.start();
+      combineIngredients.join();
+      preheatOven.join();
+      bakeCake.start();
+      makeFrosting.join();
+      bakeCake.join();
+      frostCake.start();
+      frostCake.join();
+
+      System.out.println("Cake complete!");
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  } // End of Main
+
+  /* Instance Methods */
+  public void preheatOven() {
+    try {
+      printTask("Oven pre-heating...");
+      ovenInUse = true;
+      Thread.sleep(10000);
+      ovenInUse = false;
+      printTask("Done!");
+    } catch (InterruptedException e) {
+      System.out.println(e);
+    }
+  }
+
+  public void mixDryIngredients() {
+    try {
+      printTask("Mixing dry ingredients...");
+      synchronized(this) {
+        while(mixingBowlInUse) {
+          printTask("Waiting for the mixing bowl...");
+          wait();
+        }
+        mixingBowlInUse = true;
+        printTask("Using mixing bowl!");
+      }
+      Thread.sleep(200);
+      printTask("Adding cake flour");
+      Thread.sleep(200);
+      printTask("Adding salt");
+      Thread.sleep(200);
+      printTask("Adding baking powder");
+      Thread.sleep(200);
+      printTask("Adding baking soda");
+      Thread.sleep(200);
+      whiskInUse = true;
+      printTask("Mixing...");
+      Thread.sleep(200);
+      whiskInUse = false;
+      synchronized(this) {
+        printTask("Releasing mixing bowl!");
+        mixingBowlInUse = false;
+        notifyAll();
+      }
+      printTask("Done!");
+    } catch (InterruptedException e) {
+      System.out.println(e);
+    }
+  };
+
+  public void mixWetIngredients() {
+    try {
+      printTask("Mixing wet ingredients...");
+      synchronized(this) {
+        while(mixingBowlInUse) {
+          printTask("Waiting for mixing bowl...");
+          wait();
+        }
+        printTask("Using mixing bowl!");
+        mixingBowlInUse = true;
+      };
+      Thread.sleep(1000);
+      printTask("Adding butter...");
+      Thread.sleep(500);
+      printTask("Adding eggs...");
+      Thread.sleep(500);
+      printTask("Adding vanilla extract...");
+      Thread.sleep(500);
+      printTask("Adding buttermilk...");
+      Thread.sleep(500);
+      whiskInUse = true;
+      printTask("Mixing...");
+      Thread.sleep(1500);
+      whiskInUse = false;
+      synchronized(this) {
+        printTask("Releasing mixing bowl!");
+        mixingBowlInUse = false;
+        notifyAll();
+      }
+      printTask("Done!");
+    } catch (InterruptedException e) {
+      System.out.println(e);
+    }
+  };
+
+  public void combineIngredients() {
+    try {
+      printTask("Combining ingredients...");
+      mixingBowlInUse = true;
+      Thread.sleep(1000);
+      printTask("Adding dry mix to wet mix...");
+      Thread.sleep(1500);
+      whiskInUse = true;
+      printTask("Mixing...");
+      Thread.sleep(1500);
+      whiskInUse = false;
+      mixingBowlInUse = false;
+      printTask("Done!");
+    } catch (InterruptedException e) {
+      System.out.println(e);
+    }
+  };
+
+  public void bakeCake() {
+    try {
+      printTask("Baking cake...");
+      ovenInUse = true;
+      Thread.sleep(10000);
+      ovenInUse = false;
+      printTask("Done!");
+    } catch (InterruptedException e) {
+      System.out.println(e);
+    }
+  }
+
+  public void makeFrosting() {
+    try {
+      printTask("Making frosting...");
+      whiskInUse = true;
+      mixingBowlInUse = true;
+      printTask("Adding butter...");
+      Thread.sleep(200);
+      printTask("Adding milk...");
+      Thread.sleep(200);
+      printTask("Adding sugar...");
+      Thread.sleep(200);
+      printTask("Adding vanilla extract...");
+      Thread.sleep(200);
+      printTask("Adding salt...");
+      Thread.sleep(200);
+      whiskInUse = false;
+      mixingBowlInUse = false;
+      printTask("Done!");
+
+    } catch (InterruptedException e) {
+      System.out.println(e);
+    }
+  }
+
+  public void frostCake() {
+    try {
+      printTask("Frosting cake...");
+      Thread.sleep(1500);
+      printTask("Done!");
+
+    } catch (InterruptedException e) {
+      System.out.println(e);
+    }
+  }
+
+  private void printTask(String task) {
+    System.out.println(Thread.currentThread().getName() + " " + " - " + task);
+  }
+} // End of CakeMaker
+```
