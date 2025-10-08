@@ -1,4 +1,4 @@
-# Threading
+# Threading...
 ## Introduction
 So far, we have learned about threads and how they work in theory. Before we put it into practice, we should have a strong understanding of what kinds of problems multi-threaded programs are best suited to solve.
 
