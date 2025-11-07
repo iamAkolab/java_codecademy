@@ -1,5 +1,5 @@
 public class Bank {
-    private CheckingAccount accountOne;
+  private CheckingAccount accountOne;
   private CheckingAccount accountTwo;
   
   public Bank(){
@@ -15,4 +15,5 @@ public class Bank {
     System.out.println(bankOfGods.accountOne.getBalance());
     System.out.println(bankOfGods.accountOne.getMonthlyInterest());
   }
+    
 }
