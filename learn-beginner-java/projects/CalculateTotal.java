@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 class CalculateTotal {
   
   public static void main(String[] args) {
