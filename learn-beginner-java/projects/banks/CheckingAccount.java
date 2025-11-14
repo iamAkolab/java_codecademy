@@ -5,7 +5,7 @@ public class CheckingAccount {
   private String id;
   private double interestRate;
   
-  public CheckingAccount(String inputName, int inputBalance, String inputId){
+  public CheckingAccount(String inputName, int inputBalance, String inputId) {
     this.name = inputName;
     this.balance = inputBalance;
     this.id = inputId;
