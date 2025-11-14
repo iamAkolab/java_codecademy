@@ -1,4 +1,4 @@
-public class CheckingAccount{
+public class CheckingAccount {
   private String name;
   private int balance;
   private String id;
