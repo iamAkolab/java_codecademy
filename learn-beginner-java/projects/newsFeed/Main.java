@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Main{
+public class Main {
   public static void main(String[] args){
 		Newsfeed feed;
     if(args[0].equals("Robot")){
