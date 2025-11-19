@@ -2,7 +2,7 @@ public class Newsfeed {
   
   String[] topics;
   
-  public Newsfeed(String[] initialTopics){
+  public Newsfeed(String[] initialTopics) {
 		topics = initialTopics;
   }
 }
