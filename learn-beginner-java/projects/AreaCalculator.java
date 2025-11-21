@@ -20,7 +20,7 @@ public class AreaCalculator {
       
 	    System.out.print("Which shape: ");
 	
-      int shape = keyboard.nextInt();
+        int shape = keyboard.nextInt();
 	    System.out.println();
 	
 	    if (shape == 1) {
