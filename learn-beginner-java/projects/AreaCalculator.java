@@ -16,7 +16,7 @@ public class AreaCalculator {
 	    System.out.println("2) Rectangle");
 	    System.out.println("3) Circle");
 	    System.out.println("4) Quit");
-      System.out.println();
+        System.out.println();
       
 	    System.out.print("Which shape: ");
 	
