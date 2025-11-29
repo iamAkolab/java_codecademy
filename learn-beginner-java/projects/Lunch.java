@@ -3,6 +3,7 @@ import java.util.ArrayList;
 class Lunch {
  
   public static ArrayList<String> removeAnts(ArrayList<String> lunchBox) {
+   
     // Add your code below
     for (int i = 0; i < lunchBox.size(); i++) {
       if (lunchBox.get(i) == "ant"){
