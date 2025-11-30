@@ -10,4 +10,5 @@ public class Mayan extends Language {
         super.getInfo();
         System.out.println("Fun fact: " + this.name + " is an ergative language.");
     }
+    
 }
