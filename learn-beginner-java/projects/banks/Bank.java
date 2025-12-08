@@ -9,7 +9,7 @@ public class Bank {
     myAccount = new CheckingAccount("Mike", 300, "3");
   }
   
-  public static void main(String[] args){
+  public static void main(String[] args) {
     Bank bankOfGods = new Bank();
     System.out.println(bankOfGods.accountOne.getBalance());
     bankOfGods.accountOne.setBalance(5000);
