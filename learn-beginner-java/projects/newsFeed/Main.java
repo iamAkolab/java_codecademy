@@ -5,7 +5,7 @@ public class Main {
   public static void main(String[] args) {
 	Newsfeed feed;
 	  
-    if(args[0].equals("Robot")){
+    if(args[0].equals("Robot")) {
       //topics for a Robot feed:
       String[] robotTopics = {"Oil", "Parts", "Algorithms", "Love"};
       feed = new Newsfeed(robotTopics);
