@@ -23,6 +23,7 @@ public class Main {
         
     System.out.println("The topics in this feed are:");
     System.out.println(Arrays.toString(feed.topics));
+	  
   }
 	
 }
