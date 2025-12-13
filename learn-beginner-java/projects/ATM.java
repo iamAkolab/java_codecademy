@@ -7,7 +7,7 @@ public class ATM {
   // Instance variables
   public int money;
 
-  public ATM(int inputMoney){
+  public ATM(int inputMoney) {
     this.money = inputMoney;
     numATMs += 1;
     totalMoney += inputMoney;
