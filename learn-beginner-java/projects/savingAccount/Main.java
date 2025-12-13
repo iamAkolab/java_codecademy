@@ -1,6 +1,7 @@
 public class Main {
   
   public static void main(String[] args) {
+    
     SavingsAccount savings = new SavingsAccount(2000);
         
     //Check balance:
