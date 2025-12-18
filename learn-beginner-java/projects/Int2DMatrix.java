@@ -25,6 +25,7 @@ public class Main {
 
 public class Main {
 	public static void main(String[] args) {
+		
 		//Given the provided 2d array
 		int[][] intMatrix = {
 				{ 4,  6,  8, 10, 12, 14, 16},
