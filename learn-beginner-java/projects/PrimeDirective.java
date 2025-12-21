@@ -38,7 +38,6 @@ class PrimeDirective {
       }
     }
     return true;
-
   }
 
   public ArrayList<Integer> onlyPrimes(int[] numbers) {
