@@ -17,7 +17,6 @@ class PrimeDirective {
   */
   
   // Add your methods here:
-  
   public static void main(String[] args) {
 
     PrimeDirective pd = new PrimeDirective();
