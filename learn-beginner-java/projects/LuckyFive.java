@@ -18,7 +18,5 @@ class LuckyFive {
       System.out.println(dieRoll);
 
     }
-    
-    
   }
   
