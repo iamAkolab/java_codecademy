@@ -28,7 +28,6 @@ class ToDos {
     sherlocksToDos.remove(0);
     poirotsToDos.remove(0);
     sherlocksToDos.remove("play violin");
-    
       
     System.out.println(sherlocksToDos.toString() + "\n");
     System.out.println(poirotsToDos.toString());
