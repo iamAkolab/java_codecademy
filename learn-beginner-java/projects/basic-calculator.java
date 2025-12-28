@@ -10,6 +10,7 @@ In this project, you will use classes, methods, and objects to create a simple a
 */
 
 public class Calculator{
+  
   public static void main(String[] args) {
     // Basic Calculator that adds, subtratcs, multiply and divide integers
     Calculator myCalculator = new Calculator();
