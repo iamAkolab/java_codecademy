@@ -1,6 +1,5 @@
 public class MadLibs {
   
-  //
     //Your description here
   	public static void main(String[] args){
 
