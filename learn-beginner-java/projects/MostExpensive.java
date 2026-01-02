@@ -20,7 +20,7 @@ class MostExpensive {
       }
     }
     
-    System.out.println(mostExpensive)
+    System.out.println(mostExpensive);
     
   }
   
