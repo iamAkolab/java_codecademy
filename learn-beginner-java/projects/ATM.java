@@ -15,7 +15,7 @@ public class ATM {
     totalMoney += inputMoney;
   }
 
-  public void withdrawMoney(int amountToWithdraw){
+  public void withdrawMoney(int amountToWithdraw) {
     if(amountToWithdraw <= this.money){
       this.money -= amountToWithdraw;
       totalMoney -= amountToWithdraw;
