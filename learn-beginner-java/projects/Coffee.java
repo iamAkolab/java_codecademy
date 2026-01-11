@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Coffee {
   
   public static void main(String[] args) {
