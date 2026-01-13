@@ -9,7 +9,7 @@ In this project, you will use classes, methods, and objects to create a simple a
 - Apply the modulo operator on two integers
 */
 
-public class Calculator{
+public class Calculator {
   
   public static void main(String[] args) {
     
