@@ -13,7 +13,7 @@ public class Calculator {
   
   public static void main(String[] args) {
     
-    // Basic Calculator that adds, subtracts, multiplies, multiply and divide integers
+    // Basic Calculator that adds, subtracts, multiplies, and divides integers
     Calculator myCalculator = new Calculator();
 
     System.out.println(myCalculator.add(5,7));
