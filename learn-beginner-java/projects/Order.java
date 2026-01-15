@@ -12,6 +12,7 @@ public class Order {
 	if (cost > 24.00) {
       System.out.println("High value item!");
     }
+	  
     isFilled = filled;
     billAmount = cost;
     shipping = shippingMethod;
