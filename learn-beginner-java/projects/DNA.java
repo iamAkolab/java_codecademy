@@ -25,7 +25,7 @@ ATGCGATAGA is not a protein because the sequence length is not divisible by 3, s
 
 */
 
-public class DNA{
+public class DNA {
   //program that determines whether there is a protein in a strand of DNA.
   
   public static void main(String[] args) {
