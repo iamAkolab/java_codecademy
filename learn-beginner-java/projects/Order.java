@@ -8,13 +8,15 @@ public class Order {
   String couponCode;
   
   public Order(boolean filled, double cost, String shippingMethod, String coupon) {
-		if (cost > 24.00) {
+	  
+	if (cost > 24.00) {
       System.out.println("High value item!");
     }
     isFilled = filled;
     billAmount = cost;
     shipping = shippingMethod;
     couponCode = coupon;
+	  
   }
   
   public void ship() {
