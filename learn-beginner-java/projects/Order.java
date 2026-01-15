@@ -1,6 +1,7 @@
 
 // If-Else
 public class Order {
+	
   boolean isFilled;
   double billAmount;
   String shipping;
