@@ -37,3 +37,73 @@ A structured, 7-week learning journey to master modern backend engineering — a
 - `docs/` → Architecture decisions and pattern library
 - `capstone-project/` → Unified system integrating all domains
 - `utils/` → Setup scripts and reflection templates
+
+```
+backend-mastery-2026/
+├── README.md                     # Project overview, learning philosophy, weekly roadmap
+├── .gitignore                    # Standard ignores (IDE, logs, binaries)
+├── docs/
+│   ├── architecture-decisions.md # Record key choices (e.g., "Why gRPC over REST?")
+│   └── patterns-library.md       # Reusable design pattern implementations
+├── week-01-api-design/
+│   ├── README.md                 # Weekly goal, resources, checklist
+│   ├── notes.md                  # Personal insights
+│   ├── labs/
+│   │   ├── rest-api/             # Versioned REST service (v1/v2)
+│   │   └── grpc-service/         # gRPC proto + server/client
+│   └── challenges.md             # e.g., "Achieve backward compatibility during field deprecation"
+├── week-02-data-management/
+│   ├── README.md
+│   ├── notes.md
+│   ├── labs/
+│   │   ├── sql-optimization/     # Indexing, EXPLAIN plans
+│   │   ├── nosql-sharding/       # Simulate sharding logic
+│   │   └── vector-db-rag/        # LLM retrieval with Qdrant/Chroma
+│   └── challenges.md             # e.g., "Tune query to <50ms under 10k rows"
+├── week-03-concurrency/
+│   ├── README.md
+│   ├── notes.md
+│   ├── labs/
+│   │   ├── async-pipeline/       # Go channels or Python asyncio
+│   │   └── thread-safe-cache/    # Immutable state + concurrent access
+│   └── challenges.md             # e.g., "Profile memory leak in goroutine"
+├── week-04-distributed-systems/
+│   ├── README.md
+│   ├── notes.md
+│   ├── labs/
+│   │   ├── kafka-producer-consumer/  # Idempotent consumer
+│   │   └── service-mesh-demo/        # Linkerd/Istio local setup
+│   └── challenges.md                 # e.g., "Handle message duplication after retry"
+├── week-05-security/
+│   ├── README.md
+│   ├── notes.md
+│   ├── labs/
+│   │   ├── oauth2-passkey-auth/      # WebAuthn + OAuth2 flow
+│   │   └── owasp-audit/              # Scan code for Top 10 risks
+│   └── challenges.md                 # e.g., "Implement zero-trust authZ policy"
+├── week-06-observability/
+│   ├── README.md
+│   ├── notes.md
+│   ├── labs/
+│   │   ├── opentelemetry-instrumentation/  # Auto-instrument service
+│   │   └── grafana-dashboard/              # Logs + traces + metrics
+│   └── challenges.md                       # e.g., "Trace latency spike to DB call"
+├── week-07-deployment/
+│   ├── README.md
+│   ├── notes.md
+│   ├── labs/
+│   │   ├── k8s-gitops/                   # ArgoCD + Helm
+│   │   └── edge-caching/                 # Cloudflare Workers + Redis
+│   └── challenges.md                     # e.g., "Roll out canary without downtime"
+├── capstone-project/
+│   └── trading-agent-backend/            # Integrate all 7 domains into one system
+│       ├── api/                          # Week 1
+│       ├── data/                         # Week 2
+│       ├── engine/                       # Week 3 + 4
+│       ├── auth/                         # Week 5
+│       ├── telemetry/                    # Week 6
+│       └── deploy/                       # Week 7
+└── utils/
+    ├── setup.sh                          # Install Kafka, Redis, K8s, etc.
+    └── weekly-review-template.md         # Reflection prompts
+```
