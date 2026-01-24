@@ -1,4 +1,5 @@
 // Importing the Random library
+
 import java.util.Random;
 
 class LuckyFive {
