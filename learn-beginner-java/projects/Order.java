@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-// If-Else
+
 public class Order {
 	
   boolean isFilled;
@@ -22,6 +22,8 @@ public class Order {
   }
   
   public void ship() {
+
+	// If-Else
     if (isFilled) {
       System.out.println("Shipping");
       System.out.println("Shipping cost: " + calculateShipping());
