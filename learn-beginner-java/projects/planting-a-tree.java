@@ -1,8 +1,6 @@
 // Defined the tree class in this file!
 
 
-
-
 class Tree {
   
   public static void main(String[] args) {
